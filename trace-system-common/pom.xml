@@ -168,7 +168,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>qutihuo-common</finalName>
+		<finalName>trace-system-common</finalName>
 		<resources>
 			<resource>
 				<directory>${project.basedir}/src/main/resources</directory>

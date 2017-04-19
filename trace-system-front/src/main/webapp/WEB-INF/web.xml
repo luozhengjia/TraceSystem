@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
 
-	<display-name>qutihuo Web Application</display-name>
+	<display-name>trace Web Application</display-name>
 
 	<session-config>
 		<session-timeout>30</session-timeout>
@@ -12,7 +12,7 @@
 
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>qutihuo.wap.root</param-value>
+		<param-value>trace.wap.root</param-value>
 	</context-param>
 	<context-param>
 		<param-name>log4jConfigLocation</param-name>

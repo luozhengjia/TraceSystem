@@ -41,13 +41,13 @@
 	<select id="read" resultMap="MerchantMapper" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
-		from tb_merchant
+		from tb_merchant_info
 		where ID = #{id,jdbcType=INTEGER}
 	</select>
 
 	<insert id="insert" parameterType="com.ejunhai.trace.merchant.model.Merchant"
 		useGeneratedKeys="true" keyProperty="id">
-		insert into tb_merchant (
+		insert into tb_merchant_info (
 		<include refid="Base_Column_List" />
 		)
 		values (
@@ -68,7 +68,7 @@
 	</insert>
 
 	<update id="update" parameterType="com.ejunhai.trace.merchant.model.Merchant">
-		update tb_merchant
+		update tb_merchant_info
 		<set>
 			id = #{id,jdbcType=INTEGER},
 			merchant_name = #{merchantName,jdbcType=VARCHAR},
@@ -88,18 +88,18 @@
 	</update>
 
 	<delete id="delete" parameterType="java.lang.Integer">
-		delete from tb_merchant
+		delete from tb_merchant_info
 		where ID = #{id,jdbcType=INTEGER}
 	</delete>
 
 	<select id="queryMerchantCount" resultType="java.lang.Integer">
-		select count(1) from tb_merchant
+		select count(1) from tb_merchant_info
 	</select>
 
 	<select id="queryMerchantList" resultMap="MerchantMapper">
 		select
 		<include refid="Base_Column_List" />
-		from tb_merchant
+		from tb_merchant_info
 		<where>
 			<if test="merchantName!=null and merchantName!=''">
 				and merchant_name like CONCAT('%',#{merchantName},'%')
@@ -111,7 +111,7 @@
 	<select id="getMerchantListByIds" resultMap="MerchantMapper">
 		select
 		<include refid="Base_Column_List" />
-		from tb_merchant
+		from tb_merchant_info
 		where id in (
 		<foreach collection="list" item="id" index="index" separator=",">
 			#{id}

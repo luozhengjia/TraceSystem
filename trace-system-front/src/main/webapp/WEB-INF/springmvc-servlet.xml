@@ -21,10 +21,6 @@
 	
 	<bean id="exceptionHandler" class="com.ejunhai.trace.interceptor.DefaultExceptionResolver"/> 
 	
-	<mvc:interceptors>  
-    	<bean class="com.ejunhai.trace.interceptor.AuthenticationInterceptor" />  
-    </mvc:interceptors> 
-	
     <!-- 设置编码  -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">  
         <property name="messageConverters">  

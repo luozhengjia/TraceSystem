@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.qutihuo.system.dao.SystemPrivilageMapper" >
+    <resultMap id="SystemPrivilageMapper" type="com.ejunhai.qutihuo.system.model.SystemPrivilage" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="role_id" property="roleId" jdbcType="INTEGER" />
+        <result column="action_id" property="actionId" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        role_id,
+        action_id
+    </sql>
+    
+    <insert id="batchAddSystemPrivilage" parameterType="java.util.List">  
+        insert into tb_system_privilage (<include refid="Base_Column_List" />) values
+        <foreach collection="list" item="privilage" index="index" separator="," >  
+	        (
+		        #{privilage.id,jdbcType=INTEGER},
+        		#{privilage.roleId,jdbcType=INTEGER},
+        		#{privilage.actionId,jdbcType=INTEGER}
+	        )
+	    </foreach>
+    </insert>
+    
+    <delete id="deleteByRoleId" parameterType="java.lang.Integer" >
+        delete from tb_system_privilage where role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+    
+    <select id="getSystemPrivilageListByRoleIds" resultMap="SystemPrivilageMapper">
+    	select <include refid="Base_Column_List" /> from tb_system_privilage
+    	 where role_id in (
+	        <foreach collection="list" item="roleId" index="index" separator="," >  
+		        #{roleId}
+		    </foreach>
+		    )
+    </select>
+    
+</mapper>

@@ -1,0 +1,174 @@
+<@override name="page-content">  
+	<style>
+		.category-title {
+			padding:6px 15px; 
+			border-radius:999em; 
+			background:#428bca; 
+			color:#fff;
+		}
+
+		.menu-item {
+			margin-bottom:10px;
+		}
+
+		.menu-title {
+			padding:6px 15px; 
+			background:#5bc0de; 
+			color:#fff;
+			height:32px; 
+			line-height:1.2;
+			font-size:12px;
+			min-width:50px; 
+			margin: 0 8px 10px 0;
+		}
+
+		.operation-item {
+			float: left; 
+			height:32px; 
+			margin:0 15px 10px 0; 
+			padding:6px 15px; 
+			background:#eaeaea; 
+			color:#555; 
+			line-height:1.2;
+		}
+   	</style>
+   	
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">用户管理</a></li>
+            <li><a href="/system/roleList.jhtml">角色列表</a></li>
+            <li>角色授权</li>
+        </ul>
+    </div>
+
+	<div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+            	<div class="widget with-header">
+                	<div class="widget-header">
+                    	<span class="widget-caption"><i class="glyphicon glyphicon-edit"></i>&nbsp;<b>角色授权</b></span>
+                    	
+						<div class="widget-buttons">
+							<a href="${_referUrl!'/system/roleList.jhtml'}" class="btn">&nbsp;&nbsp;<i class="typcn typcn-arrow-back"></i>&nbsp;&nbsp;</a>
+						</div>
+                    </div>
+                
+                	<div class="widget-body">
+						<form method="post" class="form-horizontal" method="POST" action="/system/saveAuthorize.jhtml">
+							<input type="hidden" name="roleId" value="${roleId}"/>
+							
+							<#list rootSystemActionList as item >
+							<div class="form-group">
+								<label class="col-lg-2 control-label "><span class="category-title">${item.actionName}</span></label>
+								<div class="menu-list col-lg-10">
+									<#if item.actionType==2>
+										<div class="menu-item clearfix">
+											<h6>
+												<label class="menu-title">
+													<input type="checkbox" name="actionIds" value="${item.id}">
+	                                                <span class="text">${item.actionName}</span>
+	                                            </label>
+	                                        </h6>
+											<div class="operation-list" >
+												<#list parentSystemActionMap[item.id?string]?if_exists as operation>
+													<div class="operation-item">
+	                                                    <label>
+	                                                        <input type="checkbox" name="actionIds" value="${operation.id}">
+	                                                        <span class="text">${operation.actionName}</span>
+	                                                    </label>
+	                                                </div>
+						                       	</#list>
+											</div>
+										</div>
+					                 <#else>
+					                     <#list parentSystemActionMap[item.id?string] as menuNode >
+											<div class="menu-item clearfix">
+												<h6>
+													<label class="menu-title">
+														<input type="checkbox" name="actionIds" value="${menuNode.id}">
+	                                                    <span class="text">${menuNode.actionName}</span>
+	                                                </label>
+	                                            </h6>
+												<div class="operation-list">
+													<#list parentSystemActionMap[menuNode.id?string]?if_exists as operation>
+														<div class="operation-item">
+	                                                        <label>
+	                                                            <input type="checkbox" name="actionIds" value="${operation.id}">
+	                                                            <span class="text">${operation.actionName}</span>
+	                                                        </label>
+		                                                </div>
+							                         </#list>
+												</div>
+											</div>
+										</#list>
+					                 </#if>
+								</div>
+							</div>
+							</#list>
+	
+							<div class="form-group">
+	                            <div class="col-lg-2 col-lg-offset-2">
+	                            	 <button type="submit" class="btn btn-success">确认</button>
+	                            </div>
+	                        </div>
+	                        
+	                    </form>
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+	<script>
+		$(document).ready(function() {
+		
+			// 自动填充表单
+			var actionIds=[<#list legalPrivilageList as item>${item.actionId}<#if item_has_next>,</#if></#list>];
+			$.each(actionIds,function(n,value) {   
+				$('.form-horizontal').find('input[name="actionIds"][value="'+ value +'"]').prop("checked",true);
+	  		});  
+			
+			// 单击菜单节点时，自动操作子节点
+			$('.menu-title').find('input[name="actionIds"]').on('click', function() {
+				var subActionIdCheckBox=$(this).parents(".menu-item").find('.operation-item input[name="actionIds"]');
+				if($(this).prop("checked")){
+					subActionIdCheckBox.prop("checked",true);
+				}else{
+					subActionIdCheckBox.removeAttr("checked");
+				}
+			});
+			
+			// 选中子节点时，自动选中菜单节点
+			$('.operation-item').find('input[name="actionIds"]').on('click', function() {
+				if($(this).prop("checked")){
+					$(this).parents(".menu-item").find('.menu-title input[name="actionIds"]').prop("checked",true);
+				}
+			});
+			
+			// 异步提交表单
+			$('.form-horizontal').formValidation().on('success.form.fv', function(e) {
+		        // Prevent form submission
+		        e.preventDefault();
+		
+		        // Get the form instance
+		        var $form = $(e.target);
+		
+		        // Get the FormValidation instance
+		        var bv = $form.data('formValidation');
+		
+		        // Use Ajax to submit form data
+		        $.post($form.attr('action'), $form.serialize(), function(result) {
+		            if(result.state.code==200){
+		        		Notify('操作成功', 'bottom-right', '500', 'success', 'fa-check', true);
+		        		setTimeout(function () {window.location = "${_referUrl!'/system/roleList.jhtml'}";}, 800);
+		        	}else{
+		        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+		        }, 'json');
+		    });
+		});
+	</script>
+</@override>
+<@extends name="/common/base.html"/>  
+

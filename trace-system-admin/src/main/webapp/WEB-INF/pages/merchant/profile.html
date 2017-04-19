@@ -1,0 +1,100 @@
+<@override name="page-content">  
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">商户管理</a></li>
+            <li>商户信息</li>
+        </ul>
+    </div>
+    
+    <div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+                <div class="well with-header with-footer">
+                	<div class="header">
+                    	<i class="glyphicon glyphicon-edit"></i>&nbsp;<b>商户信息</b>
+                    </div>
+                    
+                    <form id="html5Form" method="post" class="form-horizontal" method="POST" action="/merchant/editMerchant.jhtml">
+						<input type="hidden" name="id"/>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">商户名称</label>
+                            <div class="col-lg-5">
+                            	<p class="form-control">${merchant.merchantName}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">主营业务</label>
+                            <div class="col-lg-4">
+                            	<p class="form-control">${merchant.businessLine}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">商户等级</label>
+                            <div class="col-lg-4">
+                            	<p class="form-control">金牌商户</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">注册时间</label>
+                            <div class="col-lg-4">
+                            	<p class="form-control">${merchant.openTime}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">剩余短信数量</label>
+                            <div class="col-xs-3">
+                            	<span class="form-control">${merchant.availableSmsNum} 条</span>
+                            </div>
+                            <div class="col-xs-3">
+                            	<button type="button" class="btn btn-info">充值</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">备案号</label>
+                            <div class="col-lg-4">
+                            	<p class="form-control">${merchant.recordNumber}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系人</label>
+                            <div class="col-lg-3">
+                            	<p class="form-control">${merchant.contacts}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系电话</label>
+                            <div class="col-lg-3">
+                            	<p class="form-control">${merchant.telephone}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">公司联系地址</label>
+                            <div class="col-lg-6">
+                            	<p class="form-control">${merchant.address}</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+	<script>
+		$(document).ready(function() {
+			$('.btn').click(function() {  
+				Notify("敬请期待", 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+			}); 
+	
+		});
+	</script>
+</@override>
+<@extends name="/common/base.html"/>  

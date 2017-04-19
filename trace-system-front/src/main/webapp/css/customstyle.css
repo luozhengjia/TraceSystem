@@ -1,6 +1,6 @@
 /* Custom Styles */
 * { margin:0; padding:0; box-sizing:border-box;}
-body { background:#fff; font:500 14px/1.428571429 "microsoft yahei","simsun";}
+body { background:#fff; font:300 14px/1.428571429 "microsoft yahei","simsun";}
 h1, h2, h3, h4, h5, h6 { font-size:100%; line-height:100%;}
 ul, ul li { list-style-type:none;}
 a { color:#666;}

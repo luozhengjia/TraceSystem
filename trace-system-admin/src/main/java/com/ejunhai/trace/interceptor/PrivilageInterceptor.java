@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.interceptor;
+package com.ejunhai.trace.interceptor;
 
 import java.util.List;
 import java.util.Map;
@@ -11,14 +11,14 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ejunhai.qutihuo.utils.FrontUtil;
-import com.ejunhai.qutihuo.utils.SessionManager;
 import com.ejunhai.trace.system.model.SystemAction;
 import com.ejunhai.trace.system.model.SystemPrivilage;
 import com.ejunhai.trace.system.service.SystemActionService;
 import com.ejunhai.trace.system.service.SystemPrivilageService;
 import com.ejunhai.trace.system.utils.SystemActionUtil;
 import com.ejunhai.trace.system.utils.SystemPrivilageUtil;
+import com.ejunhai.trace.utils.FrontUtil;
+import com.ejunhai.trace.utils.SessionManager;
 
 public class PrivilageInterceptor implements HandlerInterceptor {
 

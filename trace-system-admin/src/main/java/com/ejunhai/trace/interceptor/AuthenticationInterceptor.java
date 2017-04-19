@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.interceptor;
+package com.ejunhai.trace.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ejunhai.qutihuo.utils.FrontUtil;
-import com.ejunhai.qutihuo.utils.SessionManager;
+import com.ejunhai.trace.utils.FrontUtil;
+import com.ejunhai.trace.utils.SessionManager;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
 

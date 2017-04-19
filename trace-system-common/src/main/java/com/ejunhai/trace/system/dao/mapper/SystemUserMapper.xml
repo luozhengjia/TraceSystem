@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ejunhai.qutihuo.system.dao.SystemUserMapper" >
-    <resultMap id="SystemUserMapper" type="com.ejunhai.qutihuo.system.model.SystemUser" >
+<mapper namespace="com.ejunhai.trace.system.dao.SystemUserMapper" >
+    <resultMap id="SystemUserMapper" type="com.ejunhai.trace.system.model.SystemUser" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="login_name" property="loginName" jdbcType="VARCHAR" />
         <result column="passwd" property="passwd" jdbcType="VARCHAR" />
@@ -38,7 +38,7 @@
         where ID = #{id,jdbcType=INTEGER}
     </select>
     
-    <insert id="insert" parameterType="com.ejunhai.qutihuo.system.model.SystemUser" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.ejunhai.trace.system.model.SystemUser" useGeneratedKeys="true" keyProperty="id" >
         insert into tb_system_user (<include refid="Base_Column_List" />)
         values (
         #{id,jdbcType=INTEGER},
@@ -56,7 +56,7 @@
         )
     </insert>
     
-    <update id="update" parameterType="com.ejunhai.qutihuo.system.model.SystemUser" >
+    <update id="update" parameterType="com.ejunhai.trace.system.model.SystemUser" >
         update tb_system_user
         <set>
             id = #{id,jdbcType=INTEGER},

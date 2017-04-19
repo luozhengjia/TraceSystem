@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.utils;
+package com.ejunhai.trace.utils;
 
 import javax.servlet.http.HttpServletRequest;
 

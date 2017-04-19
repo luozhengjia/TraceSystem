@@ -48,7 +48,7 @@
 	
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
-        <property name="basePackage" value="com.ejunhai.qutihuo.*.dao"/> 
+        <property name="basePackage" value="com.ejunhai.trace.*.dao"/> 
     </bean>
     
 </beans>

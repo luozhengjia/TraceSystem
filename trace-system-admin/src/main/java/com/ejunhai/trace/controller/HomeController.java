@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.controller;
+package com.ejunhai.trace.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,9 +11,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ejunhai.qutihuo.utils.FrontUtil;
 import com.ejunhai.trace.common.errors.ErrorType;
 import com.ejunhai.trace.common.utils.PropertyConfigurer;
+import com.ejunhai.trace.utils.FrontUtil;
 import com.qiniu.api.auth.digest.Mac;
 import com.qiniu.api.rs.PutPolicy;
 

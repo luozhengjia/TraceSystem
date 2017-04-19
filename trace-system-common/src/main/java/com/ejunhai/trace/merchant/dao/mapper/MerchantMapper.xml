@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ejunhai.qutihuo.merchant.dao.MerchantMapper">
-	<resultMap id="MerchantMapper" type="com.ejunhai.qutihuo.merchant.model.Merchant">
+<mapper namespace="com.ejunhai.trace.merchant.dao.MerchantMapper">
+	<resultMap id="MerchantMapper" type="com.ejunhai.trace.merchant.model.Merchant">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="merchant_name" property="merchantName"
 			jdbcType="VARCHAR" />
@@ -45,7 +45,7 @@
 		where ID = #{id,jdbcType=INTEGER}
 	</select>
 
-	<insert id="insert" parameterType="com.ejunhai.qutihuo.merchant.model.Merchant"
+	<insert id="insert" parameterType="com.ejunhai.trace.merchant.model.Merchant"
 		useGeneratedKeys="true" keyProperty="id">
 		insert into tb_merchant (
 		<include refid="Base_Column_List" />
@@ -67,7 +67,7 @@
 		)
 	</insert>
 
-	<update id="update" parameterType="com.ejunhai.qutihuo.merchant.model.Merchant">
+	<update id="update" parameterType="com.ejunhai.trace.merchant.model.Merchant">
 		update tb_merchant
 		<set>
 			id = #{id,jdbcType=INTEGER},

@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.interceptor;
+package com.ejunhai.trace.interceptor;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,9 +10,9 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ejunhai.qutihuo.utils.FrontUtil;
 import com.ejunhai.trace.common.errors.BusinessException;
 import com.ejunhai.trace.common.errors.ErrorType;
+import com.ejunhai.trace.utils.FrontUtil;
 
 /**
  * 系统默认异常处理类

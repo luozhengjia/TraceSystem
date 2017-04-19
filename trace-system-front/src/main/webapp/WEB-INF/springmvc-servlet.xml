@@ -19,10 +19,10 @@
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	
-	<bean id="exceptionHandler" class="com.ejunhai.qutihuo.interceptor.DefaultExceptionResolver"/> 
+	<bean id="exceptionHandler" class="com.ejunhai.trace.interceptor.DefaultExceptionResolver"/> 
 	
 	<mvc:interceptors>  
-    	<bean class="com.ejunhai.qutihuo.interceptor.AuthenticationInterceptor" />  
+    	<bean class="com.ejunhai.trace.interceptor.AuthenticationInterceptor" />  
     </mvc:interceptors> 
 	
     <!-- 设置编码  -->
@@ -65,7 +65,7 @@
         <property name="location" value="classpath:staticClass.properties" />
     </bean>
     
-    <bean id="freemarkerStaticModels" class="com.ejunhai.qutihuo.common.freemarker.FreemarkerStaticModels" factory-method="getInstance">
+    <bean id="freemarkerStaticModels" class="com.ejunhai.trace.common.freemarker.FreemarkerStaticModels" factory-method="getInstance">
         <property name="staticModels" ref="freemarkerStatic"/>
     </bean>
 	

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ejunhai.qutihuo.system.dao.SystemOperateLogMapper" >
-    <resultMap id="SystemOperateLogMapper" type="com.ejunhai.qutihuo.system.model.SystemOperateLog" >
+<mapper namespace="com.ejunhai.trace.system.dao.SystemOperateLogMapper" >
+    <resultMap id="SystemOperateLogMapper" type="com.ejunhai.trace.system.model.SystemOperateLog" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="user_id" property="userId" jdbcType="INTEGER" />
         <result column="oper_type" property="operType" jdbcType="TINYINT" />
@@ -26,7 +26,7 @@
         where ID = #{id,jdbcType=INTEGER}
     </select>
     
-    <insert id="insert" parameterType="com.ejunhai.qutihuo.system.model.SystemOperateLog" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.ejunhai.trace.system.model.SystemOperateLog" useGeneratedKeys="true" keyProperty="id" >
         insert into tb_system_operate_log (<include refid="Base_Column_List" />)
         values (
         #{id,jdbcType=INTEGER},
@@ -38,7 +38,7 @@
         )
     </insert>
     
-    <update id="update" parameterType="com.ejunhai.qutihuo.system.model.SystemOperateLog" >
+    <update id="update" parameterType="com.ejunhai.trace.system.model.SystemOperateLog" >
         update tb_system_operate_log
         <set>
             id = #{id,jdbcType=INTEGER},

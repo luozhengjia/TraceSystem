@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.controller;
+package com.ejunhai.trace.controller;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -12,7 +12,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ejunhai.qutihuo.utils.SessionManager;
 import com.ejunhai.trace.common.base.BaseController;
 import com.ejunhai.trace.common.base.Pagination;
 import com.ejunhai.trace.common.errors.JunhaiAssert;
@@ -28,6 +27,7 @@ import com.ejunhai.trace.system.model.SystemUser;
 import com.ejunhai.trace.system.service.SystemRoleService;
 import com.ejunhai.trace.system.service.SystemUserService;
 import com.ejunhai.trace.system.utils.SystemRoleUtil;
+import com.ejunhai.trace.utils.SessionManager;
 
 @Controller
 @RequestMapping("merchant")

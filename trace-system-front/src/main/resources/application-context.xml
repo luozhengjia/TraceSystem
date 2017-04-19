@@ -16,7 +16,7 @@
 	<context:component-scan base-package="com.ejunhai" />
 	
 	<!-- 系统属性配置器 -->
-	<bean id="propertyConfigurer" class="com.ejunhai.qutihuo.common.utils.PropertyConfigurer">
+	<bean id="propertyConfigurer" class="com.ejunhai.trace.common.utils.PropertyConfigurer">
         <property name="locations">
 			<list>
 				<value>classpath:environment/application-${env}.properties</value>

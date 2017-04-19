@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ejunhai.qutihuo.system.dao.SystemRoleMapper" >
-    <resultMap id="SystemRoleMapper" type="com.ejunhai.qutihuo.system.model.SystemRole" >
+<mapper namespace="com.ejunhai.trace.system.dao.SystemRoleMapper" >
+    <resultMap id="SystemRoleMapper" type="com.ejunhai.trace.system.model.SystemRole" >
         <id column="id" property="id" jdbcType="INTEGER" />
         <result column="role_type" property="roleType" jdbcType="TINYINT" />
         <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
@@ -24,7 +24,7 @@
         where ID = #{id,jdbcType=INTEGER}
     </select>
     
-    <insert id="insert" parameterType="com.ejunhai.qutihuo.system.model.SystemRole" useGeneratedKeys="true" keyProperty="id" >
+    <insert id="insert" parameterType="com.ejunhai.trace.system.model.SystemRole" useGeneratedKeys="true" keyProperty="id" >
         insert into tb_system_role (<include refid="Base_Column_List" />)
         values (
         #{id,jdbcType=INTEGER},
@@ -35,7 +35,7 @@
         )
     </insert>
     
-    <update id="update" parameterType="com.ejunhai.qutihuo.system.model.SystemRole" >
+    <update id="update" parameterType="com.ejunhai.trace.system.model.SystemRole" >
         update tb_system_role
         <set>
             id = #{id,jdbcType=INTEGER},

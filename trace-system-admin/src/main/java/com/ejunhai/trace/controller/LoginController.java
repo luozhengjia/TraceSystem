@@ -1,4 +1,4 @@
-package com.ejunhai.qutihuo.controller;
+package com.ejunhai.trace.controller;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ejunhai.qutihuo.utils.FrontUtil;
-import com.ejunhai.qutihuo.utils.SessionManager;
 import com.ejunhai.trace.common.base.BaseController;
 import com.ejunhai.trace.common.errors.ErrorType;
 import com.ejunhai.trace.common.errors.JunhaiAssert;
 import com.ejunhai.trace.system.enums.UserState;
 import com.ejunhai.trace.system.model.SystemUser;
 import com.ejunhai.trace.system.service.SystemUserService;
+import com.ejunhai.trace.utils.FrontUtil;
+import com.ejunhai.trace.utils.SessionManager;
 
 @Controller
 @RequestMapping("")

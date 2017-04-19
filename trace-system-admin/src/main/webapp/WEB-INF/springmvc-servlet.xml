@@ -19,12 +19,12 @@
 
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	
-	<bean id="exceptionHandler" class="com.ejunhai.qutihuo.interceptor.DefaultExceptionResolver"/>  
+	<bean id="exceptionHandler" class="com.ejunhai.trace.interceptor.DefaultExceptionResolver"/>  
 	
 	<mvc:interceptors>  
-    	<bean class="com.ejunhai.qutihuo.interceptor.AuthenticationInterceptor" />  
-    	<bean class="com.ejunhai.qutihuo.interceptor.PrivilageInterceptor" />  
-    	<bean class="com.ejunhai.qutihuo.interceptor.MenuBulidInterceptor" />  
+    	<bean class="com.ejunhai.trace.interceptor.AuthenticationInterceptor" />  
+    	<bean class="com.ejunhai.trace.interceptor.PrivilageInterceptor" />  
+    	<bean class="com.ejunhai.trace.interceptor.MenuBulidInterceptor" />  
     </mvc:interceptors>
     
     <!-- 设置编码  -->
@@ -43,10 +43,10 @@
     </bean>  
     
     <!-- 类似"类"的继承关系,并不限继承层次 -->
-    <bean id="blockDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.BlockDirective"/>
-	<bean id="extendsDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.ExtendsDirective"/>
-	<bean id="overrideDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.OverrideDirective"/>
-	<bean id="superDirective" class="com.ejunhai.qutihuo.common.freemarker.directive.SuperDirective"/>
+    <bean id="blockDirective" class="com.ejunhai.trace.common.freemarker.directive.BlockDirective"/>
+	<bean id="extendsDirective" class="com.ejunhai.trace.common.freemarker.directive.ExtendsDirective"/>
+	<bean id="overrideDirective" class="com.ejunhai.trace.common.freemarker.directive.OverrideDirective"/>
+	<bean id="superDirective" class="com.ejunhai.trace.common.freemarker.directive.SuperDirective"/>
 	
 	<!-- 模板配置 -->
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
@@ -78,7 +78,7 @@
         <property name="location" value="classpath:staticClass.properties" />
     </bean>
     
-    <bean id="freemarkerStaticModels" class="com.ejunhai.qutihuo.common.freemarker.FreemarkerStaticModels" factory-method="getInstance">
+    <bean id="freemarkerStaticModels" class="com.ejunhai.trace.common.freemarker.FreemarkerStaticModels" factory-method="getInstance">
         <property name="staticModels" ref="freemarkerStatic"/>
     </bean>
 	

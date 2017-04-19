@@ -69,7 +69,7 @@
 
 	<servlet>
 		<servlet-name>ImageValidate</servlet-name>
-		<servlet-class>com.ejunhai.qutihuo.utils.ImageValidate</servlet-class>
+		<servlet-class>com.ejunhai.trace.utils.ImageValidate</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ImageValidate</servlet-name>

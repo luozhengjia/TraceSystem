@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.utils.PropertyConfigurer;
-import com.ejunhai.qutihuo.errors.ErrorType;
 import com.ejunhai.qutihuo.utils.FrontUtil;
+import com.ejunhai.trace.common.errors.ErrorType;
 import com.qiniu.api.auth.digest.Mac;
 import com.qiniu.api.rs.PutPolicy;
 

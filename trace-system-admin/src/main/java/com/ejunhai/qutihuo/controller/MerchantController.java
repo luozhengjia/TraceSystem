@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
-import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.merchant.dto.MerchantDto;
 import com.ejunhai.qutihuo.merchant.model.Merchant;
 import com.ejunhai.qutihuo.merchant.service.MerchantService;
@@ -28,6 +27,7 @@ import com.ejunhai.qutihuo.system.service.SystemRoleService;
 import com.ejunhai.qutihuo.system.service.SystemUserService;
 import com.ejunhai.qutihuo.system.utils.SystemRoleUtil;
 import com.ejunhai.qutihuo.utils.SessionManager;
+import com.ejunhai.trace.common.errors.JunhaiAssert;
 
 @Controller
 @RequestMapping("merchant")

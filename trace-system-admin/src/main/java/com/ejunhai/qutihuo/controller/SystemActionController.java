@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
 import com.ejunhai.qutihuo.common.base.Pagination;
-import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.system.dto.SystemActionDto;
 import com.ejunhai.qutihuo.system.model.SystemAction;
 import com.ejunhai.qutihuo.system.service.SystemActionService;
 import com.ejunhai.qutihuo.system.utils.SystemActionUtil;
+import com.ejunhai.trace.common.errors.JunhaiAssert;
 
 @Controller
 @RequestMapping("system")

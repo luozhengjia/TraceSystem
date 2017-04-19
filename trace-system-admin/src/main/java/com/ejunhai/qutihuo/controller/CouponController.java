@@ -32,8 +32,8 @@ import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 import com.ejunhai.qutihuo.coupon.service.CouponService;
 import com.ejunhai.qutihuo.coupon.utils.CouponUtil;
-import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.utils.SessionManager;
+import com.ejunhai.trace.common.errors.JunhaiAssert;
 
 @Controller
 @RequestMapping("coupon")

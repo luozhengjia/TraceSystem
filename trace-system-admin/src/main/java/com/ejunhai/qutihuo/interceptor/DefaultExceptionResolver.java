@@ -10,9 +10,9 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ejunhai.qutihuo.errors.BusinessException;
-import com.ejunhai.qutihuo.errors.ErrorType;
 import com.ejunhai.qutihuo.utils.FrontUtil;
+import com.ejunhai.trace.common.errors.BusinessException;
+import com.ejunhai.trace.common.errors.ErrorType;
 
 /**
  * 系统默认异常处理类

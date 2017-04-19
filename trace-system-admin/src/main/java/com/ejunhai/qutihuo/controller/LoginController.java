@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ejunhai.qutihuo.common.base.BaseController;
-import com.ejunhai.qutihuo.errors.ErrorType;
-import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.system.enums.UserState;
 import com.ejunhai.qutihuo.system.model.SystemUser;
 import com.ejunhai.qutihuo.system.service.SystemUserService;
 import com.ejunhai.qutihuo.utils.FrontUtil;
 import com.ejunhai.qutihuo.utils.SessionManager;
+import com.ejunhai.trace.common.errors.ErrorType;
+import com.ejunhai.trace.common.errors.JunhaiAssert;
 
 @Controller
 @RequestMapping("")

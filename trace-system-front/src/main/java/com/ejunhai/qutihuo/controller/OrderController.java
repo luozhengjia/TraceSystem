@@ -19,11 +19,11 @@ import com.ejunhai.qutihuo.coupon.model.Coupon;
 import com.ejunhai.qutihuo.coupon.model.CouponSchema;
 import com.ejunhai.qutihuo.coupon.service.CouponSchemaService;
 import com.ejunhai.qutihuo.coupon.service.CouponService;
-import com.ejunhai.qutihuo.errors.JunhaiAssert;
 import com.ejunhai.qutihuo.order.enums.OrderSource;
 import com.ejunhai.qutihuo.order.model.OrderMain;
 import com.ejunhai.qutihuo.order.service.OrderMainService;
 import com.ejunhai.qutihuo.utils.SessionManager;
+import com.ejunhai.trace.common.errors.JunhaiAssert;
 
 /**
  * order Controller

@@ -6,16 +6,16 @@ import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
 
-import com.ejunhai.trace.merchant.model.Merchant;
+import com.ejunhai.trace.merchant.model.MerchantInfo;
 
 public class MerchantUtil {
-    public static Map<String, Merchant> getMerchantMap(List<Merchant> merchantList) {
-        Map<String, Merchant> merchantMap = new HashMap<String, Merchant>();
+    public static Map<String, MerchantInfo> getMerchantMap(List<MerchantInfo> merchantList) {
+        Map<String, MerchantInfo> merchantMap = new HashMap<String, MerchantInfo>();
         if (CollectionUtils.isEmpty(merchantList)) {
             return merchantMap;
         }
 
-        for (Merchant merchant : merchantList) {
+        for (MerchantInfo merchant : merchantList) {
             merchantMap.put(String.valueOf(merchant.getId()), merchant);
         }
 

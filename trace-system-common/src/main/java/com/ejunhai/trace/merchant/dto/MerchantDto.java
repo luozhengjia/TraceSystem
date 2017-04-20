@@ -1,12 +1,9 @@
 package com.ejunhai.trace.merchant.dto;
 
-import com.ejunhai.trace.merchant.model.Merchant;
+import com.ejunhai.trace.merchant.model.MerchantInfo;
 
-public class MerchantDto extends Merchant {
+public class MerchantDto extends MerchantInfo {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     /**

@@ -16,7 +16,7 @@ import com.ejunhai.trace.common.base.BaseController;
 import com.ejunhai.trace.common.base.Pagination;
 import com.ejunhai.trace.common.errors.JunhaiAssert;
 import com.ejunhai.trace.merchant.dto.MerchantDto;
-import com.ejunhai.trace.merchant.model.Merchant;
+import com.ejunhai.trace.merchant.model.MerchantInfo;
 import com.ejunhai.trace.merchant.service.MerchantService;
 import com.ejunhai.trace.system.dto.SystemRoleDto;
 import com.ejunhai.trace.system.enums.RoleType;
@@ -47,7 +47,7 @@ public class MerchantController extends BaseController {
         Integer iCount = merchantService.queryMerchantCount(merchantDto);
         Pagination pagination = new Pagination(merchantDto.getPageNo(), iCount);
 
-        List<Merchant> merchantList = new ArrayList<Merchant>();
+        List<MerchantInfo> merchantList = new ArrayList<MerchantInfo>();
         if (iCount > 0) {
             merchantDto.setOffset(pagination.getOffset());
             merchantDto.setPageSize(pagination.getPageSize());
@@ -61,7 +61,7 @@ public class MerchantController extends BaseController {
     }
 
     @RequestMapping("/merchantDetail")
-    public String merchantDetail(HttpServletRequest request, Merchant merchant, ModelMap modelMap) {
+    public String merchantDetail(HttpServletRequest request, MerchantInfo merchant, ModelMap modelMap) {
         if (merchant.getId() != null) {
             merchant = merchantService.read(merchant.getId());
         }
@@ -90,7 +90,7 @@ public class MerchantController extends BaseController {
         JunhaiAssert.notBlank(merchantDto.getTelephone(), "手机号码不能为空");
 
         // 保存商户信息
-        Merchant merchant = new Merchant();
+        MerchantInfo merchant = new MerchantInfo();
         merchant.setMerchantName(merchantDto.getMerchantName());
         merchant.setBusinessLine(merchantDto.getBusinessLine());
         merchant.setRecordNumber(merchantDto.getRecordNumber());
@@ -124,7 +124,7 @@ public class MerchantController extends BaseController {
     public String editMerchant(HttpServletRequest request, MerchantDto merchantDto) {
         JunhaiAssert.notNull(merchantDto.getId(), "商户ID不能为空");
         JunhaiAssert.notBlank(merchantDto.getMerchantName(), "商户名称不能为空");
-        Merchant merchant = merchantService.read(merchantDto.getId());
+        MerchantInfo merchant = merchantService.read(merchantDto.getId());
         JunhaiAssert.notNull(merchant, "商户ID不合法");
 
         // 更新商户信息
@@ -143,7 +143,7 @@ public class MerchantController extends BaseController {
         Integer merchantId = SessionManager.get(request).getMerchantId();
         JunhaiAssert.notNull(merchantId, "商户ID不能为空");
 
-        Merchant merchant = merchantService.read(merchantId);
+        MerchantInfo merchant = merchantService.read(merchantId);
         modelMap.put("merchant", merchant);
         return "merchant/profile";
     }

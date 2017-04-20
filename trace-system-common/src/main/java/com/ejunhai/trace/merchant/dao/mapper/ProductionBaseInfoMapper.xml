@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ejunhai.trace.product.dao.ProductionBaseInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ejunhai.trace.product.model.ProductionBaseInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="base_name" property="baseName" jdbcType="VARCHAR" />
+    <result column="base_type" property="baseType" jdbcType="VARCHAR" />
+    <result column="base_area" property="baseArea" jdbcType="VARCHAR" />
+    <result column="base_address" property="baseAddress" jdbcType="VARCHAR" />
+    <result column="base_env_info" property="baseEnvInfo" jdbcType="VARCHAR" />
+    <result column="base_resource_info" property="baseResourceInfo" jdbcType="VARCHAR" />
+    <result column="base_bulid_time" property="baseBulidTime" jdbcType="DATE" />
+    <result column="pic_urls" property="picUrls" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, merchant_id, base_name, base_type, base_area, base_address, base_env_info, base_resource_info, 
+    base_bulid_time, pic_urls, create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ejunhai.trace.product.model.ProductionBaseInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_production_base_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+      limit ${limitStart} , ${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_production_base_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_production_base_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ejunhai.trace.product.model.ProductionBaseInfoExample" >
+    delete from tb_production_base_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductionBaseInfo" >
+    insert into tb_production_base_info (id, merchant_id, base_name, 
+      base_type, base_area, base_address, 
+      base_env_info, base_resource_info, base_bulid_time, 
+      pic_urls, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{baseName,jdbcType=VARCHAR}, 
+      #{baseType,jdbcType=VARCHAR}, #{baseArea,jdbcType=VARCHAR}, #{baseAddress,jdbcType=VARCHAR}, 
+      #{baseEnvInfo,jdbcType=VARCHAR}, #{baseResourceInfo,jdbcType=VARCHAR}, #{baseBulidTime,jdbcType=DATE}, 
+      #{picUrls,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ejunhai.trace.product.model.ProductionBaseInfo" >
+    insert into tb_production_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="baseName != null" >
+        base_name,
+      </if>
+      <if test="baseType != null" >
+        base_type,
+      </if>
+      <if test="baseArea != null" >
+        base_area,
+      </if>
+      <if test="baseAddress != null" >
+        base_address,
+      </if>
+      <if test="baseEnvInfo != null" >
+        base_env_info,
+      </if>
+      <if test="baseResourceInfo != null" >
+        base_resource_info,
+      </if>
+      <if test="baseBulidTime != null" >
+        base_bulid_time,
+      </if>
+      <if test="picUrls != null" >
+        pic_urls,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="baseName != null" >
+        #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseType != null" >
+        #{baseType,jdbcType=VARCHAR},
+      </if>
+      <if test="baseArea != null" >
+        #{baseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAddress != null" >
+        #{baseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="baseEnvInfo != null" >
+        #{baseEnvInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="baseResourceInfo != null" >
+        #{baseResourceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="baseBulidTime != null" >
+        #{baseBulidTime,jdbcType=DATE},
+      </if>
+      <if test="picUrls != null" >
+        #{picUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ejunhai.trace.product.model.ProductionBaseInfoExample" resultType="java.lang.Integer" >
+    select count(*) from tb_production_base_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_production_base_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="record.baseName != null" >
+        base_name = #{record.baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseType != null" >
+        base_type = #{record.baseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseArea != null" >
+        base_area = #{record.baseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseAddress != null" >
+        base_address = #{record.baseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseEnvInfo != null" >
+        base_env_info = #{record.baseEnvInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseResourceInfo != null" >
+        base_resource_info = #{record.baseResourceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baseBulidTime != null" >
+        base_bulid_time = #{record.baseBulidTime,jdbcType=DATE},
+      </if>
+      <if test="record.picUrls != null" >
+        pic_urls = #{record.picUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_production_base_info
+    set id = #{record.id,jdbcType=INTEGER},
+      merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      base_name = #{record.baseName,jdbcType=VARCHAR},
+      base_type = #{record.baseType,jdbcType=VARCHAR},
+      base_area = #{record.baseArea,jdbcType=VARCHAR},
+      base_address = #{record.baseAddress,jdbcType=VARCHAR},
+      base_env_info = #{record.baseEnvInfo,jdbcType=VARCHAR},
+      base_resource_info = #{record.baseResourceInfo,jdbcType=VARCHAR},
+      base_bulid_time = #{record.baseBulidTime,jdbcType=DATE},
+      pic_urls = #{record.picUrls,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ejunhai.trace.product.model.ProductionBaseInfo" >
+    update tb_production_base_info
+    <set >
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="baseName != null" >
+        base_name = #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseType != null" >
+        base_type = #{baseType,jdbcType=VARCHAR},
+      </if>
+      <if test="baseArea != null" >
+        base_area = #{baseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="baseAddress != null" >
+        base_address = #{baseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="baseEnvInfo != null" >
+        base_env_info = #{baseEnvInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="baseResourceInfo != null" >
+        base_resource_info = #{baseResourceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="baseBulidTime != null" >
+        base_bulid_time = #{baseBulidTime,jdbcType=DATE},
+      </if>
+      <if test="picUrls != null" >
+        pic_urls = #{picUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ejunhai.trace.product.model.ProductionBaseInfo" >
+    update tb_production_base_info
+    set merchant_id = #{merchantId,jdbcType=INTEGER},
+      base_name = #{baseName,jdbcType=VARCHAR},
+      base_type = #{baseType,jdbcType=VARCHAR},
+      base_area = #{baseArea,jdbcType=VARCHAR},
+      base_address = #{baseAddress,jdbcType=VARCHAR},
+      base_env_info = #{baseEnvInfo,jdbcType=VARCHAR},
+      base_resource_info = #{baseResourceInfo,jdbcType=VARCHAR},
+      base_bulid_time = #{baseBulidTime,jdbcType=DATE},
+      pic_urls = #{picUrls,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

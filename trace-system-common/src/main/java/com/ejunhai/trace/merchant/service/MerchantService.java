@@ -3,7 +3,7 @@ package com.ejunhai.trace.merchant.service;
 import java.util.List;
 
 import com.ejunhai.trace.merchant.dto.MerchantDto;
-import com.ejunhai.trace.merchant.model.Merchant;
+import com.ejunhai.trace.merchant.model.MerchantInfo;
 
 /**
  * 
@@ -22,21 +22,21 @@ public interface MerchantService {
      * @param id
      * @return
      */
-    public Merchant read(Integer id);
+    public MerchantInfo read(Integer id);
 
     /**
      * 新增Merchant
      * 
      * @param merchant
      */
-    public void insert(Merchant merchant);
+    public void insert(MerchantInfo merchant);
 
     /**
      * 更新Merchant
      * 
      * @param merchant
      */
-    public void update(Merchant merchant);
+    public void update(MerchantInfo merchant);
 
     /**
      * 删除Merchant
@@ -59,7 +59,7 @@ public interface MerchantService {
      * @param merchant
      * @return
      */
-    public List<Merchant> queryMerchantList(MerchantDto merchantDto);
+    public List<MerchantInfo> queryMerchantList(MerchantDto merchantDto);
 
     /**
      * 根据ID获取商户列表
@@ -67,6 +67,6 @@ public interface MerchantService {
      * @param merchantIds
      * @return
      */
-    public List<Merchant> getMerchantListByIds(List<Integer> merchantIds);
+    public List<MerchantInfo> getMerchantListByIds(List<Integer> merchantIds);
 
 }

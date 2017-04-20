@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.ejunhai.trace.merchant.dao.MerchantMapper;
+import com.ejunhai.trace.merchant.dao.MerchantInfoMapper;
 import com.ejunhai.trace.merchant.dto.MerchantDto;
-import com.ejunhai.trace.merchant.model.Merchant;
+import com.ejunhai.trace.merchant.model.MerchantInfo;
 import com.ejunhai.trace.merchant.service.MerchantService;
 
 /**
@@ -24,22 +24,22 @@ import com.ejunhai.trace.merchant.service.MerchantService;
 public class MerchantServiceImpl implements MerchantService {
 
     @Resource
-    private MerchantMapper merchantMapper;
+    private MerchantInfoMapper merchantMapper;
 
     @Override
-    public Merchant read(Integer id) {
+    public MerchantInfo read(Integer id) {
         return merchantMapper.read(id);
     }
 
     @Override
-    public void insert(Merchant merchant) {
+    public void insert(MerchantInfo merchant) {
         merchant.setCreateTime(new Timestamp(System.currentTimeMillis()));
         merchant.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         merchantMapper.insert(merchant);
     }
 
     @Override
-    public void update(Merchant merchant) {
+    public void update(MerchantInfo merchant) {
         merchant.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         merchantMapper.update(merchant);
     }
@@ -55,12 +55,12 @@ public class MerchantServiceImpl implements MerchantService {
     }
 
     @Override
-    public List<Merchant> queryMerchantList(MerchantDto merchantDto) {
+    public List<MerchantInfo> queryMerchantList(MerchantDto merchantDto) {
         return merchantMapper.queryMerchantList(merchantDto);
     }
 
     @Override
-    public List<Merchant> getMerchantListByIds(List<Integer> merchantIds) {
+    public List<MerchantInfo> getMerchantListByIds(List<Integer> merchantIds) {
         return merchantMapper.getMerchantListByIds(merchantIds);
     }
 

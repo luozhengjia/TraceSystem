@@ -21,7 +21,7 @@ import com.ejunhai.trace.common.base.BaseController;
 import com.ejunhai.trace.common.base.Pagination;
 import com.ejunhai.trace.common.constant.CommonConstant;
 import com.ejunhai.trace.common.errors.JunhaiAssert;
-import com.ejunhai.trace.merchant.model.Merchant;
+import com.ejunhai.trace.merchant.model.MerchantInfo;
 import com.ejunhai.trace.merchant.service.MerchantService;
 import com.ejunhai.trace.merchant.utils.MerchantUtil;
 import com.ejunhai.trace.system.dto.SystemPrivilageDto;
@@ -235,7 +235,7 @@ public class SystemUserController extends BaseController {
 
             // 根据商户IDS获取商户列表
             List<Integer> merchantIds = SystemRoleUtil.getMerchantIdList(systemRoleList);
-            List<Merchant> merchantList = merchantService.getMerchantListByIds(merchantIds);
+            List<MerchantInfo> merchantList = merchantService.getMerchantListByIds(merchantIds);
             modelMap.put("merchantMap", MerchantUtil.getMerchantMap(merchantList));
         }
         modelMap.put("systemRoleList", systemRoleList);

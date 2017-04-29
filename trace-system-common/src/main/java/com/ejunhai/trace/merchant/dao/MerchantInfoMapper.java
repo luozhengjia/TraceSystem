@@ -59,4 +59,6 @@ public interface MerchantInfoMapper {
      * @return
      */
     public List<MerchantInfo> getMerchantListByIds(List<Integer> merchantIds);
+
+    public List<MerchantInfo> getNoSmaMerchantList();
 }

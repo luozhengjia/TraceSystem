@@ -1,6 +1,5 @@
 package com.ejunhai.trace.controller;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +17,8 @@ import com.ejunhai.trace.common.errors.JunhaiAssert;
 import com.ejunhai.trace.merchant.dto.MerchantDto;
 import com.ejunhai.trace.merchant.model.MerchantInfo;
 import com.ejunhai.trace.merchant.service.MerchantService;
-import com.ejunhai.trace.system.dto.SystemRoleDto;
-import com.ejunhai.trace.system.enums.RoleType;
-import com.ejunhai.trace.system.enums.UserState;
-import com.ejunhai.trace.system.enums.UserType;
-import com.ejunhai.trace.system.model.SystemRole;
-import com.ejunhai.trace.system.model.SystemUser;
 import com.ejunhai.trace.system.service.SystemRoleService;
 import com.ejunhai.trace.system.service.SystemUserService;
-import com.ejunhai.trace.system.utils.SystemRoleUtil;
 import com.ejunhai.trace.utils.SessionManager;
 
 @Controller
@@ -66,15 +58,6 @@ public class MerchantController extends BaseController {
             merchant = merchantService.read(merchant.getId());
         }
 
-        // 获取可以分配给用户的角色列表
-        SystemRoleDto systemRoleDto = new SystemRoleDto();
-        systemRoleDto.setRoleType(RoleType.sa.getValue());
-        systemRoleDto.setOffset(0);
-        systemRoleDto.setPageSize(Integer.MAX_VALUE);
-        List<SystemRole> systemRoleList = systemRoleService.querySystemRoleList(systemRoleDto);
-        modelMap.put("systemRoleList", systemRoleList);
-        modelMap.put("systemRoleMap", SystemRoleUtil.getSystemRoleMap(systemRoleList));
-
         // 新增或编辑商户信息
         modelMap.put("merchant", merchant);
         return merchant.getId() == null ? "merchant/merchantAdd" : "merchant/merchantEdit";
@@ -84,38 +67,18 @@ public class MerchantController extends BaseController {
     @ResponseBody
     public String addMerchant(HttpServletRequest request, MerchantDto merchantDto) {
         JunhaiAssert.notBlank(merchantDto.getMerchantName(), "商户名称不能为空");
-        JunhaiAssert.notBlank(merchantDto.getLoginName(), "登陆账号不能为空");
-        JunhaiAssert.notBlank(merchantDto.getPasswd(), "登陆密码不能为空");
-        JunhaiAssert.notBlank(merchantDto.getNickname(), "用户昵称不能为空不能为空");
-        JunhaiAssert.notBlank(merchantDto.getTelephone(), "手机号码不能为空");
 
-        // 保存商户信息
         MerchantInfo merchant = new MerchantInfo();
         merchant.setMerchantName(merchantDto.getMerchantName());
         merchant.setBusinessLine(merchantDto.getBusinessLine());
+        merchant.setPicUrls(merchantDto.getPicUrls());
+        merchant.setOrganization(merchantDto.getOrganization());
+        merchant.setBusinessLicense(merchantDto.getBusinessLicense());
         merchant.setRecordNumber(merchantDto.getRecordNumber());
         merchant.setContacts(merchantDto.getContacts());
         merchant.setTelephone(merchantDto.getTelephone());
         merchant.setAddress(merchantDto.getAddress());
-        merchant.setAvailableSmsNum(50);
-        merchant.setMerchantLevel(1);
-        merchant.setExpireTime(new Timestamp(System.currentTimeMillis() + 365L * 24 * 60 * 60 * 1000));
-        merchant.setOpenTime(new Timestamp(System.currentTimeMillis()));
         merchantService.insert(merchant);
-
-        // 保存用户账号信息
-        SystemUser systemUser = new SystemUser();
-        systemUser.setUserType(UserType.sma.getValue());
-        systemUser.setLoginName(merchantDto.getLoginName());
-        systemUser.setNickname(merchantDto.getNickname());
-        systemUser.setPasswd(merchantDto.getPasswd());
-        systemUser.setPictureUrl("/assets/img/avatars/Osvaldus-Valutis.jpg");
-        systemUser.setRoleIds(merchantDto.getRoleIds());
-        systemUser.setMerchantId(merchant.getId());
-        systemUser.setState(UserState.normal.getValue());
-        systemUser.setTelephone(merchantDto.getMobile());
-        systemUserService.insert(systemUser);
-
         return jsonSuccess();
     }
 
@@ -130,11 +93,22 @@ public class MerchantController extends BaseController {
         // 更新商户信息
         merchant.setMerchantName(merchantDto.getMerchantName());
         merchant.setBusinessLine(merchantDto.getBusinessLine());
+        merchant.setPicUrls(merchantDto.getPicUrls());
+        merchant.setOrganization(merchantDto.getOrganization());
+        merchant.setBusinessLicense(merchantDto.getBusinessLicense());
         merchant.setRecordNumber(merchantDto.getRecordNumber());
         merchant.setContacts(merchantDto.getContacts());
         merchant.setTelephone(merchantDto.getTelephone());
         merchant.setAddress(merchantDto.getAddress());
         merchantService.update(merchant);
+        return jsonSuccess();
+    }
+
+    @RequestMapping("/deleteMerchant")
+    @ResponseBody
+    public String deleteMerchant(HttpServletRequest request, MerchantDto merchantDto) {
+        JunhaiAssert.notNull(merchantDto.getId(), "id不能为空");
+        merchantService.delete(merchantDto.getId());
         return jsonSuccess();
     }
 

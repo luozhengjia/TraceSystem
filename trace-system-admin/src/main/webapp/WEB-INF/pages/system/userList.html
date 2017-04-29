@@ -33,9 +33,9 @@
                                 <th>ID</th>
                                 <th>登陆账号</th>
                                 <th>用户昵称</th>
-                                <th>手机号码</th>
                                 <th>用户类型</th>
-                                <th>用户角色</th>
+                                <th style="text-align:center">商户名称</th>
+                                <th>手机号码</th>
                                 <th>用户状态</th>
                                 <th>创建时间</th>
                                 <th>操作</th>
@@ -44,12 +44,12 @@
                         <tbody>
                             <#list systemUserList as item >
                             <tr data-formData='{"id":${item.id},"loginName":"${item.loginName}"}'>
-                                <td>${item.id}</td>
+                                <td>${item.id!''}</td>
                                 <td>${item.loginName}</td>
                                 <td>${item.nickname}</td>
-                                <td>${item.telephone}</td>
                                 <td>${UserType.get(item.userType).getTitle()}</td>
-                                <td><#list item.roleIds?split(",") as roleId>${systemRoleMap[roleId].roleName}<#if roleId_has_next>,</#if></#list></td>
+                                <td style="text-align:center"><#if item.merchantId??>${merchantMap[item.merchantId?string].merchantName}<#else>-</#if> </td>
+                                <td>${item.telephone}</td>
                                 <td>${UserState.get(item.state).getTitle()}</td>
                                 <td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                                 <td>

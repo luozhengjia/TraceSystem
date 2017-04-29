@@ -69,4 +69,10 @@ public interface MerchantService {
      */
     public List<MerchantInfo> getMerchantListByIds(List<Integer> merchantIds);
 
+    /**
+     * 获取没有商户户主的商户列表
+     * 
+     * @return
+     */
+    public List<MerchantInfo> getNoSmaMerchantList();
 }

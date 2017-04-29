@@ -157,9 +157,11 @@
 			
 				// 需要重新加载父节点列表数据
 				$('#html5Form').find('select[name="parentId"] option').remove();  
+				
+				
 				$.getJSON('/system/getParentActionList.jhtml',{actionType:$(this).val()},function(result) {
 					$.each(result.data.actionList, function (key, val) {
-						var selected = formData.parentId==val.id?"'selected'='selected'":"";
+						var selected = formData.parentId==val.id?"selected='selected'":"";
 						var optionHtml = "<option value='"+val.id+"' "+ selected + ">"+val.actionName+"</option>";
 	                    $('#html5Form').find('select[name="parentId"]').append(optionHtml);
 	                });
@@ -195,15 +197,16 @@
 				"remark":"${(systemAction.remark)!''}"
 	        };
 	        
-			// 自动填充表单
-	        $("#html5Form").autofill(formData);
-			$('.spinner').spinner({max:9999999,min:100,value:formData.weight});
-	
 			 // 业务特性处理
 			$('#html5Form').find('input[name="actionType"][value="'+formData.actionType+'"]').trigger("change");
 	        if(formData.id !=null){
 	        	$('#html5Form').find('input[name="actionType"]:not(:checked)').attr("disabled",true);
 	        }
+	        
+	        // 自动填充表单
+	        $("#html5Form").autofill(formData);
+			$('.spinner').spinner({max:9999999,min:100,value:formData.weight});
+			
 		});
 	</script>
 </@override>

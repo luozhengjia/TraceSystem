@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ejunhai.trace.product.dao.SystemAccessLogMapper" >
-  <resultMap id="BaseResultMap" type="com.ejunhai.trace.product.model.SystemAccessLog" >
+  <resultMap id="BaseResultMap" type="com.ejunhai.trace.system.model.SystemAccessLog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
     <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
@@ -10,84 +10,9 @@
     <result column="source_ip" property="sourceIp" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
   <sql id="Base_Column_List" >
     id, merchant_id, batch_no, product_id, trace_code, source_ip, create_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ejunhai.trace.product.model.SystemAccessLogExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from tb_system_access_log
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-    <if test="limitStart >= 0" >
-      limit ${limitStart} , ${pageSize}
-    </if>
-  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -98,13 +23,7 @@
     delete from tb_system_access_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.ejunhai.trace.product.model.SystemAccessLogExample" >
-    delete from tb_system_access_log
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.ejunhai.trace.product.model.SystemAccessLog" >
+  <insert id="insert" parameterType="com.ejunhai.trace.system.model.SystemAccessLog" >
     insert into tb_system_access_log (id, merchant_id, batch_no, 
       product_id, trace_code, source_ip, 
       create_time)
@@ -112,128 +31,7 @@
       #{productId,jdbcType=INTEGER}, #{traceCode,jdbcType=VARCHAR}, #{sourceIp,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ejunhai.trace.product.model.SystemAccessLog" >
-    insert into tb_system_access_log
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="merchantId != null" >
-        merchant_id,
-      </if>
-      <if test="batchNo != null" >
-        batch_no,
-      </if>
-      <if test="productId != null" >
-        product_id,
-      </if>
-      <if test="traceCode != null" >
-        trace_code,
-      </if>
-      <if test="sourceIp != null" >
-        source_ip,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="merchantId != null" >
-        #{merchantId,jdbcType=INTEGER},
-      </if>
-      <if test="batchNo != null" >
-        #{batchNo,jdbcType=VARCHAR},
-      </if>
-      <if test="productId != null" >
-        #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="traceCode != null" >
-        #{traceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="sourceIp != null" >
-        #{sourceIp,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.ejunhai.trace.product.model.SystemAccessLogExample" resultType="java.lang.Integer" >
-    select count(*) from tb_system_access_log
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update tb_system_access_log
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.merchantId != null" >
-        merchant_id = #{record.merchantId,jdbcType=INTEGER},
-      </if>
-      <if test="record.batchNo != null" >
-        batch_no = #{record.batchNo,jdbcType=VARCHAR},
-      </if>
-      <if test="record.productId != null" >
-        product_id = #{record.productId,jdbcType=INTEGER},
-      </if>
-      <if test="record.traceCode != null" >
-        trace_code = #{record.traceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="record.sourceIp != null" >
-        source_ip = #{record.sourceIp,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null" >
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update tb_system_access_log
-    set id = #{record.id,jdbcType=INTEGER},
-      merchant_id = #{record.merchantId,jdbcType=INTEGER},
-      batch_no = #{record.batchNo,jdbcType=VARCHAR},
-      product_id = #{record.productId,jdbcType=INTEGER},
-      trace_code = #{record.traceCode,jdbcType=VARCHAR},
-      source_ip = #{record.sourceIp,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ejunhai.trace.product.model.SystemAccessLog" >
-    update tb_system_access_log
-    <set >
-      <if test="merchantId != null" >
-        merchant_id = #{merchantId,jdbcType=INTEGER},
-      </if>
-      <if test="batchNo != null" >
-        batch_no = #{batchNo,jdbcType=VARCHAR},
-      </if>
-      <if test="productId != null" >
-        product_id = #{productId,jdbcType=INTEGER},
-      </if>
-      <if test="traceCode != null" >
-        trace_code = #{traceCode,jdbcType=VARCHAR},
-      </if>
-      <if test="sourceIp != null" >
-        source_ip = #{sourceIp,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ejunhai.trace.product.model.SystemAccessLog" >
+  <update id="updateByPrimaryKey" parameterType="com.ejunhai.trace.system.model.SystemAccessLog" >
     update tb_system_access_log
     set merchant_id = #{merchantId,jdbcType=INTEGER},
       batch_no = #{batchNo,jdbcType=VARCHAR},

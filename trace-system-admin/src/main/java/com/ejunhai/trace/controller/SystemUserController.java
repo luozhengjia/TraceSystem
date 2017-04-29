@@ -75,11 +75,11 @@ public class SystemUserController extends BaseController {
             systemUserDto.setPageSize(pagination.getPageSize());
             systemUserList = systemUserService.querySystemUserList(systemUserDto);
 
-            // 获取角色ID-角色映射关系
-            List<Integer> roleIdList = SystemUserUtil.getRoleIdList(systemUserList);
-            List<SystemRole> systemRoleList = systemRoleService.getSystemRoleListByIds(roleIdList);
-            Map<String, SystemRole> systemRoleMap = SystemRoleUtil.getSystemRoleMap(systemRoleList);
-            modelMap.put("systemRoleMap", systemRoleMap);
+            // 获取商户ID-商户映射关系
+            List<Integer> merchantIdList = SystemUserUtil.getMerchantIdList(systemUserList);
+            List<MerchantInfo> merchantInfoList = merchantService.getMerchantListByIds(merchantIdList);
+            Map<String, MerchantInfo> merchantMap = MerchantUtil.getMerchantMap(merchantInfoList);
+            modelMap.put("merchantMap", merchantMap);
         }
 
         modelMap.put("systemUserDto", systemUserDto);
@@ -93,16 +93,28 @@ public class SystemUserController extends BaseController {
         Integer merchantId = SessionManager.get(request).getMerchantId();
 
         // 验证用户是否有操作权限
+        Integer userType = SessionManager.get(request).getUserType();
         if (userId != null) {
             SystemUser systemUser = systemUserService.read(userId);
+            userType = UserType.get(systemUser.getUserType()).getValue();
             modelMap.put("systemUser", systemUser);
             JunhaiAssert.isTrue(merchantId == null || merchantId.equals(systemUser.getMerchantId()), "id无效");
         }
 
         // 获取可以分配给用户的角色列表
         SystemRoleDto systemRoleDto = new SystemRoleDto();
-        systemRoleDto.setRoleType(RoleType.sa.getValue());
-        systemRoleDto.setMerchantId(merchantId);
+        if (UserType.ssa.getValue().equals(userType) || UserType.sa.getValue().equals(userType)) {
+            systemRoleDto.setRoleType(RoleType.sa.getValue());
+
+            // 获取商户列表
+            List<MerchantInfo> merchantInfoList = merchantService.getNoSmaMerchantList();
+            modelMap.put("merchantInfoList", merchantInfoList);
+            modelMap.put("userType", UserType.sma);
+        } else {
+            systemRoleDto.setRoleType(RoleType.ma.getValue());
+            systemRoleDto.setMerchantId(merchantId);
+            modelMap.put("userType", UserType.ma);
+        }
         systemRoleDto.setOffset(0);
         systemRoleDto.setPageSize(Integer.MAX_VALUE);
         List<SystemRole> systemRoleList = systemRoleService.querySystemRoleList(systemRoleDto);
@@ -121,18 +133,23 @@ public class SystemUserController extends BaseController {
         JunhaiAssert.notBlank(systemUserDto.getNickname(), "用户昵称不能为空不能为空");
         JunhaiAssert.notBlank(systemUserDto.getTelephone(), "手机号码不能为空");
 
+        // 暂时限定平台管理员只能创建商户户主，商户户主只能创建商户管理员
+        Integer userType = UserType.ma.getValue();
         Integer merchantId = SessionManager.get(request).getMerchantId();
+        if (merchantId == null) {
+            userType = UserType.sma.getValue();
+            JunhaiAssert.isTrue(systemUserDto.getMerchantId() != null, "商户ID不能为空");
+            merchantId = systemUserDto.getMerchantId();
+        }
+
         SystemUser systemUser = new SystemUser();
         systemUser.setNickname(systemUserDto.getNickname());
         systemUser.setTelephone(systemUserDto.getTelephone());
         systemUser.setPictureUrl("/assets/img/avatars/Osvaldus-Valutis.jpg");
         systemUser.setRoleIds(systemUserDto.getRoleIds());
-
         systemUser.setLoginName(systemUserDto.getLoginName());
         systemUser.setPasswd(systemUserDto.getPasswd());
-
-        // 系统管理员可以创建系统管理员，商户可以创建商户管理员
-        systemUser.setUserType(merchantId == null ? UserType.sa.getValue() : UserType.ma.getValue());
+        systemUser.setUserType(userType);
         systemUser.setMerchantId(merchantId);
         systemUser.setState(UserState.normal.getValue());
         systemUserService.insert(systemUser);

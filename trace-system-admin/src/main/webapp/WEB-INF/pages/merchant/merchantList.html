@@ -31,12 +31,10 @@
                             <tr>
                                 <th>ID</th>
                                 <th>商户名称</th>
-                                <th>商户等级</th>
+                                <th>主营业务</th>
                                 <th>联系人</th>
                                 <th>联系电话</th>
-                                <th>可用短信数量</th>
-                                <th>开通时间</th>
-                                <th>到期时间</th>
+                                <th>更新时间</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
@@ -45,14 +43,13 @@
                             <tr>
                                 <td>${item.id}</td>
                                 <td>${item.merchantName}</td>
-                                <td>${item.merchantLevel}</td>
-                                <td>${item.contacts}</td>
-                                <td>${item.telephone}</td>
-                                <td>${item.availableSmsNum}</td>
-                                <td>${item.openTime?string('yyyy-MM-dd HH:mm')}</td>
-                                <td>${item.expireTime?string('yyyy-MM-dd HH:mm')}</td>
+                                <td>${item.businessLine!'-'}</td>
+                                <td>${item.contacts!'-'}</td>
+                                <td>${item.telephone!'-'}</td>
+                                <td>${item.updateTime?string('yyyy-MM-dd HH:mm')}</td>
                                 <td>
                                 	<a href="/merchant/merchantDetail.jhtml?id=${item.id?c}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> 编辑</a>
+                                	<button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
 								</td>
                             </tr>
                             </#list>
@@ -70,6 +67,32 @@
             </div>
         </div>
     </div>
+</@override>
+<@override name="custom-script">
+    <script>
+	    $(document).ready(function() {
+	    	// 删除商户
+	        $(".J_delete").on('click', function () {
+	        	var dataParam = $(this).attr('data-param');
+	        	bootbox.confirm({
+			        message: '你确定删除该条数据？',
+			        title: "提示",
+			        callback: function(result) {  
+			            if (result) {
+		                    $.post('/merchant/deleteMerchant.jhtml', JSON.parse(dataParam), function(result) {
+				                if(result.state.code==200){
+					        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+					        		setTimeout(function () {window.location = "/merchant/merchantList.jhtml";}, 1500);
+					        	}else{
+					        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+					        	}
+				            }, 'json');
+		                }
+			        }
+		        });
+		    });
+		});
+    </script>
 </@override>
 <@extends name="/common/base.html"/>  
 

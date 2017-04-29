@@ -10,7 +10,7 @@ public class MerchantInfo implements Serializable {
 
     private String businessLine;
 
-    private Integer merchantLevel;
+    private Byte merchantLevel;
 
     private Date openTime;
 
@@ -62,11 +62,11 @@ public class MerchantInfo implements Serializable {
         this.businessLine = businessLine == null ? null : businessLine.trim();
     }
 
-    public Integer getMerchantLevel() {
+    public Byte getMerchantLevel() {
         return merchantLevel;
     }
 
-    public void setMerchantLevel(Integer merchantLevel) {
+    public void setMerchantLevel(Byte merchantLevel) {
         this.merchantLevel = merchantLevel;
     }
 

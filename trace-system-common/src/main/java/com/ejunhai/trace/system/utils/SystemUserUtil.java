@@ -30,4 +30,18 @@ public class SystemUserUtil {
 
         return new ArrayList<Integer>(roleIdSet);
     }
+
+    public static List<Integer> getMerchantIdList(List<SystemUser> systemUserList) {
+        Set<Integer> merchantIdSet = new HashSet<Integer>();
+        if (CollectionUtils.isEmpty(systemUserList)) {
+            return new ArrayList<Integer>(merchantIdSet);
+        }
+
+        for (SystemUser systemUser : systemUserList) {
+            if (systemUser.getMerchantId() != null) {
+                merchantIdSet.add(systemUser.getMerchantId());
+            }
+        }
+        return new ArrayList<Integer>(merchantIdSet);
+    }
 }

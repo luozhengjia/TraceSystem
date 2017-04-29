@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ejunhai.trace.product.dao.MerchantInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.ejunhai.trace.product.model.MerchantInfo" >
+<mapper namespace="com.ejunhai.trace.merchant.dao.MerchantInfoMapper" >
+  <resultMap id="MerchantMapper" type="com.ejunhai.trace.merchant.model.MerchantInfo" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
     <result column="business_line" property="businessLine" jdbcType="VARCHAR" />
@@ -39,48 +39,43 @@
 		<include refid="Base_Column_List" />
 		)
 		values (
-			#{id,jdbcType=INTEGER},
-			#{merchantName,jdbcType=VARCHAR},
-			#{businessLine,jdbcType=VARCHAR},
-			#{merchantLevel,jdbcType=TINYINT},
-			#{openTime,jdbcType=TIMESTAMP},
-			#{expireTime,jdbcType=TIMESTAMP},
-			#{availableSmsNum,jdbcType=INTEGER},
-			#{recordNumber,jdbcType=VARCHAR},
-			#{contacts,jdbcType=VARCHAR},
-			#{telephone,jdbcType=VARCHAR},
-			#{address,jdbcType=VARCHAR},
-			#{createTime,jdbcType=TIMESTAMP},
-			#{updateTime,jdbcType=TIMESTAMP}
+			#{id,jdbcType=INTEGER}, 
+			#{merchantName,jdbcType=VARCHAR}, 
+			#{businessLine,jdbcType=VARCHAR}, 
+		    #{merchantLevel,jdbcType=TINYINT}, 
+		    #{openTime,jdbcType=TIMESTAMP}, 
+		    #{expireTime,jdbcType=TIMESTAMP}, 
+		    #{availableSmsNum,jdbcType=INTEGER},
+		    #{organization,jdbcType=VARCHAR}, 
+		    #{businessLicense,jdbcType=VARCHAR}, 
+		    #{recordNumber,jdbcType=VARCHAR}, 
+		    #{contacts,jdbcType=VARCHAR},
+		    #{telephone,jdbcType=VARCHAR}, 
+		    #{address,jdbcType=VARCHAR}, 
+		    #{picUrls,jdbcType=VARCHAR}, 
+		    #{createTime,jdbcType=TIMESTAMP}, 
+		    #{updateTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
 
 	<update id="update" parameterType="com.ejunhai.trace.merchant.model.MerchantInfo">
 		update tb_merchant_info
 		<set>
-			id = #{id,jdbcType=INTEGER},
-			merchant_name =
-			#{merchantName,jdbcType=VARCHAR},
-			business_line =
-			#{businessLine,jdbcType=VARCHAR},
-			merchant_level =
-			#{merchantLevel,jdbcType=TINYINT},
-			open_time =
-			#{openTime,jdbcType=TIMESTAMP},
-			expire_time =
-			#{expireTime,jdbcType=TIMESTAMP},
-			available_sms_num =
-			#{availableSmsNum,jdbcType=INTEGER},
-			record_number =
-			#{recordNumber,jdbcType=VARCHAR},
-			contacts =
-			#{contacts,jdbcType=VARCHAR},
-			telephone =
-			#{telephone,jdbcType=VARCHAR},
-			address = #{address,jdbcType=VARCHAR},
-			create_time = #{createTime,jdbcType=TIMESTAMP},
-			update_time =
-			#{updateTime,jdbcType=TIMESTAMP}
+			merchant_name = #{merchantName,jdbcType=VARCHAR},
+		      business_line = #{businessLine,jdbcType=VARCHAR},
+		      merchant_level = #{merchantLevel,jdbcType=TINYINT},
+		      open_time = #{openTime,jdbcType=TIMESTAMP},
+		      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+		      available_sms_num = #{availableSmsNum,jdbcType=INTEGER},
+		      organization = #{organization,jdbcType=VARCHAR},
+		      business_license = #{businessLicense,jdbcType=VARCHAR},
+		      record_number = #{recordNumber,jdbcType=VARCHAR},
+		      contacts = #{contacts,jdbcType=VARCHAR},
+		      telephone = #{telephone,jdbcType=VARCHAR},
+		      address = #{address,jdbcType=VARCHAR},
+		      pic_urls = #{picUrls,jdbcType=VARCHAR},
+		      create_time = #{createTime,jdbcType=TIMESTAMP},
+		      update_time = #{updateTime,jdbcType=TIMESTAMP}
 		</set>
 		where ID = #{id,jdbcType=INTEGER}
 	</update>
@@ -116,6 +111,10 @@
 			#{id}
 		</foreach>
 		)
+	</select>
+	
+	<select id="getNoSmaMerchantList" resultMap="MerchantMapper">
+		select m.* from tb_merchant_info m left join tb_system_user u on m.id=u.merchant_id where u.merchant_id is null
 	</select>
   
 </mapper>

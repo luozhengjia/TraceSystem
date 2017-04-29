@@ -53,7 +53,6 @@ public class SystemActionServiceImpl implements SystemActionService {
 	public void update(SystemAction systemAction) {
 		SystemAction oldSystemAction = this.read(systemAction.getId());
 		oldSystemAction.setActionName(systemAction.getActionName());
-		oldSystemAction.setActionType(systemAction.getActionType());
 		oldSystemAction.setParentId(systemAction.getParentId());
 		oldSystemAction.setUrl(systemAction.getUrl());
 		oldSystemAction.setIconCss(systemAction.getIconCss());

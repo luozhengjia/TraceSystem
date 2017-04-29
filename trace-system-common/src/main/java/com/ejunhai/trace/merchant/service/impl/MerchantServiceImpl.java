@@ -1,6 +1,7 @@
 package com.ejunhai.trace.merchant.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -62,6 +63,11 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     public List<MerchantInfo> getMerchantListByIds(List<Integer> merchantIds) {
         return merchantMapper.getMerchantListByIds(merchantIds);
+    }
+
+    @Override
+    public List<MerchantInfo> getNoSmaMerchantList() {
+        return merchantMapper.getNoSmaMerchantList();
     }
 
 }

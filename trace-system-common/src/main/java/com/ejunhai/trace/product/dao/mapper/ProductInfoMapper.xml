@@ -7,15 +7,15 @@
     <result column="product_name" property="productName" jdbcType="VARCHAR" />
     <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
     <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
-    <result column="base_id" property="baseId" jdbcType="INTEGER" />
     <result column="pic_urls" property="picUrls" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="LONGVARCHAR" />	
+    <result column="creator" property="creator" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    id, merchant_id, product_name, logo_url, brand_name, base_id, pic_urls,remark, create_time, 
+    id, merchant_id, product_name, logo_url, brand_name, pic_urls,remark,creator, create_time, 
     update_time
   </sql>
   
@@ -33,9 +33,9 @@
 			#{productName,jdbcType=VARCHAR}, 
       		#{logoUrl,jdbcType=VARCHAR}, 
       		#{brandName,jdbcType=VARCHAR}, 
-      		#{baseId,jdbcType=INTEGER}, 
       		#{picUrls,jdbcType=VARCHAR}, 
       		#{remark,jdbcType=LONGVARCHAR}, 
+      		#{creator,jdbcType=INTEGER}, 
       		#{createTime,jdbcType=TIMESTAMP}, 
       		#{updateTime,jdbcType=TIMESTAMP}
 		)
@@ -48,7 +48,6 @@
 		      product_name = #{productName,jdbcType=VARCHAR},
 		      logo_url = #{logoUrl,jdbcType=VARCHAR},
 		      brand_name = #{brandName,jdbcType=VARCHAR},
-		      base_id = #{baseId,jdbcType=INTEGER},
 		      pic_urls = #{picUrls,jdbcType=VARCHAR},
 		      remark = #{remark,jdbcType=LONGVARCHAR}, 
 		      create_time = #{createTime,jdbcType=TIMESTAMP},

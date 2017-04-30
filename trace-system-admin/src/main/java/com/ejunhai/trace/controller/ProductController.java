@@ -83,7 +83,6 @@ public class ProductController extends BaseController {
         productInfo.setProductName(productInfoDto.getProductName());
         productInfo.setLogoUrl(productInfoDto.getLogoUrl());
         productInfo.setBrandName(productInfoDto.getBrandName());
-        productInfo.setBaseId(productInfoDto.getBaseId());
         productInfo.setPicUrls(productInfoDto.getPicUrls());
         productInfo.setRemark(productInfoDto.getRemark());
         productInfoService.save(productInfo);

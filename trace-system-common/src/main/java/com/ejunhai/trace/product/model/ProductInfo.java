@@ -14,15 +14,15 @@ public class ProductInfo implements Serializable {
 
     private String brandName;
 
-    private Integer baseId;
-
     private String picUrls;
+
+    private String remark;
+
+    private Integer creator;
 
     private Date createTime;
 
     private Date updateTime;
-
-    private String remark;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,7 +47,7 @@ public class ProductInfo implements Serializable {
     }
 
     public void setProductName(String productName) {
-        this.productName = productName == null ? null : productName.trim();
+        this.productName = productName;
     }
 
     public String getLogoUrl() {
@@ -55,7 +55,7 @@ public class ProductInfo implements Serializable {
     }
 
     public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl == null ? null : logoUrl.trim();
+        this.logoUrl = logoUrl;
     }
 
     public String getBrandName() {
@@ -63,15 +63,7 @@ public class ProductInfo implements Serializable {
     }
 
     public void setBrandName(String brandName) {
-        this.brandName = brandName == null ? null : brandName.trim();
-    }
-
-    public Integer getBaseId() {
-        return baseId;
-    }
-
-    public void setBaseId(Integer baseId) {
-        this.baseId = baseId;
+        this.brandName = brandName;
     }
 
     public String getPicUrls() {
@@ -79,7 +71,23 @@ public class ProductInfo implements Serializable {
     }
 
     public void setPicUrls(String picUrls) {
-        this.picUrls = picUrls == null ? null : picUrls.trim();
+        this.picUrls = picUrls;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Integer getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Integer creator) {
+        this.creator = creator;
     }
 
     public Date getCreateTime() {
@@ -98,32 +106,4 @@ public class ProductInfo implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", merchantId=").append(merchantId);
-        sb.append(", productName=").append(productName);
-        sb.append(", logoUrl=").append(logoUrl);
-        sb.append(", brandName=").append(brandName);
-        sb.append(", baseId=").append(baseId);
-        sb.append(", picUrls=").append(picUrls);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

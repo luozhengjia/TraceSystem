@@ -34,7 +34,6 @@
                                 <th>产品名称</th>
                                 <th>Logo</th>
                                 <th>品牌</th>
-                                <th>生产基地</th>
                                 <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
@@ -44,9 +43,8 @@
                             <tr data-formData='{"id":${item.id}}'>
                     			<td>${item.id}</td>
                     			<td>${item.productName}</td>
-                    			<td><img src="${item.logoUrl!''}" style="width:60px"></td>
+                    			<td><img src="${item.logoUrl!''}" style="height:36px"></td>
                     			<td>${item.brandName!''}</td>
-                    			<td></td>
                     			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                     			<td>
                     				<a href="/product/toProductInfo.jhtml?id=${item.id?c}" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> 编辑</a>

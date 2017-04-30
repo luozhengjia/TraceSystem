@@ -58,5 +58,13 @@ public interface ProductionBaseInfoMapper {
      * @return
      */
     public List<ProductionBaseInfo> getProductionBaseInfoListByIds(List<Integer> baseIds);
+    
+    /**
+     * 根据merchantId获取基地信息列表
+     * 
+     * @param merchantId
+     * @return
+     */
+    public List<ProductionBaseInfo> getProductionBaseInfoListByMerchantId(Integer merchantId);
 
 }

@@ -59,4 +59,9 @@ public class ProductInfoServiceImpl implements ProductInfoService {
         return productInfoMapper.getProductInfoListByIds(productIds);
     }
 
+    @Override
+    public List<ProductInfo> getProductInfoListByMerchantId(Integer merchantId) {
+        return productInfoMapper.getProductInfoListByMerchantId(merchantId);
+    }
+
 }

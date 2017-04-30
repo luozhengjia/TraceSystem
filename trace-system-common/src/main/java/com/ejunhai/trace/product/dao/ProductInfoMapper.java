@@ -50,7 +50,7 @@ public interface ProductInfoMapper {
      * @return
      */
     public List<ProductInfo> queryProductInfoList(ProductInfoDto productInfoDto);
-    
+
     /**
      * 根据ID获取产品列表
      * 
@@ -58,5 +58,13 @@ public interface ProductInfoMapper {
      * @return
      */
     public List<ProductInfo> getProductInfoListByIds(List<Integer> productIds);
+
+    /**
+     * 根据merchantId获取产品列表
+     * 
+     * @param merchantId
+     * @return
+     */
+    public List<ProductInfo> getProductInfoListByMerchantId(Integer merchantId);
 
 }

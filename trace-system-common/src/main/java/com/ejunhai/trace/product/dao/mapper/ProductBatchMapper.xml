@@ -39,15 +39,15 @@
 	<update id="update" parameterType="com.ejunhai.trace.product.model.ProductBatch">
 		update tb_product_batch
 		<set>
-			  batch_no = #{record.batchNo,jdbcType=VARCHAR},
-		      product_id = #{record.productId,jdbcType=INTEGER},
-		      base_id = #{record.baseId,jdbcType=INTEGER},
-		      production_date = #{record.productionDate,jdbcType=VARCHAR},
-		      expire_time = #{record.expireTime,jdbcType=VARCHAR},
-		      issue_amount = #{record.issueAmount,jdbcType=INTEGER},
-		      has_issue_num = #{record.hasIssueNum,jdbcType=INTEGER},
-		      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-		      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+			  batch_no = #{batchNo,jdbcType=VARCHAR},
+		      product_id = #{productId,jdbcType=INTEGER},
+		      base_id = #{baseId,jdbcType=INTEGER},
+		      production_date = #{productionDate,jdbcType=VARCHAR},
+		      expire_time = #{expireTime,jdbcType=VARCHAR},
+		      issue_amount = #{issueAmount,jdbcType=INTEGER},
+		      has_issue_num = #{hasIssueNum,jdbcType=INTEGER},
+		      create_time = #{createTime,jdbcType=TIMESTAMP},
+		      update_time = #{updateTime,jdbcType=TIMESTAMP}
 		</set>
 		where ID = #{id,jdbcType=INTEGER}
 	</update>

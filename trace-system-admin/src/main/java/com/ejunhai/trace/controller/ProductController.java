@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ejunhai.trace.common.base.BaseController;
 import com.ejunhai.trace.common.base.Pagination;
 import com.ejunhai.trace.common.errors.JunhaiAssert;
+import com.ejunhai.trace.common.utils.DateUtil;
 import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
 import com.ejunhai.trace.merchant.service.ProductionBaseInfoService;
 import com.ejunhai.trace.merchant.utils.MerchantUtil;
@@ -151,7 +152,18 @@ public class ProductController extends BaseController {
     public String toProductBatch(HttpServletRequest request, ProductBatch productBatch, ModelMap modelMap) {
         if (productBatch.getId() != null) {
             productBatch = productBatchService.read(productBatch.getId());
+        } else {
+            productBatch.setBatchNo(DateUtil.getCurrentDateTimeToStr());
         }
+
+        // 获取产品列表
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        List<ProductInfo> productInfoList = productInfoService.getProductInfoListByMerchantId(merchantId);
+        modelMap.put("productInfoList", productInfoList);
+
+        // 获取基地列表
+        List<ProductionBaseInfo> productionBaseInfoList = productionBaseInfoService.getProductionBaseInfoListByMerchantId(merchantId);
+        modelMap.put("productionBaseInfoList", productionBaseInfoList);
 
         // 新增或编辑信息
         modelMap.put("productBatch", productBatch);

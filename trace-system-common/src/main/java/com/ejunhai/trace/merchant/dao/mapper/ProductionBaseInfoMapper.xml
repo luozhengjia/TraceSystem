@@ -105,4 +105,8 @@
 		)
 	</select>
 	
+	<select id="getProductionBaseInfoListByMerchantId" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_production_base_info where merchant_id= #{merchantId,jdbcType=INTEGER}
+	</select>
+	
 </mapper>

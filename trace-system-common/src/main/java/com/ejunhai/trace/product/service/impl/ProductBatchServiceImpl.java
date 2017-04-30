@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.ejunhai.trace.product.dao.ProductBatchMapper;
 import com.ejunhai.trace.product.dto.ProductBatchDto;
 import com.ejunhai.trace.product.model.ProductBatch;
-import com.ejunhai.trace.product.model.ProductInfo;
 import com.ejunhai.trace.product.service.ProductBatchService;
 
 @Service("productBatchService")

@@ -1,9 +1,9 @@
-package com.ejunhai.trace.system.model;
+package com.ejunhai.trace.product.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
-public class SystemAccessLog implements Serializable {
+public class ProductAccessLog implements Serializable {
     private Integer id;
 
     private Integer merchantId;

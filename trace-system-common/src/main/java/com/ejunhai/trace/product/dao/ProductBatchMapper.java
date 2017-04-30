@@ -2,8 +2,6 @@ package com.ejunhai.trace.product.dao;
 
 import java.util.List;
 
-import com.ejunhai.trace.merchant.dto.ProductionBaseInfoDto;
-import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
 import com.ejunhai.trace.product.dto.ProductBatchDto;
 import com.ejunhai.trace.product.model.ProductBatch;
 

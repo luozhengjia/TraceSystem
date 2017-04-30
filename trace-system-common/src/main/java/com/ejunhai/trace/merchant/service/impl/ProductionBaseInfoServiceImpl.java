@@ -59,4 +59,9 @@ public class ProductionBaseInfoServiceImpl implements ProductionBaseInfoService 
         return productionBaseInfoMapper.getProductionBaseInfoListByIds(baseIds);
     }
 
+    @Override
+    public List<ProductionBaseInfo> getProductionBaseInfoListByMerchantId(Integer merchantId) {
+        return productionBaseInfoMapper.getProductionBaseInfoListByMerchantId(merchantId);
+    }
+
 }

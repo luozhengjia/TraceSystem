@@ -107,9 +107,9 @@
 	        	bootbox.confirm({
 			        message: '每次最多能生成100000个溯源码<br/><br/>你确定要生成溯源码吗？',
 			        title: "提示",
-			        callback: function(result) {  
+			        callback: function(result) {
 			            if (result) {
-		                    $.post('/coupon/generateCoupons.jhtml', JSON.parse(dataParam), function(result) {
+		                    $.post('/product/generateTraceCodes.jhtml', JSON.parse(dataParam), function(result) {
 				                if(result.state.code==200){
 					        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
 					        		setTimeout(function () {window.location = "/product/productBatchList.jhtml";}, 1500);

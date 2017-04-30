@@ -95,5 +95,9 @@
 		</foreach>
 		)
 	</select>
+	
+	<select id="getProductInfoListByMerchantId" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_product_info where merchant_id= #{merchantId,jdbcType=INTEGER}
+	</select>
 
 </mapper>

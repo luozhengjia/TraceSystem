@@ -1,8 +1,8 @@
-package com.ejunhai.trace.system.dto;
+package com.ejunhai.trace.product.dto;
 
-import com.ejunhai.trace.system.model.SystemAccessLog;
+import com.ejunhai.trace.product.model.ProductAccessLog;
 
-public class SystemAccessLogDto extends SystemAccessLog {
+public class ProductAccessLogDto extends ProductAccessLog {
 
     /**
      * 

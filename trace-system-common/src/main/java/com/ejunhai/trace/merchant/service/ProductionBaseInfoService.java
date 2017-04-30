@@ -41,10 +41,19 @@ public interface ProductionBaseInfoService {
     public List<ProductionBaseInfo> queryProductionBaseInfoList(ProductionBaseInfoDto productionBaseInfoDto);
 
     /**
-     * 根据ID获取商户列表
+     * 根据ID获取基地信息列表
      * 
      * @param baseIds
      * @return
      */
     public List<ProductionBaseInfo> getProductionBaseInfoListByIds(List<Integer> baseIds);
+
+    /**
+     * 根据merchantId获取基地信息列表
+     * 
+     * @param merchantId
+     * @return
+     */
+    public List<ProductionBaseInfo> getProductionBaseInfoListByMerchantId(Integer merchantId);
+
 }

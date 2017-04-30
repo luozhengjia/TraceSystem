@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ejunhai.trace.product.dao.ProductionBaseInfoMapper">
-	<resultMap id="BaseResultMap"
-		type="com.ejunhai.trace.merchant.model.ProductionBaseInfo">
+<mapper namespace="com.ejunhai.trace.merchant.dao.ProductionBaseInfoMapper" >
+	<resultMap id="BaseResultMap" type="com.ejunhai.trace.merchant.model.ProductionBaseInfo">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
 		<result column="base_name" property="baseName" jdbcType="VARCHAR" />
@@ -11,7 +10,7 @@
 		<result column="base_address" property="baseAddress" jdbcType="VARCHAR" />
 		<result column="base_env_info" property="baseEnvInfo" jdbcType="VARCHAR" />
 		<result column="base_resource_info" property="baseResourceInfo" jdbcType="VARCHAR" />
-		<result column="base_bulid_time" property="baseBulidTime" jdbcType="DATE" />
+		<result column="base_bulid_time" property="baseBulidTime" jdbcType="VARCHAR" />
 		<result column="pic_urls" property="picUrls" jdbcType="VARCHAR" />
 		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
@@ -23,59 +22,70 @@
 		base_bulid_time,
 		pic_urls, create_time, update_time
 	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.Integer">
+	
+	  <select id="read" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
 		<include refid="Base_Column_List" />
 		from tb_production_base_info
-		where id = #{id,jdbcType=INTEGER}
+		where ID = #{id,jdbcType=INTEGER}
 	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from
-		tb_production_base_info
-		where id = #{id,jdbcType=INTEGER}
-	</delete>
-	<insert id="insert" parameterType="com.ejunhai.trace.merchant.model.ProductionBaseInfo">
-		insert into
-		tb_production_base_info (id, merchant_id, base_name,
-		base_type,
-		base_area, base_address,
-		base_env_info, base_resource_info,
-		base_bulid_time,
-		pic_urls, create_time, update_time
+
+	<insert id="insert" parameterType="com.ejunhai.trace.merchant.model.ProductionBaseInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into tb_production_base_info (
+		<include refid="Base_Column_List" />
 		)
-		values
-		(#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER},
-		#{baseName,jdbcType=VARCHAR},
-		#{baseType,jdbcType=VARCHAR},
-		#{baseArea,jdbcType=VARCHAR}, #{baseAddress,jdbcType=VARCHAR},
-		#{baseEnvInfo,jdbcType=VARCHAR}, #{baseResourceInfo,jdbcType=VARCHAR},
-		#{baseBulidTime,jdbcType=DATE},
-		#{picUrls,jdbcType=VARCHAR},
-		#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+		values (
+			#{id,jdbcType=INTEGER}, 
+			#{merchantId,jdbcType=INTEGER},
+			#{baseName,jdbcType=VARCHAR},
+			#{baseType,jdbcType=VARCHAR},
+			#{baseArea,jdbcType=VARCHAR}, #{baseAddress,jdbcType=VARCHAR},
+			#{baseEnvInfo,jdbcType=VARCHAR}, #{baseResourceInfo,jdbcType=VARCHAR},
+			#{baseBulidTime,jdbcType=VARCHAR},
+			#{picUrls,jdbcType=VARCHAR},
+			#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
-	<update id="updateByPrimaryKey" parameterType="com.ejunhai.trace.merchant.model.ProductionBaseInfo">
-		update
-		tb_production_base_info
-		set merchant_id =
-		#{merchantId,jdbcType=INTEGER},
-		base_name =
-		#{baseName,jdbcType=VARCHAR},
-		base_type = #{baseType,jdbcType=VARCHAR},
-		base_area = #{baseArea,jdbcType=VARCHAR},
-		base_address =
-		#{baseAddress,jdbcType=VARCHAR},
-		base_env_info =
-		#{baseEnvInfo,jdbcType=VARCHAR},
-		base_resource_info =
-		#{baseResourceInfo,jdbcType=VARCHAR},
-		base_bulid_time =
-		#{baseBulidTime,jdbcType=DATE},
-		pic_urls = #{picUrls,jdbcType=VARCHAR},
-		create_time = #{createTime,jdbcType=TIMESTAMP},
-		update_time =
-		#{updateTime,jdbcType=TIMESTAMP}
-		where id = #{id,jdbcType=INTEGER}
+
+	<update id="update" parameterType="com.ejunhai.trace.merchant.model.ProductionBaseInfo">
+		update tb_production_base_info
+		<set>
+			base_name = #{baseName,jdbcType=VARCHAR},
+			base_type = #{baseType,jdbcType=VARCHAR},
+			base_area = #{baseArea,jdbcType=VARCHAR},
+			base_address = #{baseAddress,jdbcType=VARCHAR},
+			base_env_info = #{baseEnvInfo,jdbcType=VARCHAR},
+			base_resource_info =#{baseResourceInfo,jdbcType=VARCHAR},
+			base_bulid_time = #{baseBulidTime,jdbcType=VARCHAR},
+			pic_urls = #{picUrls,jdbcType=VARCHAR},
+			create_time = #{createTime,jdbcType=TIMESTAMP},
+			update_time =#{updateTime,jdbcType=TIMESTAMP}
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
 	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from tb_production_base_info where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	
+	<select id="queryProductionBaseInfoCount" resultType="java.lang.Integer">
+		select count(1) from tb_production_base_info
+		<where>
+			<if test="baseName!=null and baseName!=''">
+				and base_name like CONCAT('%',#{base_name},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="queryProductionBaseInfoList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_production_base_info
+		<where>
+			<if test="baseName!=null and baseName!=''">
+				and base_name like CONCAT('%',#{base_name},'%')
+			</if>
+		</where>
+		limit #{offset},#{pageSize}
+	</select>
+	
 </mapper>

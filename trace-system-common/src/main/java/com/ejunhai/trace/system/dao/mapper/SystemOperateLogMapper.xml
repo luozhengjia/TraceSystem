@@ -57,11 +57,21 @@
     </delete>
     
     <select id="querySystemOperateLogCount" resultType="java.lang.Integer">
-    		select count(1) from tb_system_operate_log
+   		select count(1) from tb_system_operate_log
+   		<where>
+	   		<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+	   		<if test="operation!=null and operation!=''"> and operation like CONCAT('%',#{operation},'%')</if>
+		</where>
     </select>
     
     <select id="querySystemOperateLogList" resultMap="SystemOperateLogMapper">
-    		select <include refid="Base_Column_List" /> from tb_system_operate_log
+   		select <include refid="Base_Column_List" /> from tb_system_operate_log
+   		<where>
+   			<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+	   		<if test="operation!=null and operation!=''"> and operation like CONCAT('%',#{operation},'%')</if>
+		</where>
+		order by create_time desc
+    	limit #{offset},#{pageSize} 
     </select>
     
 </mapper>

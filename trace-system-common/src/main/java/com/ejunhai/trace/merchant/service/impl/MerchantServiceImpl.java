@@ -62,6 +62,9 @@ public class MerchantServiceImpl implements MerchantService {
 
     @Override
     public List<MerchantInfo> getMerchantListByIds(List<Integer> merchantIds) {
+        if (merchantIds == null || merchantIds.isEmpty()) {
+            return new ArrayList<MerchantInfo>();
+        }
         return merchantMapper.getMerchantListByIds(merchantIds);
     }
 

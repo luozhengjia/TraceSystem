@@ -1,8 +1,10 @@
 package com.ejunhai.trace.system.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -43,5 +45,18 @@ public class SystemUserUtil {
             }
         }
         return new ArrayList<Integer>(merchantIdSet);
+    }
+
+    public static Map<String, SystemUser> getSystemUserMap(List<SystemUser> systemUserList) {
+        Map<String, SystemUser> systemUserMap = new HashMap<String, SystemUser>();
+        if (CollectionUtils.isEmpty(systemUserList)) {
+            return systemUserMap;
+        }
+
+        for (SystemUser systemUser : systemUserList) {
+            systemUserMap.put(String.valueOf(systemUser.getId()), systemUser);
+        }
+
+        return systemUserMap;
     }
 }

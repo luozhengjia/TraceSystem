@@ -2,8 +2,8 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li><i class="fa fa-home"></i><a href="#">商户管理</a></li>
-            <li><a href="/merchant/merchantList.jhtml">商户列表</a></li>
-            <li>编辑商户</li>
+            <li><a href="/merchant/productionBaseInfoList.jhtml">基地列表</a></li>
+            <li>编辑基地</li>
         </ul>
     </div>
     
@@ -12,82 +12,76 @@
             <div class="col-xs-12 col-md-12">
             	<div class="widget with-header">
                 	<div class="widget-header">
-                    	<span class="widget-caption"><i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑商户</b></span>
+                    	<span class="widget-caption"><i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑基地</b></span>
                     	
 						<div class="widget-buttons">
-							<a href="${_referUrl!'/merchant/merchantList.jhtml'}" class="btn">&nbsp;&nbsp;<i class="typcn typcn-arrow-back"></i>&nbsp;&nbsp;</a>
+							<a href="${_referUrl!'/merchant/productionBaseInfoList.jhtml'}" class="btn">&nbsp;&nbsp;<i class="typcn typcn-arrow-back"></i>&nbsp;&nbsp;</a>
 						</div>
                     </div>
                 
                 	<div class="widget-body">
-						<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/merchant/editMerchant.jhtml">
+						<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/merchant/saveProductionBaseInfo.jhtml">
 							<input type="hidden" name="id"/>
 	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">商户名称<font color="red"> *</font></label>
+	                            <label class="col-lg-2 control-label">基地名称<font color="red"> *</font></label>
 	                            <div class="col-lg-5">
-	                                <input type="text" class="form-control" name="merchantName"/>
+	                                <input type="text" class="form-control" name="baseName"/>
 	                            </div>
-	                            <div class="col-lg-4"><p class="help-block">如：武汉壹骏海实业有限公司</p></div>
+	                            <div class="col-lg-4"><p class="help-block">如：广州增城民合东境冬瓜专业合作社</p></div>
 	                        </div>
 	                        
 	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">主营业务<font color="red"> *</font></label>
+	                            <label class="col-lg-2 control-label">基地类型<font color="red"> *</font></label>
 	                            <div class="col-lg-4">
-	                                <input type="text" class="form-control" name="businessLine"/>
+	                                <input type="text" class="form-control" name="baseType"/>
 	                            </div>
-	                            <div class="col-lg-4"><p class="help-block">如：水产|农产品</p></div>
+	                            <div class="col-lg-4"><p class="help-block">如：蔬菜种植</p></div>
 	                        </div>
 	                        
 	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">公司图片</label>
+	                            <label class="col-lg-2 control-label">基地面积<font color="red"> *</font></label>
+	                            <div class="col-lg-4">
+	                                <input type="text" class="form-control" name="baseArea"/>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block">如：0.5 km²</p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">基地建成时间</label>
+	                            <div class="col-lg-3">
+	                                <input type="text" class="form-control" name="baseBulidTime"/>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block">如：2008-06-11</p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">基地环境情况</label>
+	                            <div class="col-lg-6">
+	                                <textarea class="form-control" name="baseEnvInfo" rows="5"></textarea>
+	                            </div>
+	                            <div class="col-lg-4"><p class="help-block">如：环境优美、空气清新</p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">基地资源情况</label>
+	                            <div class="col-lg-6">
+	                                <textarea class="form-control" name="baseResourceInfo" rows="5"></textarea>
+	                            </div>
+	                            <div class="col-lg-3"><p class="help-block">如：东境村是我市小楼冬瓜生产基地村之一，有14个经济合作社，人口2031人。全村总面积3.87平方公里，冬瓜种植面积约1000亩，是著名的“冬瓜村”。</p></div>
+	                        </div>
+	                        
+	                         <div class="form-group">
+	                            <label class="col-lg-2 control-label">基地地址</label>
+	                            <div class="col-lg-6">
+	                                <input type="text" class="form-control" name="baseAddress"/>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">基地图片</label>
 	                            <div class="col-lg-10">
 	                            	<input type="text" class="form-control" id="iconUrl" name="picUrls"/>
 								</div>
-	                        </div>
-	                        
-	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">组织机构代码<font color="red"> *</font></label>
-	                            <div class="col-lg-4">
-	                                <input type="text" class="form-control" name="organization"/>
-	                            </div>
-	                            <div class="col-lg-4"><p class="help-block"></p></div>
-	                        </div>
-	                        
-	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">营业执照号码<font color="red"> *</font></label>
-	                            <div class="col-lg-4">
-	                                <input type="text" class="form-control" name="businessLicense"/>
-	                            </div>
-	                            <div class="col-lg-4"><p class="help-block"></p></div>
-	                        </div>
-	                        
-	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">备案号</label>
-	                            <div class="col-lg-4">
-	                                <input type="text" class="form-control" name="recordNumber"/>
-	                            </div>
-	                            <div class="col-lg-4"><p class="help-block">如：鄂ICP备12011799号-1</p></div>
-	                        </div>
-	                        
-	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">公司联系人</label>
-	                            <div class="col-lg-3">
-	                                <input type="text" class="form-control" name="contacts"/>
-	                            </div>
-	                        </div>
-	                        
-	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">公司联系电话</label>
-	                            <div class="col-lg-3">
-	                                <input type="text" class="form-control" name="telephone"/>
-	                            </div>
-	                        </div>
-	                        
-	                        <div class="form-group">
-	                            <label class="col-lg-2 control-label">公司联系地址</label>
-	                            <div class="col-lg-6">
-	                                <input type="text" class="form-control" name="address"/>
-	                            </div>
 	                        </div>
 	                        
 	                        <div class="form-group">
@@ -108,24 +102,24 @@
 		$(document).ready(function() {
 			$('#html5Form').formValidation({
 				fields: {
-		            merchantName: {
+		            baseName: {
 		                validators: {
 		                    notEmpty: {
-		                        message: '商户名称不能为空'
+		                        message: '基地名称不能为空'
 		                    }
 		                }
 		            },
-		            businessLine: {
+		            baseType: {
 		                validators: {
 		                    notEmpty: {
-		                        message: '主营业务不能为空'
+		                        message: '基地类型不能为空'
 		                    }
 		                }
 		            },
-		            recordNumber: {
+		            baseArea: {
 		                validators: {
 		                    notEmpty: {
-		                        message: '备案号不能为空'
+		                        message: '基地面积不能为空'
 		                    }
 		                }
 		            }
@@ -145,7 +139,7 @@
 	            $.post($form.attr('action'), $form.serialize(), function(result) {
 	                if(result.state.code==200){
 		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-		        		setTimeout(function () {window.location = "${_referUrl!'/merchant/merchantList.jhtml'}";}, 1500);
+		        		setTimeout(function () {window.location = "${_referUrl!'/merchant/productionBaseInfoList.jhtml'}";}, 1500);
 		        	}else{
 		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 		        	}
@@ -154,16 +148,15 @@
 			
 			// 构建表单数据	
 			var formData = {			
-	         	"id":${(merchant.id?c)!''},
-				"merchantName":"${(merchant.merchantName)!''}",
-				"businessLine":"${(merchant.businessLine)!''}",
-				"picUrls":"${(merchant.picUrls)!''}",
-				"organization":"${(merchant.organization)!''}",
-				"businessLicense":"${(merchant.businessLicense)!''}",
-				"recordNumber":"${(merchant.recordNumber)!''}",
-				"contacts":"${(merchant.contacts)!''}",
-				"telephone":"${(merchant.telephone)!''}", 
-				"address":"${(merchant.address)!''}"
+	         	"id":${(productionBaseInfo.id?c)!'null'},
+				"baseName":"${(productionBaseInfo.baseName)!''}",
+				"baseType":"${(productionBaseInfo.baseType)!''}",
+				"baseArea":"${(productionBaseInfo.baseArea)!''}",
+				"baseAddress":"${(productionBaseInfo.baseAddress)!''}",
+				"baseEnvInfo":"${(productionBaseInfo.baseEnvInfo)!''}",
+				"baseResourceInfo":"${(productionBaseInfo.baseResourceInfo)!''}",
+				"baseBulidTime":"${(productionBaseInfo.baseBulidTime)!''}",
+				"picUrls":"${(productionBaseInfo.picUrls)!''}"
 	        };
 	        
 			// 自动填充表单

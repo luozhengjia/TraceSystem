@@ -68,4 +68,6 @@ public interface SystemUserMapper {
      */
     public SystemUser getSystemUserByLoginName(String loginName);
 
+    public List<SystemUser> getSystemUserListByUserIds(List<Integer> userIds);
+
 }

@@ -86,14 +86,16 @@
 	</delete>
 
 	<select id="queryMerchantCount" resultType="java.lang.Integer">
-		select count(1) from
-		tb_merchant_info
+		select count(1) from tb_merchant_info
+		<where>
+			<if test="merchantName!=null and merchantName!=''">
+				and merchant_name like CONCAT('%',#{merchantName},'%')
+			</if>
+		</where>
 	</select>
 
 	<select id="queryMerchantList" resultMap="MerchantMapper">
-		select
-		<include refid="Base_Column_List" />
-		from tb_merchant_info
+		select <include refid="Base_Column_List" /> from tb_merchant_info
 		<where>
 			<if test="merchantName!=null and merchantName!=''">
 				and merchant_name like CONCAT('%',#{merchantName},'%')

@@ -50,14 +50,12 @@ public class SystemOperateLogServiceImpl implements SystemOperateLogService {
 
     @Override
     public Integer querySystemOperateLogCount(SystemOperateLog systemOperateLog) {
-        // TODO Auto-generated method stub
-        return null;
+        return systemOperateLogMapper.querySystemOperateLogCount(systemOperateLog);
     }
 
     @Override
     public List<SystemOperateLog> querySystemOperateLogList(SystemOperateLog systemOperateLog) {
-        // TODO Auto-generated method stub
-        return null;
+        return systemOperateLogMapper.querySystemOperateLogList(systemOperateLog);
     }
 
 }

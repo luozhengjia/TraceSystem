@@ -15,19 +15,7 @@ public interface ProductionBaseInfoService {
      */
     public ProductionBaseInfo read(Integer id);
 
-    /**
-     * 新增ProductionBaseInfo
-     * 
-     * @param merchant
-     */
-    public void insert(ProductionBaseInfo productionBaseInfo);
-
-    /**
-     * 更新ProductionBaseInfo
-     * 
-     * @param merchant
-     */
-    public void update(ProductionBaseInfo productionBaseInfo);
+    public void save(ProductionBaseInfo productionBaseInfo);
 
     /**
      * 删除ProductionBaseInfo

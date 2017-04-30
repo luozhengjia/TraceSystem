@@ -24,6 +24,7 @@ import com.ejunhai.trace.common.errors.JunhaiAssert;
 import com.ejunhai.trace.merchant.model.MerchantInfo;
 import com.ejunhai.trace.merchant.service.MerchantService;
 import com.ejunhai.trace.merchant.utils.MerchantUtil;
+import com.ejunhai.trace.system.dto.SystemOperateLogDto;
 import com.ejunhai.trace.system.dto.SystemPrivilageDto;
 import com.ejunhai.trace.system.dto.SystemRoleDto;
 import com.ejunhai.trace.system.dto.SystemUserDto;
@@ -31,10 +32,12 @@ import com.ejunhai.trace.system.enums.RoleType;
 import com.ejunhai.trace.system.enums.UserState;
 import com.ejunhai.trace.system.enums.UserType;
 import com.ejunhai.trace.system.model.SystemAction;
+import com.ejunhai.trace.system.model.SystemOperateLog;
 import com.ejunhai.trace.system.model.SystemPrivilage;
 import com.ejunhai.trace.system.model.SystemRole;
 import com.ejunhai.trace.system.model.SystemUser;
 import com.ejunhai.trace.system.service.SystemActionService;
+import com.ejunhai.trace.system.service.SystemOperateLogService;
 import com.ejunhai.trace.system.service.SystemPrivilageService;
 import com.ejunhai.trace.system.service.SystemRoleService;
 import com.ejunhai.trace.system.service.SystemUserService;
@@ -62,6 +65,9 @@ public class SystemUserController extends BaseController {
 
     @Resource
     private MerchantService merchantService;
+
+    @Resource
+    private SystemOperateLogService systemOperateLogService;
 
     @RequestMapping("/userList")
     public String userList(HttpServletRequest request, SystemUserDto systemUserDto, ModelMap modelMap) {
@@ -368,5 +374,41 @@ public class SystemUserController extends BaseController {
         // 保存权限数据
         systemPrivilageService.saveSystemPrivilage(systemPrivilageDto.getRoleId(), actionIdSet);
         return jsonSuccess();
+    }
+
+    @RequestMapping("/operateLogList")
+    public String operateLogList(HttpServletRequest request, SystemOperateLogDto systemOperateLogDto, ModelMap modelMap) {
+        Integer iCount = systemOperateLogService.querySystemOperateLogCount(systemOperateLogDto);
+        Pagination pagination = new Pagination(systemOperateLogDto.getPageNo(), iCount);
+
+        List<SystemOperateLog> systemOperateLogList = new ArrayList<SystemOperateLog>();
+        if (iCount > 0) {
+            systemOperateLogDto.setOffset(pagination.getOffset());
+            systemOperateLogDto.setPageSize(pagination.getPageSize());
+            systemOperateLogList = systemOperateLogService.querySystemOperateLogList(systemOperateLogDto);
+
+            List<Integer> merchantIds = new ArrayList<Integer>();
+            List<Integer> userIds = new ArrayList<Integer>();
+            for (SystemOperateLog systemOperateLog : systemOperateLogList) {
+                userIds.add(systemOperateLog.getUserId());
+                if (systemOperateLog.getMerchantId() != null) {
+                    merchantIds.add(systemOperateLog.getMerchantId());
+                }
+            }
+
+            // 获取用户映射关系
+            List<SystemUser> systemUserList = systemUserService.getSystemUserListByUserIds(userIds);
+            modelMap.put("userMap", SystemUserUtil.getSystemUserMap(systemUserList));
+
+            // 获取商户映射关系
+            List<MerchantInfo> merchantList = merchantService.getMerchantListByIds(merchantIds);
+            modelMap.put("merchantMap", MerchantUtil.getMerchantMap(merchantList));
+
+        }
+
+        modelMap.put("systemOperateLogDto", systemOperateLogDto);
+        modelMap.put("systemOperateLogList", systemOperateLogList);
+        modelMap.put("pagination", pagination);
+        return "system/operateLogList";
     }
 }

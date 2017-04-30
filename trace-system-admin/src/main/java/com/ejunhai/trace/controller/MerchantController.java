@@ -15,10 +15,11 @@ import com.ejunhai.trace.common.base.BaseController;
 import com.ejunhai.trace.common.base.Pagination;
 import com.ejunhai.trace.common.errors.JunhaiAssert;
 import com.ejunhai.trace.merchant.dto.MerchantDto;
+import com.ejunhai.trace.merchant.dto.ProductionBaseInfoDto;
 import com.ejunhai.trace.merchant.model.MerchantInfo;
+import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
 import com.ejunhai.trace.merchant.service.MerchantService;
-import com.ejunhai.trace.system.service.SystemRoleService;
-import com.ejunhai.trace.system.service.SystemUserService;
+import com.ejunhai.trace.merchant.service.ProductionBaseInfoService;
 import com.ejunhai.trace.utils.SessionManager;
 
 @Controller
@@ -26,13 +27,10 @@ import com.ejunhai.trace.utils.SessionManager;
 public class MerchantController extends BaseController {
 
     @Resource
-    private SystemUserService systemUserService;
-
-    @Resource
-    private SystemRoleService systemRoleService;
-
-    @Resource
     private MerchantService merchantService;
+
+    @Resource
+    private ProductionBaseInfoService productionBaseInfoService;
 
     @RequestMapping("/merchantList")
     public String merchantList(HttpServletRequest request, MerchantDto merchantDto, ModelMap modelMap) {
@@ -121,4 +119,70 @@ public class MerchantController extends BaseController {
         modelMap.put("merchant", merchant);
         return "merchant/profile";
     }
+
+    @RequestMapping("/productionBaseInfoList")
+    public String productionBaseList(HttpServletRequest request, ProductionBaseInfoDto productionBaseInfoDto, ModelMap modelMap) {
+        Integer iCount = productionBaseInfoService.queryProductionBaseInfoCount(productionBaseInfoDto);
+        Pagination pagination = new Pagination(productionBaseInfoDto.getPageNo(), iCount);
+
+        List<ProductionBaseInfo> productionBaseInfoList = new ArrayList<ProductionBaseInfo>();
+        if (iCount > 0) {
+            productionBaseInfoDto.setOffset(pagination.getOffset());
+            productionBaseInfoDto.setPageSize(pagination.getPageSize());
+            productionBaseInfoList = productionBaseInfoService.queryProductionBaseInfoList(productionBaseInfoDto);
+        }
+
+        modelMap.put("productionBaseInfoDto", productionBaseInfoDto);
+        modelMap.put("productionBaseInfoList", productionBaseInfoList);
+        modelMap.put("pagination", pagination);
+        return "merchant/productionBaseInfoList";
+    }
+
+    @RequestMapping("/productionBaseInfoDetail")
+    public String productionBaseInfoDetail(HttpServletRequest request, ProductionBaseInfo productionBaseInfo, ModelMap modelMap) {
+        if (productionBaseInfo.getId() != null) {
+            productionBaseInfo = productionBaseInfoService.read(productionBaseInfo.getId());
+        }
+
+        // 新增或编辑企业基地信息
+        modelMap.put("productionBaseInfo", productionBaseInfo);
+        return "merchant/productionBaseInfoEdit";
+    }
+
+    @RequestMapping("/saveProductionBaseInfo")
+    @ResponseBody
+    public String saveProductionBaseInfo(HttpServletRequest request, ProductionBaseInfoDto productionBaseInfoDto) {
+        JunhaiAssert.notBlank(productionBaseInfoDto.getBaseName(), "基地名称不能为空");
+
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        ProductionBaseInfo productionBaseInfo = new ProductionBaseInfo();
+        if (productionBaseInfoDto.getId() != null) {
+            productionBaseInfo = productionBaseInfoService.read(productionBaseInfo.getId());
+            JunhaiAssert.isTrue(productionBaseInfo != null, "无效基地ID");
+            JunhaiAssert.isTrue(productionBaseInfo.getMerchantId() == merchantId, "非法操作");
+        } else {
+            productionBaseInfo.setMerchantId(merchantId);
+        }
+
+        productionBaseInfo.setBaseName(productionBaseInfoDto.getBaseName());
+        productionBaseInfo.setBaseType(productionBaseInfoDto.getBaseType());
+        productionBaseInfo.setBaseArea(productionBaseInfoDto.getBaseArea());
+        productionBaseInfo.setBaseAddress(productionBaseInfoDto.getBaseAddress());
+        productionBaseInfo.setBaseEnvInfo(productionBaseInfoDto.getBaseEnvInfo());
+        productionBaseInfo.setBaseResourceInfo(productionBaseInfoDto.getBaseResourceInfo());
+        productionBaseInfo.setBaseBulidTime(productionBaseInfoDto.getBaseBulidTime());
+        productionBaseInfo.setPicUrls(productionBaseInfoDto.getPicUrls());
+        productionBaseInfoService.save(productionBaseInfo);
+
+        return jsonSuccess();
+    }
+
+    @RequestMapping("/deleteProductionBaseInfo")
+    @ResponseBody
+    public String deleteProductionBaseInfo(HttpServletRequest request, ProductionBaseInfoDto productionBaseInfoDto) {
+        JunhaiAssert.notNull(productionBaseInfoDto.getId(), "id不能为空");
+        productionBaseInfoService.delete(productionBaseInfoDto.getId());
+        return jsonSuccess();
+    }
+
 }

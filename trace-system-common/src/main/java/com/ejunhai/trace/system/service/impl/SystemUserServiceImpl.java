@@ -1,6 +1,7 @@
 package com.ejunhai.trace.system.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -87,6 +88,14 @@ public class SystemUserServiceImpl implements SystemUserService {
         List<SystemAction> systemActionList = systemActionService.getSystemActionListByIds(actionIdList);
 
         return systemActionList;
+    }
+
+    @Override
+    public List<SystemUser> getSystemUserListByUserIds(List<Integer> userIds) {
+        if (userIds == null || userIds.isEmpty()) {
+            return new ArrayList<SystemUser>();
+        }
+        return systemUserMapper.getSystemUserListByUserIds(userIds);
     }
 
 }

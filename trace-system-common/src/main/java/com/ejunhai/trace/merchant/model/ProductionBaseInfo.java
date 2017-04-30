@@ -20,7 +20,7 @@ public class ProductionBaseInfo implements Serializable {
 
     private String baseResourceInfo;
 
-    private Date baseBulidTime;
+    private String baseBulidTime;
 
     private String picUrls;
 
@@ -94,11 +94,11 @@ public class ProductionBaseInfo implements Serializable {
         this.baseResourceInfo = baseResourceInfo == null ? null : baseResourceInfo.trim();
     }
 
-    public Date getBaseBulidTime() {
+    public String getBaseBulidTime() {
         return baseBulidTime;
     }
 
-    public void setBaseBulidTime(Date baseBulidTime) {
+    public void setBaseBulidTime(String baseBulidTime) {
         this.baseBulidTime = baseBulidTime;
     }
 

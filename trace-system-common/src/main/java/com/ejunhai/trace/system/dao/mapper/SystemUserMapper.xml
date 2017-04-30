@@ -104,4 +104,13 @@
     	where login_name = #{loginName,jdbcType=VARCHAR}
     </select>
     
+    <select id="getSystemUserListByUserIds" resultMap="SystemUserMapper">
+    	select <include refid="Base_Column_List" /> from tb_system_user where id in (
+	        <foreach collection="list" item="userId" index="index" separator="," >  
+		        #{userId}
+		    </foreach>
+	    ) 
+    </select>
+    
+    
 </mapper>

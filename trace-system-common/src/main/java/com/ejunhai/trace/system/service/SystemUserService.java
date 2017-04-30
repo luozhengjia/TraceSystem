@@ -71,6 +71,12 @@ public interface SystemUserService {
     public SystemUser getSystemUserByLoginName(String loginName);
 
     /**
+     * @param userIds
+     * @return
+     */
+    public List<SystemUser> getSystemUserListByUserIds(List<Integer> userIds);
+
+    /**
      * 用户授权
      * 
      * @param userId

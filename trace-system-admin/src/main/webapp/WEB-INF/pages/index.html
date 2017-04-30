@@ -1,78 +1,114 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title>生鲜果蔬预定服务平台</title>
-
-    <meta name="description" content="Dashboard" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
-
-    <!--Basic Styles-->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="assets/css/weather-icons.min.css" rel="stylesheet" />
-
-    <!--Beyond styles-->
-    <link id="beyond-link" href="assets/css/beyond.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/typicons.min.css" rel="stylesheet" />
-    <link href="assets/css/animate.min.css" rel="stylesheet" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="assets/js/skins.min.js"></script>
-</head>
-
-<body>
-    <!-- Navbar -->
-    <#include "/common/navbar.html">
-    <!-- /Navbar -->
-    
-    <!-- Main Container -->
-    <div class="main-container container-fluid">
-        <!-- Page Container -->
-        <div class="page-container">
-            <!-- Page Sidebar -->
-            <div class="page-sidebar" id="sidebar">
-                <!-- Page Sidebar Header-->
-                <div class="sidebar-header-wrapper">
-                    <input type="text" class="searchinput" />
-                    <i class="searchicon fa fa-search"></i>
-                    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
-                </div>
-                <!-- /Page Sidebar Header -->
-                
-                <!-- Sidebar Menu -->
-                <#include "/common/menu.html">
-                <!-- /Sidebar Menu -->
-            </div>
-            <!-- /Page Sidebar -->
-            
-            <!-- Page Content -->
-            <div class="page-content">
-            
-                <!-- Page Breadcrumb -->
-                <div class="page-breadcrumbs">
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="fa fa-home"></i>
-                            <a href="#">Home</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /Page Breadcrumb -->
-            </div>
-            <!-- /Page Content -->
-        </div>
-        <!-- /Page Container -->
-        <!-- Main Container -->
+<@override name="page-content">
+	<div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                <i class="fa fa-home"></i>
+                <a href="#">总览</a>
+            </li>
+        </ul>
     </div>
+    <div class="page-body">
+    	<div class="row">
+            <div class="col-lg-3">
+                <div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+                    <div class="databox-top bg-palegreen no-padding"></div>
+                    <div class="databox-bottom no-padding">
+                        <div class="databox-row">
+                            <div class="databox-cell cell-6 text-align-left">
+                                <span class="databox-text">Sales Total</span>
+                                <span class="databox-number">$23,657</span>
+                            </div>
+                            <div class="databox-cell cell-6 text-align-right">
+                                <span class="databox-text">September</span>
+                                <span class="databox-number font-70">$1,257</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                <div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+                    <div class="databox-top bg-orange no-padding">
+                    </div>
+                    <div class="databox-bottom no-padding">
+                        <div class="databox-row">
+                            <div class="databox-cell cell-6 text-align-left">
+                                <span class="databox-text">Users Total</span>
+                                <span class="databox-number">76,109</span>
+                            </div>
+                            <div class="databox-cell cell-6 text-align-right">
+                                <span class="databox-text">New</span>
+                                <span class="databox-number font-70">7,540</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <!--Basic Scripts-->
-    <script src="assets/js/jquery-2.0.3.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-
-    <!--Beyond Scripts-->
-    <script src="assets/js/beyond.min.js"></script>
-</body>
-</html>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                <div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+                    <div class="databox-top bg-azure no-padding">
+                    </div>
+                    <div class="databox-bottom no-padding">
+                        <div class="databox-row">
+                            <div class="databox-cell cell-6 text-align-left">
+                                <span class="databox-text">Visits Total</span>
+                                <span class="databox-number">990,541</span>
+                            </div>
+                            <div class="databox-cell cell-6 text-align-right">
+                                <span class="databox-text">September</span>
+                                <span class="databox-number font-70">292,123</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                <div class="databox databox-lg databox-inverted radius-bordered databox-shadowed databox-graded databox-vertical">
+                    <div class="databox-top bg-orange no-padding">
+                    </div>
+                    <div class="databox-bottom no-padding">
+                        <div class="databox-row">
+                            <div class="databox-cell cell-6 text-align-left">
+                                <span class="databox-text">Users Total</span>
+                                <span class="databox-number">76,109</span>
+                            </div>
+                            <div class="databox-cell cell-6 text-align-right">
+                                <span class="databox-text">New</span>
+                                <span class="databox-number font-70">7,540</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    	
+        <div class="row">     
+        	<div class="col-lg-12">
+                <div class="widget">
+                    <div class="widget-header ">
+                        <span class="widget-caption">溯源码访问次数日趋势图（PV&UV）</span>
+                    </div>
+                    <div class="widget-body">
+                        <div id="line-chart-2" class="chart chart-lg"></div>
+                    </div>
+                </div>
+            </div>
+        	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+	<script src="/assets/js/charts/morris/raphael-2.0.2.min.js"></script>
+    <script src="/assets/js/charts/morris/morris.js"></script>
+    <script src="/assets/js/charts/morris/morris-init.js"></script>
+	
+    <script>
+    	$(window).bind("load", function () {
+    		InitiateLineChart2.init();
+    	});
+    	
+    </script>
+</@override>
+<@extends name="/common/base.html"/>  

@@ -51,4 +51,12 @@ public interface ProductionBaseInfoMapper {
      */
     public List<ProductionBaseInfo> queryProductionBaseInfoList(ProductionBaseInfoDto productionBaseInfoDto);
 
+    /**
+     * 根据ID获取商户列表
+     * 
+     * @param baseIds
+     * @return
+     */
+    public List<ProductionBaseInfo> getProductionBaseInfoListByIds(List<Integer> baseIds);
+
 }

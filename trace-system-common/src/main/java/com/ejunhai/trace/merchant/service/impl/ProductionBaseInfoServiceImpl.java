@@ -1,6 +1,7 @@
 package com.ejunhai.trace.merchant.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -48,6 +49,14 @@ public class ProductionBaseInfoServiceImpl implements ProductionBaseInfoService 
     @Override
     public List<ProductionBaseInfo> queryProductionBaseInfoList(ProductionBaseInfoDto productionBaseInfoDto) {
         return productionBaseInfoMapper.queryProductionBaseInfoList(productionBaseInfoDto);
+    }
+
+    @Override
+    public List<ProductionBaseInfo> getProductionBaseInfoListByIds(List<Integer> baseIds) {
+        if (baseIds == null || baseIds.isEmpty()) {
+            return new ArrayList<ProductionBaseInfo>();
+        }
+        return productionBaseInfoMapper.getProductionBaseInfoListByIds(baseIds);
     }
 
 }

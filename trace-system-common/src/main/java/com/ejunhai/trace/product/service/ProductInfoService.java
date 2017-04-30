@@ -2,6 +2,7 @@ package com.ejunhai.trace.product.service;
 
 import java.util.List;
 
+import com.ejunhai.trace.merchant.model.MerchantInfo;
 import com.ejunhai.trace.product.dto.ProductInfoDto;
 import com.ejunhai.trace.product.model.ProductInfo;
 
@@ -39,5 +40,13 @@ public interface ProductInfoService {
      * @return
      */
     public List<ProductInfo> queryProductInfoList(ProductInfoDto productInfoDto);
+
+    /**
+     * 根据ID获取产品列表
+     * 
+     * @param productIds
+     * @return
+     */
+    public List<ProductInfo> getProductInfoListByIds(List<Integer> productIds);
 
 }

@@ -12,11 +12,15 @@ public class ProductBatch implements Serializable {
 
     private Integer productId;
 
-    private Date productionDate;
+    private Integer baseId;
+
+    private String productionDate;
 
     private String expireTime;
 
-    private Integer batchNum;
+    private Integer issueAmount;
+
+    private Integer hasIssueNum;
 
     private Date createTime;
 
@@ -56,12 +60,20 @@ public class ProductBatch implements Serializable {
         this.productId = productId;
     }
 
-    public Date getProductionDate() {
+    public Integer getBaseId() {
+        return baseId;
+    }
+
+    public void setBaseId(Integer baseId) {
+        this.baseId = baseId;
+    }
+
+    public String getProductionDate() {
         return productionDate;
     }
 
-    public void setProductionDate(Date productionDate) {
-        this.productionDate = productionDate;
+    public void setProductionDate(String productionDate) {
+        this.productionDate = productionDate == null ? null : productionDate.trim();
     }
 
     public String getExpireTime() {
@@ -72,12 +84,20 @@ public class ProductBatch implements Serializable {
         this.expireTime = expireTime == null ? null : expireTime.trim();
     }
 
-    public Integer getBatchNum() {
-        return batchNum;
+    public Integer getIssueAmount() {
+        return issueAmount;
     }
 
-    public void setBatchNum(Integer batchNum) {
-        this.batchNum = batchNum;
+    public void setIssueAmount(Integer issueAmount) {
+        this.issueAmount = issueAmount;
+    }
+
+    public Integer getHasIssueNum() {
+        return hasIssueNum;
+    }
+
+    public void setHasIssueNum(Integer hasIssueNum) {
+        this.hasIssueNum = hasIssueNum;
     }
 
     public Date getCreateTime() {
@@ -106,9 +126,11 @@ public class ProductBatch implements Serializable {
         sb.append(", merchantId=").append(merchantId);
         sb.append(", batchNo=").append(batchNo);
         sb.append(", productId=").append(productId);
+        sb.append(", baseId=").append(baseId);
         sb.append(", productionDate=").append(productionDate);
         sb.append(", expireTime=").append(expireTime);
-        sb.append(", batchNum=").append(batchNum);
+        sb.append(", issueAmount=").append(issueAmount);
+        sb.append(", hasIssueNum=").append(hasIssueNum);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);

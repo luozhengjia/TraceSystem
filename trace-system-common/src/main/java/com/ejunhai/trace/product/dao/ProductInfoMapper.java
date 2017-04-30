@@ -50,5 +50,13 @@ public interface ProductInfoMapper {
      * @return
      */
     public List<ProductInfo> queryProductInfoList(ProductInfoDto productInfoDto);
+    
+    /**
+     * 根据ID获取产品列表
+     * 
+     * @param productIds
+     * @return
+     */
+    public List<ProductInfo> getProductInfoListByIds(List<Integer> productIds);
 
 }

@@ -94,4 +94,15 @@
 		limit #{offset},#{pageSize}
 	</select>
 	
+	<select id="getProductionBaseInfoListByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_production_base_info
+		where id in (
+		<foreach collection="list" item="id" index="index" separator=",">
+			#{id}
+		</foreach>
+		)
+	</select>
+	
 </mapper>

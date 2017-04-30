@@ -1,6 +1,7 @@
 package com.ejunhai.trace.product.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -48,6 +49,14 @@ public class ProductInfoServiceImpl implements ProductInfoService {
     @Override
     public List<ProductInfo> queryProductInfoList(ProductInfoDto productInfoDto) {
         return productInfoMapper.queryProductInfoList(productInfoDto);
+    }
+
+    @Override
+    public List<ProductInfo> getProductInfoListByIds(List<Integer> productIds) {
+        if (productIds == null || productIds.isEmpty()) {
+            return new ArrayList<ProductInfo>();
+        }
+        return productInfoMapper.getProductInfoListByIds(productIds);
     }
 
 }

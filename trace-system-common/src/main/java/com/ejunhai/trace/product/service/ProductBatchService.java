@@ -15,19 +15,7 @@ public interface ProductBatchService {
      */
     public ProductBatch read(Integer id);
 
-    /**
-     * 新增ProductBatch
-     * 
-     * @param merchant
-     */
-    public void insert(ProductBatch productBatch);
-
-    /**
-     * 更新ProductBatch
-     * 
-     * @param merchant
-     */
-    public void update(ProductBatch productBatch);
+    public void save(ProductBatch productBatch);
 
     /**
      * 删除ProductBatch

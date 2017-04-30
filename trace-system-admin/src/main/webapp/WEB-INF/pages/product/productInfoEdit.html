@@ -1,0 +1,157 @@
+<@override name="page-content">  
+    <div class="page-breadcrumbs">
+        <ul class="breadcrumb">
+            <li><i class="fa fa-home"></i><a href="#">产品管理</a></li>
+            <li><a href="/product/productInfoList.jhtml">产品列表</a></li>
+            <li>编辑产品</li>
+        </ul>
+    </div>
+    
+	<div class="page-body">
+        <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+            <div class="col-xs-12 col-md-12">
+            	<div class="widget with-header">
+                	<div class="widget-header">
+                    	<span class="widget-caption"><i class="glyphicon glyphicon-edit"></i>&nbsp;<b>编辑产品</b></span>
+                    	
+						<div class="widget-buttons">
+							<a href="${_referUrl!'/product/productInfoList.jhtml'}" class="btn">&nbsp;&nbsp;<i class="typcn typcn-arrow-back"></i>&nbsp;&nbsp;</a>
+						</div>
+                    </div>
+                
+                	<div class="widget-body">
+						<form id="html5Form" method="post" class="form-horizontal" method="POST" action="/product/saveProductInfo.jhtml">
+							<input type="hidden" name="id"/>
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">产品名称<font color="red"> *</font></label>
+	                            <div class="col-lg-6">
+	                                <input type="text" class="form-control" name="productName"/>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">品牌名称<font color="red"> *</font></label>
+	                            <div class="col-lg-4">
+	                            	<input type="text" class="form-control" name="brandName"/>
+								</div>
+								<div class="col-lg-4"><p class="help-block">如：东境冬瓜</p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">产品logo<font color="red"> *</font></label>
+	                            <div class="col-lg-10">
+	                            	<input type="text" class="form-control" id="logoUrl" name="logoUrl"/>
+								</div>
+								<div class="col-lg-10 col-lg-offset-2"><p class="help-block"> 请上传尺寸为2:1的图片,最好为640px:320px</p></div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <label class="col-lg-2 control-label">产品介绍</label>
+	                            <div class="col-lg-10">
+	                            	<input type="hidden" class="form-control" name="remark"/>
+	                            	<div id="summernote"></div>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <div class="col-lg-2 col-lg-offset-2">
+	                            	 <button type="submit" class="btn btn-success">确认</button>
+	                            </div>
+	                        </div>
+	                    </form>
+	                </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</@override>
+<@override name="custom-script">
+   	<script>
+		$(document).ready(function() {
+			// 构建表单数据	
+			var formData = {			
+	         	"id":${(productInfo.id)!'null'},
+				"productName":"${(productInfo.productName)!''}",
+				"logoUrl":"${(productInfo.logoUrl)!''}",
+				"brandName":"${(productInfo.brandName)!''}",
+				"remark":"${(productInfo.remark)!''}"
+	        };
+	        
+			// 自动填充表单
+	        $("#html5Form").autofill(formData);
+		
+			// 图片上传
+			$('#logoUrl').imgUploader({max:1,callback:function(){
+				$('#html5Form').formValidation('revalidateField', 'logoUrl');
+			}});
+			
+			// 富文本编辑器
+			$('#summernote').summernote({ 
+				height: 200,
+				oninit:function(e){
+					$('#summernote').code(formData.remark);
+				},
+				onblur:function(e){
+					$('#html5Form').find('input[name="remark"]').val($('#summernote').code());
+				}
+			 });
+			
+			// 提交表单
+			$('#html5Form').formValidation({
+				fields: {
+		            productName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '产品名称不能为空'
+		                    }
+		                }
+		            },
+		            brandName: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '品牌名称不能为空'
+		                    }
+		                }
+		            },
+		            logoUrl: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '产品logo不能为空'
+		                    }
+		                }
+		            },
+		            remark: {
+		                validators: {
+		                    notEmpty: {
+		                        message: '产品介绍不能为空'
+		                    }
+		                }
+		            }
+		        }
+			})        
+			.on('success.form.fv', function(e) {
+	            // Prevent form submission
+	            e.preventDefault();
+	
+	            // Get the form instance
+	            var $form = $(e.target);
+	
+	            // Get the FormValidation instance
+	            var bv = $form.data('formValidation');
+	            
+	            // Use Ajax to submit form data
+	            $.post($form.attr('action'), $form.serialize(), function(result) {
+	                if(result.state.code==200){
+		        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+		        		setTimeout(function () {window.location = "${_referUrl!'/product/productInfoList.jhtml'}";}, 1500);
+		        	}else{
+		        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
+		        	}
+	            }, 'json');
+	        });
+		});
+	</script>
+</@override>
+<@extends name="/common/base.html"/>  
+

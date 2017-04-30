@@ -1,12 +1,12 @@
-<@override name="page-content">
+<@override name="page-content">  
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
-            <li><i class="fa fa-home"></i><a href="#">礼品卡管理</a></li>
-            <li>礼品卡列表</li>
+            <li><i class="fa fa-home"></i><a href="#">产品管理</a></li>
+            <li>批次管理</li>
         </ul>
     </div>
     
-    <div class="page-body">
+	<div class="page-body">
         <div class="row">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
             <div class="col-xs-12 col-md-12">
                 <div class="well with-header with-footer">
@@ -14,55 +14,51 @@
                         <div class="col-xs-10">
                         	<form class="form-inline" role="form">
 							    <div class="form-group">
-							    	<select name="couponSchemaId" class="form-control">
-										<option value="">按方案Id过滤</option>
-										<#list couponSchemaList as item >
-											<option value="${item.id}" <#if couponDto.couponSchemaId?? && couponDto.couponSchemaId==item.id>selected</#if>>${item.couponName}</option> 
-										</#list>
-                                    </select>
-							        <input type="text"  name="couponNumber" class="form-control" value="${(couponDto.couponNumber)!''}" placeholder="按礼品卡编码过滤">
-							        <select name="state" class="form-control">
-										<option value="">按状态过滤</option>
-										<#list CouponState.values() as item >
-											<option value="${item.value}" <#if couponDto.state?? && couponDto.state==item.value>selected</#if>>${item.title}</option> 
-										</#list>
-                                    </select>
+							        <input type="text"  name="batchNo" class="form-control" value="${(productBatchDto.batchNo)!''}" placeholder="按批次号过滤">
 							    </div>
 							    <button type="submit" class="btn">搜索</button>
 							</form>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class = "pull-right">
+                            	<a class="btn btn-success" href="/product/toProductBatch.jhtml">新增批次</a>
+                            </div>
                         </div>
                     </div>
                 
                     <table class="table table-hover table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>礼品卡编码</th>
-                                <th>方案名称</th>
-                                <th>有效时间</th>
-                                <th>状态</th>
-                                <th>使用时间</th>
-                                <th>使用订单号</th>
+                                <th>批次号</th>
+                                <th style="width:15%">产品名称</th>
+                                <th style="width:15%">基地</th>
+                                <th>生产日期</th>
+                                <th>溯源码数/产品数</th>
+                                <th>创建时间</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <#list couponList as item >
-                            <tr>
-                    			<td>${item.id?c}</td>
-                    			<td>${item.couponNumber}</td>
-                    			<td>${(couponSchemaMap[item.couponSchemaId?string].couponName)!''}（${item.couponSchemaId?c}）</td>
-                    			<td>${item.useStartdate?string('yyyy-MM-dd')} 至 ${item.useEnddate?string('yyyy-MM-dd')}</td>
-                    			<td>${CouponState.get(item.state).getTitle()}</td>
-                    			<td style="text-align:center">${(item.useTime?string('yyyy-MM-dd HH:mm'))!'-'}</td>
-                    			<td style="text-align:center">${(item.orderNumber)!'-'}</td>
+                            <#list productBatchList as item >
+                            <tr data-formData='{"id":${item.id}}'>
+                    			<td>${item.batchNo}</td>
+                    			<td>${(productInfoMap[item.productId?string].productName)!'-'}</td>
+                    			<td>${(productionBaseInfoMap[item.baseId?string].baseName)!'-'}</td>
+                    			<td>${item.productionDate}</td>
+                    			<td>${item.hasIssueNum?c}/${item.issueAmount?c}</td>
+                    			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                     			<td>
-                    				<#if item.state==0||item.state==1>
-	                					<#if item.state==0>
-	                						<button type="button" class="btn btn-success btn-xs J_activate" data-param='{"couponId":${item.id?c}}'><i class="fa fa-plus-circle"></i> 激活</button>
-	                					</#if>
-	                					<button type="button" class="btn btn-danger btn-xs delete J_discard" data-param='{"couponId":${item.id?c}}'><i class="fa fa-trash-o"></i> 作废</button>
-	                				</#if>
+                    				<#if item.hasIssueNum &lt; item.issueAmount>
+                    					<button type="button" class="btn btn-success btn-xs J_generate" data-param='{"id":${item.id?c}}'><i class="fa fa-plus-circle"></i> 生成溯源码</button>
+                    				</#if>
+                    				<#if item.hasIssueNum &gt; 0>
+                    					<a class="btn btn-success btn-xs" href="/product/exportTraceCodes.jhtml?id=${item.id?c}"><i class="fa fa-download"></i> 下载</a>
+                    				</#if>
+                    				
+                    				<a class="btn btn-info btn-xs" href="/product/toProductBatch.jhtml?id=${item.id?c}"><i class="fa fa-edit"></i> 编辑</a>
+                    				<#if item.hasIssueNum==0>
+                    					<button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i> 删除</button>
+                    				</#if>
                     			</td>
                             </tr>
                             </#list>
@@ -83,19 +79,19 @@
 </@override>
 <@override name="custom-script">
     <script>
-    	$(document).ready(function() {
-    		// 激活礼品卡
-	        $(".J_activate").on('click', function () {
+	    $(document).ready(function() {
+	    	// 删除产品批次
+	        $(".J_delete").on('click', function () {
 	        	var dataParam = $(this).attr('data-param');
 	        	bootbox.confirm({
-			        message: '你确定要激活该礼品卡？',
+			        message: '你确定删除该条数据？',
 			        title: "提示",
 			        callback: function(result) {  
 			            if (result) {
-		                    $.post('/coupon/activateCoupon.jhtml', JSON.parse(dataParam), function(result) {
+		                    $.post('/product/deleteProductBatch.jhtml', JSON.parse(dataParam), function(result) {
 				                if(result.state.code==200){
 					        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-					        		setTimeout(function () {window.location = "/coupon/couponList.jhtml";}, 1500);
+					        		setTimeout(function () {window.location = "/product/productBatchList.jhtml";}, 1500);
 					        	}else{
 					        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 					        	}
@@ -105,18 +101,18 @@
 		        });
 		    });
 		    
-		    // 作废礼品卡
-	        $(".J_discard").on('click', function () {
+		    // 生成溯源码
+		    $(".J_generate").on('click', function () {
 	        	var dataParam = $(this).attr('data-param');
 	        	bootbox.confirm({
-			        message: '你确定要作废该礼品卡？',
+			        message: '每次最多能生成100000个溯源码<br/><br/>你确定要生成溯源码吗？',
 			        title: "提示",
 			        callback: function(result) {  
 			            if (result) {
-		                    $.post('/coupon/discardCoupon.jhtml', JSON.parse(dataParam), function(result) {
+		                    $.post('/coupon/generateCoupons.jhtml', JSON.parse(dataParam), function(result) {
 				                if(result.state.code==200){
 					        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-					        		setTimeout(function () {window.location = "/coupon/couponList.jhtml";}, 1500);
+					        		setTimeout(function () {window.location = "/product/productBatchList.jhtml";}, 1500);
 					        	}else{
 					        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 					        	}
@@ -125,7 +121,7 @@
 			        }
 		        });
 		    });
-		});
+	    });
     </script>
 </@override>
 <@extends name="/common/base.html"/>  

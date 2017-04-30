@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.ejunhai.trace.merchant.model.MerchantInfo;
+import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
 
 public class MerchantUtil {
     public static Map<String, MerchantInfo> getMerchantMap(List<MerchantInfo> merchantList) {
@@ -20,5 +21,18 @@ public class MerchantUtil {
         }
 
         return merchantMap;
+    }
+
+    public static Map<String, ProductionBaseInfo> getProductionBaseInfoMap(List<ProductionBaseInfo> productionBaseInfoList) {
+        Map<String, ProductionBaseInfo> productionBaseInfoMap = new HashMap<String, ProductionBaseInfo>();
+        if (CollectionUtils.isEmpty(productionBaseInfoList)) {
+            return productionBaseInfoMap;
+        }
+
+        for (ProductionBaseInfo productionBaseInfo : productionBaseInfoList) {
+            productionBaseInfoMap.put(String.valueOf(productionBaseInfo.getId()), productionBaseInfo);
+        }
+
+        return productionBaseInfoMap;
     }
 }

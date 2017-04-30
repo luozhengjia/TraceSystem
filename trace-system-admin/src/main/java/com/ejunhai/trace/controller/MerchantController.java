@@ -122,6 +122,7 @@ public class MerchantController extends BaseController {
 
     @RequestMapping("/productionBaseInfoList")
     public String productionBaseList(HttpServletRequest request, ProductionBaseInfoDto productionBaseInfoDto, ModelMap modelMap) {
+        productionBaseInfoDto.setMerchantId(SessionManager.get(request).getMerchantId());
         Integer iCount = productionBaseInfoService.queryProductionBaseInfoCount(productionBaseInfoDto);
         Pagination pagination = new Pagination(productionBaseInfoDto.getPageNo(), iCount);
 

@@ -1,47 +1,53 @@
 package com.ejunhai.trace.product.service.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 
-import com.ejunhai.trace.product.dto.ProductTraceCodeDto;
-import com.ejunhai.trace.product.model.ProductTraceCode;
-import com.ejunhai.trace.product.service.ProductTraceCodeService;
+import javax.annotation.Resource;
 
-public class ProductInfoServiceImpl implements ProductTraceCodeService {
+import org.springframework.stereotype.Service;
+
+import com.ejunhai.trace.product.dao.ProductInfoMapper;
+import com.ejunhai.trace.product.dto.ProductInfoDto;
+import com.ejunhai.trace.product.model.ProductInfo;
+import com.ejunhai.trace.product.service.ProductInfoService;
+
+@Service("productInfoService")
+public class ProductInfoServiceImpl implements ProductInfoService {
+
+    @Resource
+    private ProductInfoMapper productInfoMapper;
 
     @Override
-    public ProductTraceCode read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+    public ProductInfo read(Integer id) {
+        return productInfoMapper.read(id);
     }
 
     @Override
-    public void insert(ProductTraceCode productTraceCode) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void update(ProductTraceCode productTraceCode) {
-        // TODO Auto-generated method stub
-
+    public void save(ProductInfo productInfo) {
+        if (productInfo.getId() != null) {
+            productInfo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            productInfoMapper.update(productInfo);
+        } else {
+            productInfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            productInfo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+            productInfoMapper.insert(productInfo);
+        }
     }
 
     @Override
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
-
+        productInfoMapper.delete(id);
     }
 
     @Override
-    public Integer queryProductTraceCodeCount(ProductTraceCodeDto productTraceCodeDto) {
-        // TODO Auto-generated method stub
-        return null;
+    public Integer queryProductInfoCount(ProductInfoDto productInfoDto) {
+        return productInfoMapper.queryProductInfoCount(productInfoDto);
     }
 
     @Override
-    public List<ProductTraceCode> queryProductTraceCodeList(ProductTraceCodeDto productTraceCodeDto) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<ProductInfo> queryProductInfoList(ProductInfoDto productInfoDto) {
+        return productInfoMapper.queryProductInfoList(productInfoDto);
     }
 
 }

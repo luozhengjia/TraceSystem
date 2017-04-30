@@ -2,46 +2,49 @@ package com.ejunhai.trace.product.service.impl;
 
 import java.util.List;
 
-import com.ejunhai.trace.merchant.dto.ProductionBaseInfoDto;
-import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.ejunhai.trace.product.dao.ProductBatchMapper;
+import com.ejunhai.trace.product.dto.ProductBatchDto;
+import com.ejunhai.trace.product.model.ProductBatch;
 import com.ejunhai.trace.product.service.ProductBatchService;
 
+@Service("productBatchService")
 public class ProductBatchServiceImpl implements ProductBatchService {
 
+    @Resource
+    private ProductBatchMapper productBatchMapper;
+
     @Override
-    public ProductionBaseInfo read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
+    public ProductBatch read(Integer id) {
+        return productBatchMapper.read(id);
     }
 
     @Override
-    public void insert(ProductionBaseInfo productionBaseInfo) {
-        // TODO Auto-generated method stub
-
+    public void insert(ProductBatch productBatch) {
+        productBatchMapper.insert(productBatch);
     }
 
     @Override
-    public void update(ProductionBaseInfo productionBaseInfo) {
-        // TODO Auto-generated method stub
-
+    public void update(ProductBatch productBatch) {
+        productBatchMapper.update(productBatch);
     }
 
     @Override
     public void delete(Integer id) {
-        // TODO Auto-generated method stub
-
+        productBatchMapper.delete(id);
     }
 
     @Override
-    public Integer queryProductionBaseInfoCount(ProductionBaseInfoDto productionBaseInfoDto) {
-        // TODO Auto-generated method stub
-        return null;
+    public Integer queryProductBatchCount(ProductBatchDto productBatchDto) {
+        return productBatchMapper.queryProductBatchCount(productBatchDto);
     }
 
     @Override
-    public List<ProductionBaseInfo> queryProductionBaseInfoList(ProductionBaseInfoDto troductionBaseInfoDto) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<ProductBatch> queryProductBatchList(ProductBatchDto productBatchDto) {
+        return productBatchMapper.queryProductBatchList(productBatchDto);
     }
 
 }

@@ -72,8 +72,11 @@
 	<select id="queryProductionBaseInfoCount" resultType="java.lang.Integer">
 		select count(1) from tb_production_base_info
 		<where>
+			<if test="merchantId!=null and merchantId!=''">
+				and merchant_id like CONCAT('%',#{merchantId},'%')
+			</if>
 			<if test="baseName!=null and baseName!=''">
-				and base_name like CONCAT('%',#{base_name},'%')
+				and base_name like CONCAT('%',#{baseName},'%')
 			</if>
 		</where>
 	</select>
@@ -81,8 +84,11 @@
 	<select id="queryProductionBaseInfoList" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" /> from tb_production_base_info
 		<where>
+			<if test="merchantId!=null and merchantId!=''">
+				and merchant_id like CONCAT('%',#{merchantId},'%')
+			</if>
 			<if test="baseName!=null and baseName!=''">
-				and base_name like CONCAT('%',#{base_name},'%')
+				and base_name like CONCAT('%',#{baseName},'%')
 			</if>
 		</where>
 		limit #{offset},#{pageSize}

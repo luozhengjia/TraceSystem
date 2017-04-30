@@ -2,8 +2,8 @@ package com.ejunhai.trace.product.service;
 
 import java.util.List;
 
-import com.ejunhai.trace.merchant.dto.ProductionBaseInfoDto;
-import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
+import com.ejunhai.trace.product.dto.ProductBatchDto;
+import com.ejunhai.trace.product.model.ProductBatch;
 
 public interface ProductBatchService {
 
@@ -13,43 +13,43 @@ public interface ProductBatchService {
      * @param id
      * @return
      */
-    public ProductionBaseInfo read(Integer id);
+    public ProductBatch read(Integer id);
 
     /**
-     * 新增ProductionBaseInfo
+     * 新增ProductBatch
      * 
      * @param merchant
      */
-    public void insert(ProductionBaseInfo productionBaseInfo);
+    public void insert(ProductBatch productBatch);
 
     /**
-     * 更新ProductionBaseInfo
+     * 更新ProductBatch
      * 
      * @param merchant
      */
-    public void update(ProductionBaseInfo productionBaseInfo);
+    public void update(ProductBatch productBatch);
 
     /**
-     * 删除ProductionBaseInfo
+     * 删除ProductBatch
      * 
      * @param id
      */
     public void delete(Integer id);
 
     /**
-     * 查询ProductionBaseInfo数量
+     * 查询ProductBatch数量
      * 
-     * @param merchant
+     * @param productBatchDto
      * @return
      */
-    public Integer queryProductionBaseInfoCount(ProductionBaseInfoDto productionBaseInfoDto);
+    public Integer queryProductBatchCount(ProductBatchDto productBatchDto);
 
     /**
-     * 查询ProductionBaseInfo列表
+     * 查询ProductBatch列表
      * 
-     * @param merchant
+     * @param productBatchDto
      * @return
      */
-    public List<ProductionBaseInfo> queryProductionBaseInfoList(ProductionBaseInfoDto troductionBaseInfoDto);
+    public List<ProductBatch> queryProductBatchList(ProductBatchDto productBatchDto);
 
 }

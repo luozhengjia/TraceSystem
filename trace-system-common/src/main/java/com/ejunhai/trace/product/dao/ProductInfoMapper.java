@@ -2,53 +2,53 @@ package com.ejunhai.trace.product.dao;
 
 import java.util.List;
 
-import com.ejunhai.trace.merchant.dto.ProductionBaseInfoDto;
-import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
+import com.ejunhai.trace.product.dto.ProductInfoDto;
+import com.ejunhai.trace.product.model.ProductInfo;
 
 public interface ProductInfoMapper {
     /**
-     * 根据Id获取ProductionBaseInfo
+     * 根据Id获取ProductInfo
      * 
      * @param id
      * @return
      */
-    public ProductionBaseInfo read(Integer id);
+    public ProductInfo read(Integer id);
 
     /**
-     * 新增ProductionBaseInfo
+     * 新增ProductInfo
      * 
      * @param merchant
      */
-    public void insert(ProductionBaseInfo productionBaseInfo);
+    public void insert(ProductInfo productInfo);
 
     /**
-     * 更新ProductionBaseInfo
+     * 更新ProductInfo
      * 
      * @param merchant
      */
-    public void update(ProductionBaseInfo productionBaseInfo);
+    public void update(ProductInfo productInfo);
 
     /**
-     * 删除ProductionBaseInfo
+     * 删除ProductInfo
      * 
      * @param id
      */
     public void delete(Integer id);
 
     /**
-     * 查询ProductionBaseInfo数量
+     * 查询ProductInfo数量
      * 
      * @param merchant
      * @return
      */
-    public Integer queryProductionBaseInfoCount(ProductionBaseInfoDto productionBaseInfoDto);
+    public Integer queryProductInfoCount(ProductInfoDto productInfoDto);
 
     /**
-     * 查询ProductionBaseInfo列表
+     * 查询ProductInfo列表
      * 
      * @param merchant
      * @return
      */
-    public List<ProductionBaseInfo> queryProductionBaseInfoList(ProductionBaseInfoDto troductionBaseInfoDto);
+    public List<ProductInfo> queryProductInfoList(ProductInfoDto productInfoDto);
 
 }

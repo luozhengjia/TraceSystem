@@ -2,10 +2,13 @@ package com.ejunhai.trace.product.service.impl;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.ejunhai.trace.product.dto.ProductTraceCodeDto;
 import com.ejunhai.trace.product.model.ProductTraceCode;
 import com.ejunhai.trace.product.service.ProductTraceCodeService;
 
+@Service("productTraceCodeService")
 public class ProductTraceCodeServiceImpl implements ProductTraceCodeService {
 
     @Override

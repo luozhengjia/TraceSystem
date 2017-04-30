@@ -25,7 +25,6 @@ public class ProductionBaseInfoServiceImpl implements ProductionBaseInfoService 
 
     @Override
     public void save(ProductionBaseInfo productionBaseInfo) {
-        // TODO Auto-generated method stub
         if (productionBaseInfo.getId() != null) {
             productionBaseInfo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
             productionBaseInfoMapper.update(productionBaseInfo);

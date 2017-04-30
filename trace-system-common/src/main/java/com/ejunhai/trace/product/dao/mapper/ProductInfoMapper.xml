@@ -9,51 +9,81 @@
     <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
     <result column="base_id" property="baseId" jdbcType="INTEGER" />
     <result column="pic_urls" property="picUrls" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />	
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ejunhai.trace.product.model.ProductInfo" extends="BaseResultMap" >
-    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
-  </resultMap>
+  
   <sql id="Base_Column_List" >
-    id, merchant_id, product_name, logo_url, brand_name, base_id, pic_urls, create_time, 
+    id, merchant_id, product_name, logo_url, brand_name, base_id, pic_urls,remark, create_time, 
     update_time
   </sql>
-  <sql id="Blob_Column_List" >
-    remark
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from tb_product_info
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_product_info
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductInfo" >
-    insert into tb_product_info (id, merchant_id, product_name, 
-      logo_url, brand_name, base_id, 
-      pic_urls, create_time, update_time, 
-      remark)
-    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
-      #{logoUrl,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR}, #{baseId,jdbcType=INTEGER}, 
-      #{picUrls,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{remark,jdbcType=LONGVARCHAR})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.ejunhai.trace.product.model.ProductInfo" >
-    update tb_product_info
-    set merchant_id = #{merchantId,jdbcType=INTEGER},
-      product_name = #{productName,jdbcType=VARCHAR},
-      logo_url = #{logoUrl,jdbcType=VARCHAR},
-      brand_name = #{brandName,jdbcType=VARCHAR},
-      base_id = #{baseId,jdbcType=INTEGER},
-      pic_urls = #{picUrls,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+  
+  	<select id="read" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from tb_product_info where ID = #{id,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductInfo" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_product_info (
+		<include refid="Base_Column_List" />
+		)
+		values (
+			#{id,jdbcType=INTEGER}, 
+			#{merchantId,jdbcType=INTEGER}, 
+			#{productName,jdbcType=VARCHAR}, 
+      		#{logoUrl,jdbcType=VARCHAR}, 
+      		#{brandName,jdbcType=VARCHAR}, 
+      		#{baseId,jdbcType=INTEGER}, 
+      		#{picUrls,jdbcType=VARCHAR}, 
+      		#{remark,jdbcType=LONGVARCHAR}, 
+      		#{createTime,jdbcType=TIMESTAMP}, 
+      		#{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<update id="update" parameterType="com.ejunhai.trace.product.model.ProductInfo">
+		update tb_product_info
+		<set>
+			  merchant_id = #{merchantId,jdbcType=INTEGER},
+		      product_name = #{productName,jdbcType=VARCHAR},
+		      logo_url = #{logoUrl,jdbcType=VARCHAR},
+		      brand_name = #{brandName,jdbcType=VARCHAR},
+		      base_id = #{baseId,jdbcType=INTEGER},
+		      pic_urls = #{picUrls,jdbcType=VARCHAR},
+		      remark = #{remark,jdbcType=LONGVARCHAR}, 
+		      create_time = #{createTime,jdbcType=TIMESTAMP},
+		      update_time = #{updateTime,jdbcType=TIMESTAMP}
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from tb_product_info where ID = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="queryProductInfoCount" resultType="java.lang.Integer">
+		select count(1) from tb_product_info
+		<where>
+			<if test="merchantId!=null and merchantId!=''">
+				and merchant_id like CONCAT('%',#{merchantId},'%')
+			</if>
+			<if test="productName!=null and productName!=''">
+				and product_name like CONCAT('%',#{productName},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="queryProductInfoList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_product_info
+		<where>
+			<if test="merchantId!=null and merchantId!=''">
+				and merchant_id like CONCAT('%',#{merchantId},'%')
+			</if>
+			<if test="productName!=null and productName!=''">
+				and product_name like CONCAT('%',#{productName},'%')
+			</if>
+		</where>
+		limit #{offset},#{pageSize}
+	</select>
+
 </mapper>

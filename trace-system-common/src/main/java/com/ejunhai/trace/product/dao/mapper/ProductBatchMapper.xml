@@ -18,40 +18,56 @@
     update_time
   </sql>
   
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_product_batch
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_product_batch
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+    <select id="read" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from tb_product_batch where ID = #{id,jdbcType=INTEGER}
+	</select>
 
-  <insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductBatch" >
-    insert into tb_product_batch (id, merchant_id, batch_no, 
-      product_id, production_date, expire_time, 
-      batch_num, create_time, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{batchNo,jdbcType=VARCHAR}, 
-      #{productId,jdbcType=INTEGER}, #{productionDate,jdbcType=DATE}, #{expireTime,jdbcType=VARCHAR}, 
-      #{batchNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
-  </insert>
-  
+	<insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductBatch" useGeneratedKeys="true" keyProperty="id">
+		insert into tb_product_batch (
+		<include refid="Base_Column_List" />
+		)
+		values (
+			#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{batchNo,jdbcType=VARCHAR}, 
+      		#{productId,jdbcType=INTEGER}, #{productionDate,jdbcType=DATE}, #{expireTime,jdbcType=VARCHAR}, 
+      		#{batchNum,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
 
-  <update id="updateByPrimaryKey" parameterType="com.ejunhai.trace.product.model.ProductBatch" >
-    update tb_product_batch
-    set merchant_id = #{merchantId,jdbcType=INTEGER},
-      batch_no = #{batchNo,jdbcType=VARCHAR},
-      product_id = #{productId,jdbcType=INTEGER},
-      production_date = #{productionDate,jdbcType=DATE},
-      expire_time = #{expireTime,jdbcType=VARCHAR},
-      batch_num = #{batchNum,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+	<update id="update" parameterType="com.ejunhai.trace.product.model.ProductBatch">
+		update tb_product_batch
+		<set>
+			  merchant_id = #{merchantId,jdbcType=INTEGER},
+		      batch_no = #{batchNo,jdbcType=VARCHAR},
+		      product_id = #{productId,jdbcType=INTEGER},
+		      production_date = #{productionDate,jdbcType=DATE},
+		      expire_time = #{expireTime,jdbcType=VARCHAR},
+		      batch_num = #{batchNum,jdbcType=INTEGER},
+		      create_time = #{createTime,jdbcType=TIMESTAMP},
+		      update_time = #{updateTime,jdbcType=TIMESTAMP}
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from tb_product_batch where ID = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="queryProductBatchCount" resultType="java.lang.Integer">
+		select count(1) from tb_product_batch
+		<where>
+			<if test="batchNo!=null and batchNo!=''">
+				and batch_no like CONCAT('%',#{batchNo},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="queryProductBatchList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_merchant_info
+		<where>
+			<if test="batchNo!=null and batchNo!=''">
+				and batch_no like CONCAT('%',#{batchNo},'%')
+			</if>
+		</where>
+		limit #{offset},#{pageSize}
+	</select>
 </mapper>

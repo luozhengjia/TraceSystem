@@ -87,6 +87,7 @@
 		                    $.post('/system/deleteAction.jhtml', JSON.parse(dataParam), function(result) {
 				                if(result.state.code==200){
 					        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
+					        		setTimeout(function () {window.location = "/system/actionList.jhtml";}, 1500);
 					        	}else{
 					        		Notify('操作失败!', 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 					        	}

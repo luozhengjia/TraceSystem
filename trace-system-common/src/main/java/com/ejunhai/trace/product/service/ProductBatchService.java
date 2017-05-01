@@ -5,6 +5,10 @@ import java.util.List;
 import com.ejunhai.trace.product.dto.ProductBatchDto;
 import com.ejunhai.trace.product.model.ProductBatch;
 
+/**
+ * @author pacel
+ * 
+ */
 public interface ProductBatchService {
 
     /**
@@ -39,5 +43,12 @@ public interface ProductBatchService {
      * @return
      */
     public List<ProductBatch> queryProductBatchList(ProductBatchDto productBatchDto);
+
+    /**
+     * 生存溯源码
+     * 
+     * @param id
+     */
+    public void generateTraceCodes(Integer id);
 
 }

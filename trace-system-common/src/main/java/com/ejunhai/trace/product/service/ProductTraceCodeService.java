@@ -16,11 +16,19 @@ public interface ProductTraceCodeService {
     public ProductTraceCode read(Integer id);
 
     /**
+     * 根据code获取ProductTraceCode
+     * 
+     * @param code
+     * @return
+     */
+    public ProductTraceCode getProductTraceCodeByCode(String code);
+
+    /**
      * 新增ProductTraceCode
      * 
      * @param merchant
      */
-    public void insert(ProductTraceCode productTraceCode);
+    public void batchInsert(List<ProductTraceCode> productTraceCodeList);
 
     /**
      * 更新ProductTraceCode

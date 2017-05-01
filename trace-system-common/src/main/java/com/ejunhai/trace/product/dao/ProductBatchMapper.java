@@ -22,6 +22,13 @@ public interface ProductBatchMapper {
     public void insert(ProductBatch productBatch);
 
     /**
+     * 批量插入
+     * 
+     * @param productBatchList
+     */
+    public void batchInsert(List<ProductBatch> productBatchList);
+
+    /**
      * 更新ProductBatch
      * 
      * @param merchant

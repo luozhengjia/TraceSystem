@@ -1,11 +1,11 @@
-package com.ejunhai.trace.product.dao;
+package com.ejunhai.trace.product.service;
 
 import java.util.List;
 
 import com.ejunhai.trace.product.dto.ProductAccessLogDto;
 import com.ejunhai.trace.product.model.ProductAccessLog;
 
-public interface ProductAccessLogMapper {
+public interface ProductAccessLogService {
 
     /**
      * 新增productAccessLog
@@ -29,4 +29,5 @@ public interface ProductAccessLogMapper {
      * @return
      */
     public List<ProductAccessLog> queryProductAccessLogList(ProductAccessLogDto productAccessLogDto);
+
 }

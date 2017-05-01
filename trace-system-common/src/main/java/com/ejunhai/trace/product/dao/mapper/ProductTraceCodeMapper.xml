@@ -1,46 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ejunhai.trace.product.dao.ProductTraceCodeMapper" >
-  <resultMap id="BaseResultMap" type="com.ejunhai.trace.product.model.ProductTraceCode" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
-    <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
-    <result column="trace_code" property="traceCode" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="TINYINT" />
-    <result column="access_times" property="accessTimes" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, merchant_id, batch_no, trace_code, status, access_times, create_time, update_time
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_product_trace_code
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from tb_product_trace_code
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductTraceCode" >
-    insert into tb_product_trace_code (id, merchant_id, batch_no, 
-      trace_code, status, access_times, 
-      create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{batchNo,jdbcType=VARCHAR}, 
-      #{traceCode,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{accessTimes,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
-  </insert>
-  <update id="updateByPrimaryKey" parameterType="com.ejunhai.trace.product.model.ProductTraceCode" >
-    update tb_product_trace_code
-    set merchant_id = #{merchantId,jdbcType=INTEGER},
-      batch_no = #{batchNo,jdbcType=VARCHAR},
-      trace_code = #{traceCode,jdbcType=VARCHAR},
-      status = #{status,jdbcType=TINYINT},
-      access_times = #{accessTimes,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+	<resultMap id="BaseResultMap" type="com.ejunhai.trace.product.model.ProductTraceCode" >
+	  <id column="id" property="id" jdbcType="INTEGER" />
+	  <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+	  <result column="batch_no" property="batchNo" jdbcType="VARCHAR" />
+	  <result column="trace_code" property="traceCode" jdbcType="VARCHAR" />
+	  <result column="status" property="status" jdbcType="TINYINT" />
+	  <result column="access_times" property="accessTimes" jdbcType="INTEGER" />
+	  <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	  <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+	  id, merchant_id, batch_no, trace_code, status, access_times, create_time, update_time
+	</sql>
+	
+	<select id="read" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select <include refid="Base_Column_List" /> from tb_product_trace_code where ID = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getProductTraceCodeByCode" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_product_trace_code where trace_code = #{code,jdbcType=VARCHAR}
+	</select>
+	
+	  <insert id="batchInsert" parameterType="java.util.List" >
+		insert into tb_product_trace_code (merchant_id,batch_no,trace_code)
+		values <foreach collection ="list" item="productTraceCode" index= "index" separator =",">
+		(
+			#{productTraceCode.merchantId,jdbcType=INTEGER}, 
+			#{productTraceCode.batchNo,jdbcType=VARCHAR}, 
+      		#{productTraceCode.traceCode,jdbcType=VARCHAR}, 
+		)
+		</foreach >
+	</insert>
+	
+	  <update id="update" parameterType="com.ejunhai.trace.product.model.ProductTraceCode" >
+	    update tb_product_trace_code
+	    set merchant_id = #{merchantId,jdbcType=INTEGER},
+	      batch_no = #{batchNo,jdbcType=VARCHAR},
+	      trace_code = #{traceCode,jdbcType=VARCHAR},
+	      status = #{status,jdbcType=TINYINT},
+	      access_times = #{accessTimes,jdbcType=INTEGER},
+	      create_time = #{createTime,jdbcType=TIMESTAMP},
+	      update_time = #{updateTime,jdbcType=TIMESTAMP}
+	    where id = #{id,jdbcType=INTEGER}
+	  </update>
+  
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from tb_product_trace_code where ID = #{id,jdbcType=INTEGER}
+	</delete>
+
+	<select id="queryProductTraceCodeCount" resultType="java.lang.Integer">
+		select count(1) from tb_product_trace_code
+		<where>
+			<if test="merchantId!=null and merchantId!=''">
+				and merchant_id like CONCAT('%',#{merchantId},'%')
+			</if>
+		</where>
+	</select>
+
+	<select id="queryProductTraceCodeList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_product_trace_code
+		<where>
+			<if test="merchantId!=null and merchantId!=''">
+				and merchant_id like CONCAT('%',#{merchantId},'%')
+			</if>
+		</where>
+		limit #{offset},#{pageSize}
+	</select>
+
 </mapper>

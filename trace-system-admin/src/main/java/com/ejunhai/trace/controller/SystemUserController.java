@@ -282,7 +282,7 @@ public class SystemUserController extends BaseController {
         // 新增或编辑角色
         systemRole.setRoleName(systemRoleDto.getRoleName());
         if (systemRoleDto.getId() == null) {
-            systemRole.setRoleType(RoleType.sa.getValue());
+            systemRole.setRoleType(RoleType.ma.getValue());
             systemRole.setMerchantId(SessionManager.get(request).getMerchantId());
             systemRoleService.insert(systemRole);
         } else {

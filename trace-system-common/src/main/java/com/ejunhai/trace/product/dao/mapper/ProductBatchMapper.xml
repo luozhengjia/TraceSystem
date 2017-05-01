@@ -35,7 +35,7 @@
 		      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
 		)
 	</insert>
-
+	
 	<update id="update" parameterType="com.ejunhai.trace.product.model.ProductBatch">
 		update tb_product_batch
 		<set>
@@ -80,4 +80,6 @@
 		</where>
 		limit #{offset},#{pageSize}
 	</select>
+	
+
 </mapper>

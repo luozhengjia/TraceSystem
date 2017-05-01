@@ -19,13 +19,19 @@ import com.ejunhai.trace.common.utils.DateUtil;
 import com.ejunhai.trace.merchant.model.ProductionBaseInfo;
 import com.ejunhai.trace.merchant.service.ProductionBaseInfoService;
 import com.ejunhai.trace.merchant.utils.MerchantUtil;
+import com.ejunhai.trace.product.dto.ProductAccessLogDto;
 import com.ejunhai.trace.product.dto.ProductBatchDto;
 import com.ejunhai.trace.product.dto.ProductInfoDto;
+import com.ejunhai.trace.product.dto.ProductTraceCodeDto;
+import com.ejunhai.trace.product.model.ProductAccessLog;
 import com.ejunhai.trace.product.model.ProductBatch;
 import com.ejunhai.trace.product.model.ProductInfo;
+import com.ejunhai.trace.product.model.ProductTraceCode;
+import com.ejunhai.trace.product.service.ProductAccessLogService;
 import com.ejunhai.trace.product.service.ProductBatchService;
 import com.ejunhai.trace.product.service.ProductInfoService;
 import com.ejunhai.trace.product.service.ProductTraceCodeService;
+import com.ejunhai.trace.product.utils.ProductAccesslogUtil;
 import com.ejunhai.trace.product.utils.ProductUtil;
 import com.ejunhai.trace.utils.SessionManager;
 
@@ -44,6 +50,9 @@ public class ProductController extends BaseController {
 
     @Resource
     private ProductionBaseInfoService productionBaseInfoService;
+
+    @Resource
+    private ProductAccessLogService productAccessLogService;
 
     @RequestMapping("/productInfoList")
     public String productInfoList(HttpServletRequest request, ProductInfoDto productInfoDto, ModelMap modelMap) {
@@ -112,7 +121,7 @@ public class ProductController extends BaseController {
     @ResponseBody
     public String importProductInfo(HttpServletRequest request, ProductInfoDto productInfoDto) {
         JunhaiAssert.notNull(productInfoDto.getId(), "id不能为空");
-        productInfoService.delete(productInfoDto.getId());
+        // todo
         return jsonSuccess();
     }
 
@@ -204,11 +213,63 @@ public class ProductController extends BaseController {
         return jsonSuccess();
     }
 
-    @RequestMapping("/exportTraceCodes")
-    public String exportTraceCodes(HttpServletRequest request, ProductBatchDto productBatchDto) {
+    @RequestMapping("/generateTraceCodes")
+    public String generateTraceCodes(HttpServletRequest request, ProductBatchDto productBatchDto) {
         JunhaiAssert.notNull(productBatchDto.getId(), "id不能为空");
-        productBatchService.delete(productBatchDto.getId());
+        productBatchService.generateTraceCodes(productBatchDto.getId());
         return jsonSuccess();
     }
 
+    @RequestMapping("/exportTraceCodes")
+    public String exportTraceCodes(HttpServletRequest request, ProductBatchDto productBatchDto) {
+        JunhaiAssert.notNull(productBatchDto.getId(), "id不能为空");
+        // todo
+        return jsonSuccess();
+    }
+
+    @RequestMapping("/queryTraceCodes")
+    public String productTraceCodeList(HttpServletRequest request, ProductTraceCodeDto productTraceCodeDto, ModelMap modelMap) {
+        productTraceCodeDto.setMerchantId(SessionManager.get(request).getMerchantId());
+        Integer iCount = productTraceCodeService.queryProductTraceCodeCount(productTraceCodeDto);
+        Pagination pagination = new Pagination(productTraceCodeDto.getPageNo(), iCount);
+
+        // 获取分页数据
+        List<ProductTraceCode> productTraceCodeList = new ArrayList<ProductTraceCode>();
+        if (iCount > 0) {
+            productTraceCodeDto.setOffset(pagination.getOffset());
+            productTraceCodeDto.setPageSize(pagination.getPageSize());
+            productTraceCodeList = productTraceCodeService.queryProductTraceCodeList(productTraceCodeDto);
+        }
+
+        modelMap.put("pagination", pagination);
+        modelMap.put("productTraceCodeDto", productTraceCodeDto);
+        modelMap.put("productTraceCodeList", productTraceCodeList);
+        return "product/productTraceCodeList";
+    }
+
+    @RequestMapping("/productAccessLogList")
+    public String productAccessLogList(HttpServletRequest request, ProductAccessLogDto productAccessLogDto, ModelMap modelMap) {
+        productAccessLogDto.setMerchantId(SessionManager.get(request).getMerchantId());
+        Integer iCount = productAccessLogService.queryProductAccessLogCount(productAccessLogDto);
+        Pagination pagination = new Pagination(productAccessLogDto.getPageNo(), iCount);
+
+        // 获取分页数据
+        List<ProductAccessLog> productAccessLogList = new ArrayList<ProductAccessLog>();
+        if (iCount > 0) {
+            productAccessLogDto.setOffset(pagination.getOffset());
+            productAccessLogDto.setPageSize(pagination.getPageSize());
+            productAccessLogList = productAccessLogService.queryProductAccessLogList(productAccessLogDto);
+
+            // 获取产品ID-产品映射关系
+            List<Integer> productIdList = ProductAccesslogUtil.getProductIdList(productAccessLogList);
+            List<ProductInfo> productInfoList = productInfoService.getProductInfoListByIds(productIdList);
+            Map<String, ProductInfo> productInfoMap = ProductUtil.getProductInfoMap(productInfoList);
+            modelMap.put("productInfoMap", productInfoMap);
+        }
+
+        modelMap.put("pagination", pagination);
+        modelMap.put("productAccessLogDto", productAccessLogDto);
+        modelMap.put("productAccessLogList", productAccessLogList);
+        return "product/productAccessLogList";
+    }
 }

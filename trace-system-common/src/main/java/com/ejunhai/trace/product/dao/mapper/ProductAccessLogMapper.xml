@@ -30,7 +30,7 @@
 	</insert>
   
   	<select id="queryProductAccessLogCount" resultType="java.lang.Integer">
-		select count(1) from tb_product_batch
+		select count(1) from tb_product_access_log
 		<where>
 			<if test="merchantId!=null and merchantId!=''">
 				and merchant_id like CONCAT('%',#{merchantId},'%')
@@ -39,13 +39,14 @@
 	</select>
 
 	<select id="queryProductAccessLogList" resultMap="BaseResultMap">
-		select <include refid="Base_Column_List" /> from tb_product_batch
+		select <include refid="Base_Column_List" /> from tb_product_access_log
 		<where>
 			<if test="merchantId!=null and merchantId!=''">
 				and merchant_id like CONCAT('%',#{merchantId},'%')
 			</if>
 		</where>
-		limit #{offset},#{pageSize}
+		order by create_time desc
+		limit #{offset},#{pageSize} 
 	</select>
 
 </mapper>

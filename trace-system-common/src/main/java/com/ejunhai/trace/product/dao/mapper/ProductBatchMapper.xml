@@ -51,6 +51,10 @@
 		</set>
 		where ID = #{id,jdbcType=INTEGER}
 	</update>
+	
+	<update id="updateHaveIssueNum" >
+		update tb_product_batch set has_issue_num=has_issue_num+#{num}  where ID = #{id,jdbcType=INTEGER}
+	</update>
 
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from tb_product_batch where ID = #{id,jdbcType=INTEGER}

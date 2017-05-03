@@ -25,12 +25,13 @@
 	</select>
 	
 	  <insert id="batchInsert" parameterType="java.util.List" >
-		insert into tb_product_trace_code (merchant_id,batch_no,trace_code)
+		insert into tb_product_trace_code (merchant_id,batch_no,trace_code,status)
 		values <foreach collection ="list" item="productTraceCode" index= "index" separator =",">
 		(
 			#{productTraceCode.merchantId,jdbcType=INTEGER}, 
 			#{productTraceCode.batchNo,jdbcType=VARCHAR}, 
-      		#{productTraceCode.traceCode,jdbcType=VARCHAR}, 
+      		#{productTraceCode.traceCode,jdbcType=VARCHAR},
+      		#{productTraceCode.status,jdbcType=VARCHAR}
 		)
 		</foreach >
 	</insert>

@@ -16,6 +16,8 @@ public class ProductAccessLog implements Serializable {
 
     private String sourceIp;
 
+    private String location;
+
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
@@ -74,6 +76,14 @@ public class ProductAccessLog implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     @Override

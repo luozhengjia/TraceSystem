@@ -2,7 +2,7 @@
     <div class="page-breadcrumbs">
         <ul class="breadcrumb">
             <li><i class="fa fa-home"></i><a href="#">产品管理</a></li>
-            <li>用户访问记录</li>
+            <li>用户查询记录</li>
         </ul>
     </div>
     
@@ -43,7 +43,7 @@
                     			<td>${item.traceCode!''}</td>
                     			<td>${(productInfoMap[item.productId?string].productName)!'-'}</td>
                     			<td>${item.batchNo}</td>
-                    			<td>${item.sourceIp}</td>
+                    			<td>${item.sourceIp!''}(${item.location!'-'})</td>
                     			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                             </tr>
                             </#list>

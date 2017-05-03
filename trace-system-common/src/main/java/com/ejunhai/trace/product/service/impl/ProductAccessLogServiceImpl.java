@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import me.zzp.district.DistrictHelper;
+
 import org.springframework.stereotype.Service;
 
 import com.ejunhai.trace.product.dao.ProductAccessLogMapper;
@@ -19,6 +21,9 @@ public class ProductAccessLogServiceImpl implements ProductAccessLogService {
 
     @Override
     public void insert(ProductAccessLog productAccessLog) {
+        if (productAccessLog.getSourceIp() != null) {
+            productAccessLog.setLocation(DistrictHelper.ofIp(productAccessLog.getSourceIp()));
+        }
         productAccessLogMapper.insert(productAccessLog);
     }
 

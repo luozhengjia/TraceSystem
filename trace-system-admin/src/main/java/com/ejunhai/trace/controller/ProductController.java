@@ -247,6 +247,16 @@ public class ProductController extends BaseController {
         return "product/productTraceCodeList";
     }
 
+    public String discardTraceCode(HttpServletRequest request, ProductTraceCodeDto productTraceCodeDto, ModelMap modelMap) {
+        ProductTraceCode productTraceCode = productTraceCodeService.getProductTraceCodeByCode(productTraceCodeDto.getTraceCode());
+        JunhaiAssert.isTrue(productTraceCode != null, "溯源码不存在");
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        JunhaiAssert.isTrue(productTraceCode.getMerchantId() == merchantId, "非法操作");
+        productTraceCode.setStatus(productTraceCodeDto.getStatus());
+        productTraceCodeService.update(productTraceCode);
+        return jsonSuccess();
+    }
+
     @RequestMapping("/productAccessLogList")
     public String productAccessLogList(HttpServletRequest request, ProductAccessLogDto productAccessLogDto, ModelMap modelMap) {
         productAccessLogDto.setMerchantId(SessionManager.get(request).getMerchantId());

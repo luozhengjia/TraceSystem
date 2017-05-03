@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ejunhai.trace.product.dao.ProductBatchMapper;
 import com.ejunhai.trace.product.dto.ProductBatchDto;
+import com.ejunhai.trace.product.enums.TracecodeState;
 import com.ejunhai.trace.product.model.ProductBatch;
 import com.ejunhai.trace.product.model.ProductTraceCode;
 import com.ejunhai.trace.product.service.ProductBatchService;
@@ -60,23 +61,25 @@ public class ProductBatchServiceImpl implements ProductBatchService {
     @Override
     public synchronized void generateTraceCodes(Integer id) {
         ProductBatch productBatch = productBatchMapper.read(id);
-        Integer availableNum = productBatch.getIssueAmount() - productBatch.getHasIssueNum();
-        int onceLimitNum = 100000;
-        Integer maxNum = availableNum > onceLimitNum ? onceLimitNum : availableNum;
+        Integer maxGenNum = productBatch.getIssueAmount() - productBatch.getHasIssueNum();
+        int onceLimitGenNum = 100000;
+        Integer availableGenNum = maxGenNum > onceLimitGenNum ? onceLimitGenNum : maxGenNum;
 
-        // 分次批量生成溯源码
-        int batchNum = 1024;
-        int page = (maxNum + batchNum - 1) / batchNum;
+        int onceGenNum = 1024;
+        int page = (availableGenNum + onceGenNum - 1) / onceGenNum;
         for (int i = 0; i < page; i++) {
+            int batchNum = i == page - 1 ? availableGenNum - (page * i) * onceGenNum : onceGenNum;
             List<ProductTraceCode> productTraceCodeList = new ArrayList<ProductTraceCode>(batchNum);
             for (int j = 0; j < batchNum; j++) {
                 ProductTraceCode productTraceCode = new ProductTraceCode();
                 productTraceCode.setMerchantId(productBatch.getMerchantId());
                 productTraceCode.setBatchNo(productBatch.getBatchNo());
                 productTraceCode.setTraceCode(UUID.randomUUID().toString());
+                productTraceCode.setStatus(TracecodeState.normal.getValue());
                 productTraceCodeList.add(productTraceCode);
             }
             productTraceCodeService.batchInsert(productTraceCodeList);
+            productBatchMapper.updateHaveIssueNum(id, batchNum);
         }
     }
 }

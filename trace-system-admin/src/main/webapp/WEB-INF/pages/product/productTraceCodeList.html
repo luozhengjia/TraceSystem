@@ -43,11 +43,15 @@
                     			<td>${item.id}</td>
                     			<td>${item.traceCode!''}</td>
                     			<td>${item.batchNo}</td>
-                    			<td>${item.status}</td>
+                    			<td><td>${TraceCode.get(item.status).getTitle()}</td></td>
                     			<td>${item.accessTimes?c}</td>
                     			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                     			<td>
-                                	<button type="button" class="btn btn-danger btn-xs delete J_delete" data-param='{"id":${item.id?c}}'><i class="fa fa-trash-o"></i>废弃</button>
+                    				<#if item.state==1>
+                    					<button type="button" class="btn btn-danger btn-xs delete J_discard" data-param='{"traceCode":${item.traceCode},"status":2}'><i class="fa fa-trash-o"></i> 作废</button>
+                    				<#else>
+                    					<button type="button" class="btn btn-success btn-xs J_activate" data-param='{"traceCode":${item.traceCode},"status":1}'><i class="fa fa-plus-circle"></i> 激活</button>
+	                				</#if>
                     			</td>
                             </tr>
                             </#list>
@@ -69,18 +73,19 @@
 <@override name="custom-script">
     <script>
 	    $(document).ready(function() {
-	    	// 删除礼品卡方案
-	        $(".J_delete").on('click', function () {
+	    	 // 作废|激活溯源码
+	        $(".J_discard").on('click', function () {
 	        	var dataParam = $(this).attr('data-param');
+	        	var msg=dataParam.status==1?"激活":"作废";
 	        	bootbox.confirm({
-			        message: '你确定删除该条数据？',
+			        message: '你确定要"+msg+"该溯源码？',
 			        title: "提示",
 			        callback: function(result) {  
 			            if (result) {
-		                    $.post('/product/deleteProductInfo.jhtml', JSON.parse(dataParam), function(result) {
+		                    $.post('/product/discardTraceCode.jhtml', JSON.parse(dataParam), function(result) {
 				                if(result.state.code==200){
 					        		Notify('操作成功', 'bottom-right', '1500', 'success', 'fa-check', true);
-					        		setTimeout(function () {window.location = "/product/productInfoList.jhtml";}, 1500);
+					        		setTimeout(function () {window.location = "/product/queryTraceCodes.jhtml";}, 1500);
 					        	}else{
 					        		Notify(result.state.msg, 'bottom-right', '1500', 'danger', 'fa-bolt', true); 
 					        	}

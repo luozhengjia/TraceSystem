@@ -12,7 +12,7 @@ public class ProductTraceCode implements Serializable {
 
     private String traceCode;
 
-    private Byte status;
+    private Integer status;
 
     private Integer accessTimes;
 
@@ -54,11 +54,11 @@ public class ProductTraceCode implements Serializable {
         this.traceCode = traceCode == null ? null : traceCode.trim();
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

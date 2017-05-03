@@ -8,10 +8,11 @@
 	    <result column="product_id" property="productId" jdbcType="INTEGER" />
 	    <result column="trace_code" property="traceCode" jdbcType="VARCHAR" />
 	    <result column="source_ip" property="sourceIp" jdbcType="VARCHAR" />
+	    <result column="location" property="location" jdbcType="VARCHAR" />
 	    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
 	  </resultMap>
 	  <sql id="Base_Column_List" >
-	    id, merchant_id, batch_no, product_id, trace_code, source_ip, create_time
+	    id, merchant_id, batch_no, product_id, trace_code, source_ip, location, create_time
 	  </sql>
 	  
 	<insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductAccessLog" useGeneratedKeys="true" keyProperty="id">
@@ -25,6 +26,7 @@
       		#{productId,jdbcType=INTEGER}, 
       		#{traceCode,jdbcType=VARCHAR}, 
       		#{sourceIp,jdbcType=VARCHAR}, 
+      		#{location,jdbcType=VARCHAR}, 
       		#{createTime,jdbcType=TIMESTAMP}
       	)
 	</insert>

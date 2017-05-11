@@ -247,6 +247,8 @@ public class ProductController extends BaseController {
         return "product/productTraceCodeList";
     }
 
+    @RequestMapping("/discardTraceCode")
+    @ResponseBody
     public String discardTraceCode(HttpServletRequest request, ProductTraceCodeDto productTraceCodeDto, ModelMap modelMap) {
         ProductTraceCode productTraceCode = productTraceCodeService.getProductTraceCodeByCode(productTraceCodeDto.getTraceCode());
         JunhaiAssert.isTrue(productTraceCode != null, "溯源码不存在");

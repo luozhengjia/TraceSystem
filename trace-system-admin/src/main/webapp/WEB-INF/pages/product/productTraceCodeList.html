@@ -43,14 +43,14 @@
                     			<td>${item.id}</td>
                     			<td>${item.traceCode!''}</td>
                     			<td>${item.batchNo}</td>
-                    			<td><td>${TraceCode.get(item.status).getTitle()}</td></td>
+                    			<td>${TracecodeState.get(item.status).getTitle()}</td>
                     			<td>${item.accessTimes?c}</td>
                     			<td>${item.createTime?string('yyyy-MM-dd HH:mm')}</td>
                     			<td>
-                    				<#if item.state==1>
-                    					<button type="button" class="btn btn-danger btn-xs delete J_discard" data-param='{"traceCode":${item.traceCode},"status":2}'><i class="fa fa-trash-o"></i> 作废</button>
+                    				<#if item.status==1>
+                    					<button type="button" class="btn btn-danger btn-xs delete J_discard" data-param='{"traceCode":"${item.traceCode}","status":2}'><i class="fa fa-trash-o"></i> 作废</button>
                     				<#else>
-                    					<button type="button" class="btn btn-success btn-xs J_activate" data-param='{"traceCode":${item.traceCode},"status":1}'><i class="fa fa-plus-circle"></i> 激活</button>
+                    					<button type="button" class="btn btn-success btn-xs J_activate" data-param='{"traceCode":"${item.traceCode}","status":1}'><i class="fa fa-plus-circle"></i> 激活</button>
 	                				</#if>
                     			</td>
                             </tr>
@@ -78,7 +78,7 @@
 	        	var dataParam = $(this).attr('data-param');
 	        	var msg=dataParam.status==1?"激活":"作废";
 	        	bootbox.confirm({
-			        message: '你确定要"+msg+"该溯源码？',
+			        message: '你确定要'+msg+'该溯源码？',
 			        title: "提示",
 			        callback: function(result) {  
 			            if (result) {

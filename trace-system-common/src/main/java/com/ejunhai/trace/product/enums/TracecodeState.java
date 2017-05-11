@@ -7,7 +7,7 @@ package com.ejunhai.trace.product.enums;
  */
 public enum TracecodeState {
 
-	normal(1, "正常"), discard(3, "已作废");
+	normal(1, "正常"), discard(2, "已作废");
 
 	private TracecodeState(Integer flag, String title) {
 		this.flag = flag;

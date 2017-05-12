@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -52,6 +53,27 @@ public class ProductUtil {
             }
         }
         return new ArrayList<Integer>(baseIdSet);
+    }
+
+    private static final String CHARARTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    /**
+     * 随机产生length位长度的字符串，每4位以空格分隔
+     * 
+     * @param length 兑换码长度
+     * @return
+     */
+    public static String getCode(int length) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            Random random = new Random();
+            int index = random.nextInt(36);
+            if (i % 4 == 0)
+                stringBuilder.append(CHARARTERS.charAt(index));
+            else
+                stringBuilder.append(CHARARTERS.charAt(index));
+        }
+        return stringBuilder.toString().trim();
     }
 
 }

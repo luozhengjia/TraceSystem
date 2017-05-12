@@ -3,7 +3,6 @@ package com.ejunhai.trace.product.service.impl;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -16,6 +15,7 @@ import com.ejunhai.trace.product.model.ProductBatch;
 import com.ejunhai.trace.product.model.ProductTraceCode;
 import com.ejunhai.trace.product.service.ProductBatchService;
 import com.ejunhai.trace.product.service.ProductTraceCodeService;
+import com.ejunhai.trace.product.utils.ShareCodeUtil;
 
 @Service("productBatchService")
 public class ProductBatchServiceImpl implements ProductBatchService {
@@ -74,7 +74,7 @@ public class ProductBatchServiceImpl implements ProductBatchService {
                 ProductTraceCode productTraceCode = new ProductTraceCode();
                 productTraceCode.setMerchantId(productBatch.getMerchantId());
                 productTraceCode.setBatchNo(productBatch.getBatchNo());
-                productTraceCode.setTraceCode(UUID.randomUUID().toString());
+                productTraceCode.setTraceCode(ShareCodeUtil.toSerialCode(id).toUpperCase());
                 productTraceCode.setStatus(TracecodeState.normal.getValue());
                 productTraceCodeList.add(productTraceCode);
             }

@@ -15,35 +15,8 @@ import com.ejunhai.trace.system.model.SystemOperateLog;
  */
 public interface SystemOperateLogService {
 
-    /**
-     * 根据Id获取SystemOperateLog
-     * 
-     * @param id
-     * @return
-     */
-    public SystemOperateLog read(Integer id);
-    
-    /**
-     * 新增SystemOperateLog
-     * 
-     * @param systemOperateLog
-     */
-    public void insert(SystemOperateLog systemOperateLog);
+    public void log(Integer merchantId, String desc, Integer creator);
 
-    /**
-     * 更新SystemOperateLog
-     * 
-     * @param systemOperateLog
-     */
-    public void update(SystemOperateLog systemOperateLog);
-    
-    /**
-     * 删除SystemOperateLog
-     * 
-     * @param id
-     */
-    public void delete(Integer id);
-    
     /**
      * 查询SystemOperateLog数量
      * 
@@ -51,7 +24,7 @@ public interface SystemOperateLogService {
      * @return
      */
     public Integer querySystemOperateLogCount(SystemOperateLog systemOperateLog);
-    
+
     /**
      * 查询SystemOperateLog列表
      * 

@@ -51,6 +51,7 @@ import com.ejunhai.trace.product.service.ProductInfoService;
 import com.ejunhai.trace.product.service.ProductTraceCodeService;
 import com.ejunhai.trace.product.utils.ProductAccesslogUtil;
 import com.ejunhai.trace.product.utils.ProductUtil;
+import com.ejunhai.trace.system.service.SystemOperateLogService;
 import com.ejunhai.trace.utils.SessionManager;
 
 @Controller
@@ -72,8 +73,16 @@ public class ProductController extends BaseController {
     @Resource
     private ProductAccessLogService productAccessLogService;
 
+    @Resource
+    private SystemOperateLogService systemOperateLogService;
+
     @RequestMapping("/productInfoList")
     public String productInfoList(HttpServletRequest request, ProductInfoDto productInfoDto, ModelMap modelMap) {
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        Integer creator = SessionManager.get(request).getId();
+        String msg = String.format("用户%s访问产品列表", SessionManager.get(request).getLoginName());
+        systemOperateLogService.log(merchantId, msg, creator);
+
         productInfoDto.setMerchantId(SessionManager.get(request).getMerchantId());
         Integer iCount = productInfoService.queryProductInfoCount(productInfoDto);
         Pagination pagination = new Pagination(productInfoDto.getPageNo(), iCount);
@@ -96,6 +105,11 @@ public class ProductController extends BaseController {
     public String toProductInfo(HttpServletRequest request, ProductInfo productInfo, ModelMap modelMap) {
         if (productInfo.getId() != null) {
             productInfo = productInfoService.read(productInfo.getId());
+
+            Integer merchantId = SessionManager.get(request).getMerchantId();
+            Integer creator = SessionManager.get(request).getId();
+            String msg = String.format("用户%s访问产品%s", SessionManager.get(request).getLoginName(), productInfo.getProductName());
+            systemOperateLogService.log(merchantId, msg, creator);
         }
 
         // 新增或编辑信息
@@ -114,8 +128,16 @@ public class ProductController extends BaseController {
             productInfo = productInfoService.read(productInfoDto.getId());
             JunhaiAssert.isTrue(productInfo != null, "无效基地ID");
             JunhaiAssert.isTrue(productInfo.getMerchantId() == merchantId, "非法操作");
+
+            Integer creator = SessionManager.get(request).getId();
+            String msg = String.format("用户%s创建新产品%s", SessionManager.get(request).getLoginName(), productInfo.getProductName());
+            systemOperateLogService.log(merchantId, msg, creator);
         } else {
             productInfo.setMerchantId(merchantId);
+
+            Integer creator = SessionManager.get(request).getId();
+            String msg = String.format("用户%s更新产品%s", SessionManager.get(request).getLoginName(), productInfo.getProductName());
+            systemOperateLogService.log(merchantId, msg, creator);
         }
 
         productInfo.setProductName(productInfoDto.getProductName());
@@ -131,7 +153,13 @@ public class ProductController extends BaseController {
     @ResponseBody
     public String deleteProductInfo(HttpServletRequest request, ProductInfoDto productInfoDto) {
         JunhaiAssert.notNull(productInfoDto.getId(), "id不能为空");
+        ProductInfo productInfo = productInfoService.read(productInfoDto.getId());
         productInfoService.delete(productInfoDto.getId());
+
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        Integer creator = SessionManager.get(request).getId();
+        String msg = String.format("用户%s删除产品%s", SessionManager.get(request).getLoginName(), productInfo.getProductName());
+        systemOperateLogService.log(merchantId, msg, creator);
         return jsonSuccess();
     }
 
@@ -170,6 +198,9 @@ public class ProductController extends BaseController {
             }
         }
 
+        String msg = String.format("用户%s批量导入产品", SessionManager.get(request).getLoginName());
+        systemOperateLogService.log(merchantId, msg, creator);
+
         // 保存产品
         for (ProductInfo productInfo : productInfoList) {
             productInfoService.save(productInfo);
@@ -183,6 +214,11 @@ public class ProductController extends BaseController {
         productBatchDto.setMerchantId(SessionManager.get(request).getMerchantId());
         Integer iCount = productBatchService.queryProductBatchCount(productBatchDto);
         Pagination pagination = new Pagination(productBatchDto.getPageNo(), iCount);
+
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        Integer creator = SessionManager.get(request).getId();
+        String msg = String.format("用户%s访问产品批次列表", SessionManager.get(request).getLoginName());
+        systemOperateLogService.log(merchantId, msg, creator);
 
         // 获取分页数据
         List<ProductBatch> productBatchList = new ArrayList<ProductBatch>();
@@ -255,6 +291,10 @@ public class ProductController extends BaseController {
         productBatch.setIssueAmount(productBatchDto.getIssueAmount());
         productBatch.setHasIssueNum(0);
         productBatchService.save(productBatch);
+
+        Integer creator = SessionManager.get(request).getId();
+        String msg = String.format("用户%s新增或更新产品批次%s", SessionManager.get(request).getLoginName(), productBatch.getBatchNo());
+        systemOperateLogService.log(merchantId, msg, creator);
         return jsonSuccess();
     }
 
@@ -263,6 +303,11 @@ public class ProductController extends BaseController {
     public String deleteProductBatch(HttpServletRequest request, ProductBatchDto productBatchDto) {
         JunhaiAssert.notNull(productBatchDto.getId(), "id不能为空");
         productBatchService.delete(productBatchDto.getId());
+
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        Integer creator = SessionManager.get(request).getId();
+        String msg = String.format("用户%s删除产品批次%s", SessionManager.get(request).getLoginName(), productBatchDto.getId());
+        systemOperateLogService.log(merchantId, msg, creator);
         return jsonSuccess();
     }
 
@@ -270,6 +315,11 @@ public class ProductController extends BaseController {
     public String generateTraceCodes(HttpServletRequest request, ProductBatchDto productBatchDto) {
         JunhaiAssert.notNull(productBatchDto.getId(), "id不能为空");
         productBatchService.generateTraceCodes(productBatchDto.getId());
+
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        Integer creator = SessionManager.get(request).getId();
+        String msg = String.format("用户%s生成产品批次%s溯源码", SessionManager.get(request).getLoginName(), productBatchDto.getId());
+        systemOperateLogService.log(merchantId, msg, creator);
         return jsonSuccess();
     }
 

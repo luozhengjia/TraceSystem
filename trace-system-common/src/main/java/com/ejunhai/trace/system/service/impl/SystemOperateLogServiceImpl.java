@@ -1,5 +1,6 @@
 package com.ejunhai.trace.system.service.impl;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -25,27 +26,14 @@ public class SystemOperateLogServiceImpl implements SystemOperateLogService {
     private SystemOperateLogMapper systemOperateLogMapper;
 
     @Override
-    public SystemOperateLog read(Integer id) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public void insert(SystemOperateLog systemOperateLog) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void update(SystemOperateLog systemOperateLog) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void delete(Integer id) {
-        // TODO Auto-generated method stub
-
+    public void log(Integer merchantId, String desc, Integer creator) {
+        SystemOperateLog systemOperateLog = new SystemOperateLog();
+        systemOperateLog.setMerchantId(merchantId);
+        systemOperateLog.setUserId(creator);
+        systemOperateLog.setOperation(desc);
+        systemOperateLog.setOperType(0);
+        systemOperateLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        systemOperateLogMapper.insert(systemOperateLog);
     }
 
     @Override

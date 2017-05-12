@@ -1,6 +1,8 @@
 package com.ejunhai.trace.product.service.impl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -35,6 +37,11 @@ public class ProductAccessLogServiceImpl implements ProductAccessLogService {
     @Override
     public List<ProductAccessLog> queryProductAccessLogList(ProductAccessLogDto productAccessLogDto) {
         return productAccessLogMapper.queryProductAccessLogList(productAccessLogDto);
+    }
+
+    @Override
+    public List<Map<String, Object>> getProductAccessLogStatList(Integer merchantId, Date startTime, Date endTime) {
+        return productAccessLogMapper.getProductAccessLogStatList(merchantId, startTime, endTime);
     }
 
 }

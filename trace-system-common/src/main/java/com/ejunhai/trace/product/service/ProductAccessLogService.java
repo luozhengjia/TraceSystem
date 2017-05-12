@@ -1,6 +1,8 @@
 package com.ejunhai.trace.product.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.ejunhai.trace.product.dto.ProductAccessLogDto;
 import com.ejunhai.trace.product.model.ProductAccessLog;
@@ -30,4 +32,5 @@ public interface ProductAccessLogService {
      */
     public List<ProductAccessLog> queryProductAccessLogList(ProductAccessLogDto productAccessLogDto);
 
+    public List<Map<String, Object>> getProductAccessLogStatList(Integer merchantId, Date startTime, Date endTime);
 }

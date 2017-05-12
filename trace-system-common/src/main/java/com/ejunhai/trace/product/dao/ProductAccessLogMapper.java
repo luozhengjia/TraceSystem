@@ -1,6 +1,10 @@
 package com.ejunhai.trace.product.dao;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.ejunhai.trace.product.dto.ProductAccessLogDto;
 import com.ejunhai.trace.product.model.ProductAccessLog;
@@ -29,4 +33,7 @@ public interface ProductAccessLogMapper {
      * @return
      */
     public List<ProductAccessLog> queryProductAccessLogList(ProductAccessLogDto productAccessLogDto);
+
+    public List<Map<String, Object>> getProductAccessLogStatList(@Param("merchantId") Integer merchantId, @Param("startTime") Date startTime,
+            @Param("endTime") Date endTime);
 }

@@ -14,6 +14,7 @@ import com.ejunhai.trace.common.errors.ErrorType;
 import com.ejunhai.trace.common.errors.JunhaiAssert;
 import com.ejunhai.trace.system.enums.UserState;
 import com.ejunhai.trace.system.model.SystemUser;
+import com.ejunhai.trace.system.service.SystemOperateLogService;
 import com.ejunhai.trace.system.service.SystemUserService;
 import com.ejunhai.trace.utils.FrontUtil;
 import com.ejunhai.trace.utils.SessionManager;
@@ -24,6 +25,9 @@ public class LoginController extends BaseController {
 
     @Resource
     private SystemUserService systemUserService;
+
+    @Resource
+    private SystemOperateLogService systemOperateLogService;
 
     @RequestMapping("login")
     public String login(HttpServletRequest request) {
@@ -60,14 +64,22 @@ public class LoginController extends BaseController {
 
         // 登录用户
         SessionManager.put(systemUser, request);
+        String msg = String.format("用户%s登录系统", systemUser.getLoginName());
+        systemOperateLogService.log(systemUser.getMerchantId(), msg, systemUser.getId());
+
         return jsonSuccess();
     }
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        Integer creator = SessionManager.get(request).getId();
+        String msg = String.format("用户%s退出系统", SessionManager.get(request).getLoginName());
+        systemOperateLogService.log(merchantId, msg, creator);
 
         // 注销用户
         SessionManager.clear(request);
+
         return "redirect:/login.jhtml";
     }
 }

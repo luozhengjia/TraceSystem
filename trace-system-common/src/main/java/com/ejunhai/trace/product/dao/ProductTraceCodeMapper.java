@@ -1,6 +1,10 @@
 package com.ejunhai.trace.product.dao;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.ejunhai.trace.product.dto.ProductTraceCodeDto;
 import com.ejunhai.trace.product.model.ProductTraceCode;
@@ -58,4 +62,5 @@ public interface ProductTraceCodeMapper {
      * @return
      */
     public List<ProductTraceCode> queryProductTraceCodeList(ProductTraceCodeDto productTraceCodeDto);
+
 }

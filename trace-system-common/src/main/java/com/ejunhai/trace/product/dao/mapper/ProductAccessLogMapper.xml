@@ -50,5 +50,16 @@
 		order by create_time desc
 		limit #{offset},#{pageSize} 
 	</select>
+	
+	<select id="getProductAccessLogStatList" resultType="java.util.HashMap">
+		select DATE_FORMAT(create_time,'%Y-%m-%d') AS day,count(1) from tb_product_access_log
+		<where>
+			<if test="merchantId!=null and merchantId!=''">
+				and merchant_id like CONCAT('%',#{merchantId},'%')
+			</if>
+			and create_time #{startTime} BETWEEN #{endTime}
+		</where>
+		group by day
+	</select>
 
 </mapper>

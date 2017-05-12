@@ -13,6 +13,8 @@
 
 	<!-- 自动搜索@Controller标注的类 -->
 	<context:component-scan base-package="com.ejunhai" />
+	
+	<mvc:annotation-driven />
 
 	<!-- 开启自动切面代理 -->
 	<aop:aspectj-autoproxy />
@@ -94,6 +96,5 @@
 	<!-- 配置对文件上传的支持 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
-	<mvc:annotation-driven />
 
 </beans>

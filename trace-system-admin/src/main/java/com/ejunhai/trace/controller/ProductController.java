@@ -1,16 +1,34 @@
 package com.ejunhai.trace.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.ejunhai.trace.common.base.BaseController;
 import com.ejunhai.trace.common.base.Pagination;
@@ -117,12 +135,47 @@ public class ProductController extends BaseController {
         return jsonSuccess();
     }
 
+    @RequestMapping("/downloadExcelTemplate")
+    public ResponseEntity<byte[]> downloadExcelTemplate(HttpServletRequest request) throws Exception {
+        String filepath = request.getSession().getServletContext().getRealPath("/") + File.separator + "template" + File.separator + "产品批量导入模板.xlsx";
+        File file = new File(filepath);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("attachment", new String(file.getName().getBytes("GBK"), "iso-8859-1"));
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
+    }
+
     @RequestMapping("/importProductInfo")
-    @ResponseBody
-    public String importProductInfo(HttpServletRequest request, ProductInfoDto productInfoDto) {
-        JunhaiAssert.notNull(productInfoDto.getId(), "id不能为空");
-        // todo
-        return jsonSuccess();
+    public String importProductInfo(@RequestParam("file") CommonsMultipartFile file, HttpServletRequest request) throws IOException {
+        Integer merchantId = SessionManager.get(request).getMerchantId();
+        Integer creator = SessionManager.get(request).getId();
+        HSSFWorkbook hssfWorkbook = new HSSFWorkbook(file.getInputStream());
+        HSSFSheet sheet = hssfWorkbook.getSheetAt(0);
+
+        // 解析excel，讲数据插入到数据库
+        List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
+        for (int j = 0; j < sheet.getLastRowNum() + 1; j++) {
+            HSSFRow row = sheet.getRow(j);
+            String title = row.getCell(1).getRichStringCellValue().getString();
+            if (StringUtils.isNotBlank(title)) {
+                ProductInfo productInfo = new ProductInfo();
+                productInfo.setMerchantId(merchantId);
+                productInfo.setProductName(title);
+                productInfo.setBrandName(row.getCell(2).getRichStringCellValue().getString());
+                productInfo.setRemark(row.getCell(3).getRichStringCellValue().getString());
+                productInfo.setCreator(creator);
+                productInfo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+                productInfo.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+                productInfoList.add(productInfo);
+            }
+        }
+
+        // 保存产品
+        for (ProductInfo productInfo : productInfoList) {
+            productInfoService.save(productInfo);
+        }
+
+        return "redirect:/product/productInfoList.jhtml";
     }
 
     @RequestMapping("/productBatchList")
@@ -221,10 +274,29 @@ public class ProductController extends BaseController {
     }
 
     @RequestMapping("/exportTraceCodes")
-    public String exportTraceCodes(HttpServletRequest request, ProductBatchDto productBatchDto) {
-        JunhaiAssert.notNull(productBatchDto.getId(), "id不能为空");
-        // todo
-        return jsonSuccess();
+    public void exportTraceCodes(HttpServletRequest request, String batchNo, HttpServletResponse response) throws IOException {
+        JunhaiAssert.notNull(batchNo, "batchNo不能为空");
+
+        // 根据批次查询溯源码列表
+        ProductTraceCodeDto productTraceCodeDto = new ProductTraceCodeDto();
+        productTraceCodeDto.setMerchantId(SessionManager.get(request).getMerchantId());
+        productTraceCodeDto.setBatchNo(batchNo);
+        productTraceCodeDto.setOffset(0);
+        productTraceCodeDto.setPageSize(Integer.MAX_VALUE);
+        List<ProductTraceCode> productTraceCodeList = productTraceCodeService.queryProductTraceCodeList(productTraceCodeDto);
+
+        response.reset();
+        response.setContentType("application/csv;charset=UTF-8");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = batchNo + "_溯源码" + simpleDateFormat.format(new Date()) + ".csv";
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes("GBK"), "iso-8859-1"));
+        response.setCharacterEncoding("UTF-8");
+        PrintWriter out = response.getWriter();
+        for (ProductTraceCode productTraceCode : productTraceCodeList) {
+            out.println(productTraceCode.getTraceCode());
+        }
+        out.flush();
+        out.close();
     }
 
     @RequestMapping("/queryTraceCodes")

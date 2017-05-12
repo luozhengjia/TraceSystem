@@ -63,9 +63,7 @@
 	<select id="queryProductInfoCount" resultType="java.lang.Integer">
 		select count(1) from tb_product_info
 		<where>
-			<if test="merchantId!=null and merchantId!=''">
-				and merchant_id like CONCAT('%',#{merchantId},'%')
-			</if>
+			<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
 			<if test="productName!=null and productName!=''">
 				and product_name like CONCAT('%',#{productName},'%')
 			</if>
@@ -75,13 +73,12 @@
 	<select id="queryProductInfoList" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" /> from tb_product_info
 		<where>
-			<if test="merchantId!=null and merchantId!=''">
-				and merchant_id like CONCAT('%',#{merchantId},'%')
-			</if>
+			<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
 			<if test="productName!=null and productName!=''">
 				and product_name like CONCAT('%',#{productName},'%')
 			</if>
 		</where>
+		order by update_time desc
 		limit #{offset},#{pageSize}
 	</select>
 	

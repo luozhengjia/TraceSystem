@@ -52,7 +52,7 @@
                     					<button type="button" class="btn btn-success btn-xs J_generate" data-param='{"id":${item.id?c}}'><i class="fa fa-plus-circle"></i> 生成溯源码</button>
                     				</#if>
                     				<#if item.hasIssueNum &gt; 0>
-                    					<a class="btn btn-success btn-xs" href="/product/exportTraceCodes.jhtml?id=${item.id?c}"><i class="fa fa-download"></i> 下载</a>
+                    					<a class="btn btn-success btn-xs" href="/product/exportTraceCodes.jhtml?batchNo=${item.batchNo}"><i class="fa fa-download"></i> 下载</a>
                     				</#if>
                     				
                     				<a class="btn btn-info btn-xs" href="/product/toProductBatch.jhtml?id=${item.id?c}"><i class="fa fa-edit"></i> 编辑</a>

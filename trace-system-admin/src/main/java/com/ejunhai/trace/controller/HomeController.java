@@ -76,7 +76,7 @@ public class HomeController {
         Date endTime = new Date();
         Date startTime = DateUtil.diffDate(endTime, 30);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String[] dates = new String[] {};
+        String[] dates = new String[30];
         for (int i = 0; i < 30; i++) {
             dates[i] = simpleDateFormat.format(DateUtil.addDate(startTime, i));
         }

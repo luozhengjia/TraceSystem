@@ -43,9 +43,7 @@
 	<select id="queryProductAccessLogList" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" /> from tb_product_access_log
 		<where>
-			<if test="merchantId!=null and merchantId!=''">
-				and merchant_id like CONCAT('%',#{merchantId},'%')
-			</if>
+			<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
 		</where>
 		order by create_time desc
 		limit #{offset},#{pageSize} 
@@ -54,10 +52,8 @@
 	<select id="getProductAccessLogStatList" resultType="java.util.HashMap">
 		select DATE_FORMAT(create_time,'%Y-%m-%d') AS day,count(1) from tb_product_access_log
 		<where>
-			<if test="merchantId!=null and merchantId!=''">
-				and merchant_id like CONCAT('%',#{merchantId},'%')
-			</if>
-			and create_time #{startTime} BETWEEN #{endTime}
+			<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+			and create_time BETWEEN #{startTime} and #{endTime}
 		</where>
 		group by day
 	</select>

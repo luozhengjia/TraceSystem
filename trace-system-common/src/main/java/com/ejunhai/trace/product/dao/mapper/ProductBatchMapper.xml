@@ -67,24 +67,16 @@
 	<select id="queryProductBatchCount" resultType="java.lang.Integer">
 		select count(1) from tb_product_batch
 		<where>
-			<if test="merchantId!=null and merchantId!=''">
-				and merchant_id like CONCAT('%',#{merchantId},'%')
-			</if>
-			<if test="batchNo!=null and batchNo!=''">
-				and batch_no like CONCAT('%',#{batchNo},'%')
-			</if>
+			<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+			<if test="batchNo!=null and batchNo!=''"> and batch_no = #{batchNo} </if>
 		</where>
 	</select>
 
 	<select id="queryProductBatchList" resultMap="BaseResultMap">
 		select <include refid="Base_Column_List" /> from tb_product_batch
 		<where>
-			<if test="merchantId!=null and merchantId!=''">
-				and merchant_id like CONCAT('%',#{merchantId},'%')
-			</if>
-			<if test="batchNo!=null and batchNo!=''">
-				and batch_no like CONCAT('%',#{batchNo},'%')
-			</if>
+			<if test="merchantId != null and merchantId !=''"> and merchant_id = #{merchantId} </if>
+			<if test="batchNo!=null and batchNo!=''"> and batch_no = #{batchNo} </if>
 		</where>
 		limit #{offset},#{pageSize}
 	</select>

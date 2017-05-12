@@ -78,11 +78,6 @@ public class ProductController extends BaseController {
 
     @RequestMapping("/productInfoList")
     public String productInfoList(HttpServletRequest request, ProductInfoDto productInfoDto, ModelMap modelMap) {
-        Integer merchantId = SessionManager.get(request).getMerchantId();
-        Integer creator = SessionManager.get(request).getId();
-        String msg = String.format("用户%s访问产品列表", SessionManager.get(request).getLoginName());
-        systemOperateLogService.log(merchantId, msg, creator);
-
         productInfoDto.setMerchantId(SessionManager.get(request).getMerchantId());
         Integer iCount = productInfoService.queryProductInfoCount(productInfoDto);
         Pagination pagination = new Pagination(productInfoDto.getPageNo(), iCount);
@@ -165,7 +160,7 @@ public class ProductController extends BaseController {
 
     @RequestMapping("/downloadExcelTemplate")
     public ResponseEntity<byte[]> downloadExcelTemplate(HttpServletRequest request) throws Exception {
-        String filepath = request.getSession().getServletContext().getRealPath("/") + File.separator + "template" + File.separator + "产品批量导入模板.xlsx";
+        String filepath = request.getSession().getServletContext().getRealPath("/") + File.separator + "template" + File.separator + "产品批量导入模板.xls";
         File file = new File(filepath);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
@@ -182,13 +177,12 @@ public class ProductController extends BaseController {
 
         // 解析excel，讲数据插入到数据库
         List<ProductInfo> productInfoList = new ArrayList<ProductInfo>();
-        for (int j = 0; j < sheet.getLastRowNum() + 1; j++) {
+        for (int j = 1; j < sheet.getLastRowNum() + 1; j++) {
             HSSFRow row = sheet.getRow(j);
-            String title = row.getCell(1).getRichStringCellValue().getString();
-            if (StringUtils.isNotBlank(title)) {
+            if (row.getCell(1) != null) {
                 ProductInfo productInfo = new ProductInfo();
                 productInfo.setMerchantId(merchantId);
-                productInfo.setProductName(title);
+                productInfo.setProductName(row.getCell(1).getRichStringCellValue().getString());
                 productInfo.setBrandName(row.getCell(2).getRichStringCellValue().getString());
                 productInfo.setRemark(row.getCell(3).getRichStringCellValue().getString());
                 productInfo.setCreator(creator);
@@ -214,11 +208,6 @@ public class ProductController extends BaseController {
         productBatchDto.setMerchantId(SessionManager.get(request).getMerchantId());
         Integer iCount = productBatchService.queryProductBatchCount(productBatchDto);
         Pagination pagination = new Pagination(productBatchDto.getPageNo(), iCount);
-
-        Integer merchantId = SessionManager.get(request).getMerchantId();
-        Integer creator = SessionManager.get(request).getId();
-        String msg = String.format("用户%s访问产品批次列表", SessionManager.get(request).getLoginName());
-        systemOperateLogService.log(merchantId, msg, creator);
 
         // 获取分页数据
         List<ProductBatch> productBatchList = new ArrayList<ProductBatch>();

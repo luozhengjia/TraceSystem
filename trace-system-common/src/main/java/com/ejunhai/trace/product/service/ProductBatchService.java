@@ -19,6 +19,14 @@ public interface ProductBatchService {
      */
     public ProductBatch read(Integer id);
 
+    /**
+     * 根据批次号获取批次
+     * 
+     * @param batchNo
+     * @return
+     */
+    public ProductBatch getProductBatchByBatchNo(String batchNo);
+
     public void save(ProductBatch productBatch);
 
     /**

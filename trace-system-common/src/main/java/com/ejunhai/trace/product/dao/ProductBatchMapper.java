@@ -16,6 +16,8 @@ public interface ProductBatchMapper {
      */
     public ProductBatch read(Integer id);
 
+    public ProductBatch getProductBatchByBatchNo(String batchNo);
+
     /**
      * 新增ProductBatch
      * 

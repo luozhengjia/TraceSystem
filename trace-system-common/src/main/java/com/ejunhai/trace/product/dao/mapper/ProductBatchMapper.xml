@@ -23,6 +23,10 @@
     <select id="read" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select <include refid="Base_Column_List" /> from tb_product_batch where ID = #{id,jdbcType=INTEGER}
 	</select>
+	
+	<select id="getProductBatchByBatchNo" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" /> from tb_product_batch where  batch_no = #{batchNo,jdbcType=VARCHAR}
+	</select>
 
 	<insert id="insert" parameterType="com.ejunhai.trace.product.model.ProductBatch" useGeneratedKeys="true" keyProperty="id">
 		insert into tb_product_batch (

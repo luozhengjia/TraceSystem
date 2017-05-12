@@ -32,6 +32,11 @@ public class ProductBatchServiceImpl implements ProductBatchService {
     }
 
     @Override
+    public ProductBatch getProductBatchByBatchNo(String batchNo) {
+        return productBatchMapper.getProductBatchByBatchNo(batchNo);
+    }
+
+    @Override
     public void save(ProductBatch productBatch) {
         if (productBatch.getId() != null) {
             productBatch.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -82,4 +87,5 @@ public class ProductBatchServiceImpl implements ProductBatchService {
             productBatchMapper.updateHaveIssueNum(id, batchNum);
         }
     }
+
 }
